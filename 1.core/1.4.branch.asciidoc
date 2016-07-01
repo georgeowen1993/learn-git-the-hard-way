@@ -1,0 +1,29 @@
+- git branch
+- git checkout
+- git merge
+
+----
+git status
+git branch newfeature
+git status
+vi  # add Line_master1
+git commit -am 'master change'  # add and message
+git log --decorate --graph --oneline
+git checkout newfeature
+git log --decorate --graph --oneline --all
+vi  # add Line_feature1
+git commit -am 'feature change' 
+
+# HEAD (and branch) moves forward with each commit.
+# But can be moved (git checkout does this)
+# You are on a branch at the same time.
+
+# Git checkout
+# Detached head? means not associated with a branch. you can commit etc, but can discard these changes with 'git checkout <branch>' or create a branch.
+# This is why it 'feels wrong' to be on a detached head. It's like an un-logged temp table in a database. Handy, but without a safety rope.
+
+# SO:
+# A branch is just a pointer on a line of changes
+# HEAD is just your 'current' branch
+----
+

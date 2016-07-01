@@ -1,0 +1,131 @@
+Now we are going to work with multiple repos.
+
+Let's do the same as we did before, but create cloned_1 and cloned_2:
+
+---
+mkdir git_origin
+cd git_origin
+git init
+echo 'first commit' > file1
+git add file1
+git commit -am file1
+cd ..
+git clone git_origin alice_cloned
+git clone git_origin bob_cloned
+---
+
+Now alice_cloned and bob_cloned have git_origin as the origin:
+
+----
+cd alice_cloned
+git remote -v
+# origin	/Users/imiell/gitcourse/git_origin (fetch)
+# origin	/Users/imiell/gitcourse/git_origin (push)
+cd ../bob_cloned
+git remote -v
+# origin	/Users/imiell/gitcourse/git_origin (fetch)
+# origin	/Users/imiell/gitcourse/git_origin (push)
+----
+
+Now alice makes a change in her master branch:
+
+----
+echo alice_change >> file1 
+# imiell@Ians-MacBook-Air:~/gitcourse/alice_cloned$ git commit -am 'alice change'
+# [master 9077a48] alice change
+#  1 file changed, 1 insertion(+)
+----
+
+The question is: how does Bob get this change into his master branch?
+
+This is a common scenario in distributed teams. If you consider that git was
+created for managing the codebase of the Linux operating system, it's easy
+to imagine the git_origin as Linus Torvald's repository, alice as a contributor
+and bob as a so-called lieutenant.
+
+
+So here is how:
+
+1) ADD alice's repository as a remote to Bob's
+2) FETCH alice's updated master branch
+3) MERGE alice's master branch into Bob's local one
+
+As we have already seen, steps 2) and 3) can be collapsed into a 'git pull',
+but it is more instructive to keep these separate.
+
+1) ADD alice's repository as a remote to Bob's
+First, Bob needs to add alice's repository as a remote.
+
+----
+git remote add alice ../alice_cloned
+git remote -v
+# alice	../alice_cloned/ (fetch)
+# alice	../alice_cloned/ (push)
+# origin	/Users/imiell/gitcourse/git_origin (fetch)
+# origin	/Users/imiell/gitcourse/git_origin (push)
+----
+
+We have now linked up our repository to alice's, and given it the name 'alice'.
+
+2) FETCH alice's updated master branch
+
+----
+git fetch alice master
+# remote: Counting objects: 3, done.
+# remote: Total 3 (delta 0), reused 0 (delta 0)
+# Unpacking objects: 100% (3/3), done.
+# From ../alice_cloned
+#  * branch            master     -> FETCH_HEAD
+#  * [new branch]      master     -> alice/master
+----
+
+Alice's master branch is now fetched to our local repository.
+
+----
+git branch -vv -a
+# * master                fdc7132 [origin/master] file1
+#   remotes/alice/master  9077a48 alice change
+#   remotes/origin/HEAD   -> origin/master
+#   remotes/origin/master fdc7132 file1
+----
+
+
+3) MERGE alice's master branch into Bob's local one
+
+----
+git merge alice/master
+# Updating fdc7132..9077a48
+# Fast-forward
+#  file1 | 1 +
+#  1 file changed, 1 insertion(+)
+cat file1 
+# first commit
+# alice_change
+----
+
+You may be wondering why we use alice/master and not remotes/alice/master,
+as the output of 'git branch -vv -a' tells us. You can run:
+
+----
+git merge remotes/alice/master
+----
+
+which will do the same. Git assumes that the branch is a remote (presumably
+from the '/') and adds the 'remotes' for you.
+
+
+
+This 'Lieutenants' model is one example of a git workflow. Although it was the
+one git was originally created for, it is still common for developers to use
+a traditional centralised model around a repository such as GitLab or BitBucket.
+
+This is why people make jokes when GitHub is down about the fact that it should
+not be a problems because it is a distributed source control tool.
+
+
+What we learned
+---------------
+
+- How to add a remote repo
+- How to fetch changes from the remote repo
+- How to merge changes from the remote repo

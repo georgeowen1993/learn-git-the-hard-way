@@ -1,0 +1,331 @@
+Rebasing is one of the most commonly-discussed advanced git topics.
+
+In essence it's quite simple, but it can get very confusing.
+
+Following this you're going to learn about rebasing and fast-forwarding with
+a simple example, so pay attention!
+
+Let's say we have a set of changes on a master branch:
+
+A
+|
+B
+|
+C
+
+Figure 2.5.1
+
+and at this point we branch off to 'feature1' and make another change:
+
+A
+|
+B
+|
+C (HEAD, master)
+ \
+  D (feature1)
+
+Figure 2.5.2
+
+Now we go back to master and make a couple more changes:
+
+A
+|
+B
+|
+C
+|\
+E D (feature1)
+|
+F (HEAD, master)
+
+Figure 2.5.3
+
+Now think about this from the point of view of feature1. It made a change
+from point C on the master branch, but the situation has moved on. Now if master
+wants to merge in the change on feature1, it could merge it in, and the tree
+would look like this:
+
+A
+|
+B
+|
+C
+|\
+E |
+| |
+F D (feature1)
+| |
+|/
+G (HEAD, master)
+
+Figure 2.5.4
+
+That is OK, but not entirely desirable for two reasons:
+
+- The history has just got more complicated
+- We have introduced an extra new change (G), which is the merge of D and F
+
+Wouldn't it be better if the history looked like this?
+
+A
+|
+B
+|
+C
+|
+E
+|
+F
+|
+D (head, master, feature1)
+
+Figure 2.5.5
+
+This is much cleaner and easier to follow. If, for example, a bug was
+introduced in D, it's easier to find (eg using bisect, which we will come
+onto).
+Also, the feature1 branch can be safely deleted without any significant
+information being lost, making the history tidier and simpler.
+
+If we remind ourselves of the situation pre-merge (Figure 2.5.3) then we can 
+visualise 'picking up' the changes on the feature1 branch and moving them
+to the HEAD. So from this:
+
+A
+|
+B
+|
+C
+|\
+E D (feature1)
+|
+F (HEAD, master)
+
+Figure 2.5.3 (again)
+
+To this:
+
+A
+|
+B
+|
+C
+|
+E
+|
+F (HEAD, master)
+ \
+  D (feature1)
+
+Figure 2.5.6
+
+This is what a rebase is: you take a set of changes from a particular point
+and apply them from a different point - re-base!
+
+NOTE: be aware that people also talk about rebasing to 'squash' commits. This is
+a slightly different scneario that uses the same rebase command.
+
+Let's walk through the above scenario with git commands.
+
+----
+mkdir tmprebase
+cd tmprebase
+git init
+echo A > file1
+git add file1
+git commit -am A
+echo B >> file1
+git commit -am B
+echo C >> file1
+git commit -am C
+
+git checkout -b feature1
+echo D >> file1
+git commit -am D
+
+git checkout master
+echo E >> file1
+git commit -am E
+echo F >> file1
+git commit -am F
+
+git log --all --decorate --graph
+# * commit baacf6fb432967a9d404858268928278df40c7a3 (feature1)
+# | Author: Ian Miell <ian.miell@gmail.com>
+# | Date:   Wed Jun 29 19:02:09 2016 +0100
+# | 
+# |     D
+# |    
+# | * commit cb548ab427a50028f2dbd721f4c285cbd6ad595d (HEAD, master)
+# | | Author: Ian Miell <ian.miell@gmail.com>
+# | | Date:   Wed Jun 29 19:02:09 2016 +0100
+# | | 
+# | |     F
+# | |   
+# | * commit 9a9a81060dd74ded8306e7c1a49400529188df70
+# |/  Author: Ian Miell <ian.miell@gmail.com>
+# |   Date:   Wed Jun 29 19:02:09 2016 +0100
+# |   
+# |       E
+# |  
+# * commit 44954ddfb91d96aaa3bbedab3ae7bcb47aa833be
+# | Author: Ian Miell <ian.miell@gmail.com>
+# | Date:   Wed Jun 29 19:02:09 2016 +0100
+# | 
+# |     C
+# |  
+# * commit a63e4ff9ba95ab478a5755ed4e3c9c9bc3ddbc37
+# | Author: Ian Miell <ian.miell@gmail.com>
+# | Date:   Wed Jun 29 19:02:09 2016 +0100
+# | 
+# |     B
+# |  
+# * commit b1fd27851324ed88caa958e2da9d7a36e24277dc
+#   Author: Ian Miell <ian.miell@gmail.com>
+#   Date:   Wed Jun 29 19:02:09 2016 +0100
+#   
+#       A
+----
+
+We are now in this state:
+
+A
+|
+B
+|
+C
+|\
+E D (feature1)
+|
+F (HEAD, master)
+
+Figure 2.5.3 (again)
+
+We go to feature1 and rebase:
+
+----
+git checkout feature1
+git rebase master
+# First, rewinding head to replay your work on top of it...
+# Applying: D
+# Using index info to reconstruct a base tree...
+# M	file1
+# Falling back to patching base and 3-way merge...
+# Auto-merging file1
+# CONFLICT (content): Merge conflict in file1
+# Failed to merge in the changes.
+# Patch failed at 0001 D
+# The copy of the patch that failed is found in:
+#    /Users/imiell/gitcourse/tmprebase/.git/rebase-apply/patch
+# 
+# When you have resolved this problem, run "git rebase --continue".
+# If you prefer to skip this patch, run "git rebase --skip" instead.
+# To check out the original branch and stop rebasing, run "git rebase --abort".
+vi file1
+git add file1
+git rebase --continue
+# Applying: D
+git log --all --decorate --graph 
+* commit eff7c3a62c8a2ce74302207db014b0db82c22d4e (HEAD, feature1)
+| Author: Ian Miell <ian.miell@gmail.com>
+| Date:   Wed Jun 29 19:02:09 2016 +0100
+| 
+|     D
+|  
+* commit cb548ab427a50028f2dbd721f4c285cbd6ad595d (master)
+| Author: Ian Miell <ian.miell@gmail.com>
+| Date:   Wed Jun 29 19:02:09 2016 +0100
+| 
+|     F
+|  
+* commit 9a9a81060dd74ded8306e7c1a49400529188df70
+| Author: Ian Miell <ian.miell@gmail.com>
+| Date:   Wed Jun 29 19:02:09 2016 +0100
+| 
+|     E
+|  
+* commit 44954ddfb91d96aaa3bbedab3ae7bcb47aa833be
+| Author: Ian Miell <ian.miell@gmail.com>
+| Date:   Wed Jun 29 19:02:09 2016 +0100
+| 
+|     C
+|  
+* commit a63e4ff9ba95ab478a5755ed4e3c9c9bc3ddbc37
+| Author: Ian Miell <ian.miell@gmail.com>
+| Date:   Wed Jun 29 19:02:09 2016 +0100
+| 
+|     B
+|  
+* commit b1fd27851324ed88caa958e2da9d7a36e24277dc
+  Author: Ian Miell <ian.miell@gmail.com>
+  Date:   Wed Jun 29 19:02:09 2016 +0100
+  
+      A
+----
+
+
+Now the changes are in one line we can merge the feature1 master branch.
+
+----
+git checkout master
+git merge feature1
+# Updating cb548ab..eff7c3a
+# Fast-forward
+#  file1 | 1 +
+#  1 file changed, 1 insertion(+)
+git log --all --decorate --graph 
+# * commit eff7c3a62c8a2ce74302207db014b0db82c22d4e (HEAD, master, feature1)
+# | Author: Ian Miell <ian.miell@gmail.com>
+# | Date:   Wed Jun 29 19:02:09 2016 +0100
+# | 
+# |     D
+# |  
+# * commit cb548ab427a50028f2dbd721f4c285cbd6ad595d
+# | Author: Ian Miell <ian.miell@gmail.com>
+# | Date:   Wed Jun 29 19:02:09 2016 +0100
+# | 
+# |     F
+# |  
+# * commit 9a9a81060dd74ded8306e7c1a49400529188df70
+# | Author: Ian Miell <ian.miell@gmail.com>
+# | Date:   Wed Jun 29 19:02:09 2016 +0100
+# | 
+# |     E
+# |  
+# * commit 44954ddfb91d96aaa3bbedab3ae7bcb47aa833be
+# | Author: Ian Miell <ian.miell@gmail.com>
+# | Date:   Wed Jun 29 19:02:09 2016 +0100
+# | 
+# |     C
+# |  
+# * commit a63e4ff9ba95ab478a5755ed4e3c9c9bc3ddbc37
+# | Author: Ian Miell <ian.miell@gmail.com>
+# | Date:   Wed Jun 29 19:02:09 2016 +0100
+# | 
+# |     B
+# |  
+# * commit b1fd27851324ed88caa958e2da9d7a36e24277dc
+#   Author: Ian Miell <ian.miell@gmail.com>
+#   Date:   Wed Jun 29 19:02:09 2016 +0100
+#   
+#       A
+----
+
+
+Fast-forwarding
+---------------
+
+What's interesting about the above is this:
+
+----
+git merge feature1
+# Updating cb548ab..eff7c3a
+# Fast-forward
+#  file1 | 1 +
+#  1 file changed, 1 insertion(+)
+----
+
+Because the changes are in a line, no new changes need to be made - the master
+branch pointer merely needs to be 'fast-forwarded' to the same point as 
+feature1! The HEAD pointer, naturally, moves with the branch we're on (master).

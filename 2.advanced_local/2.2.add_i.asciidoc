@@ -1,0 +1,113 @@
+Earlier we discussed the four stages of working in Git:
+
+Git:
+
+1) Local changes
+2) Staging/Adding/Index
+3) Committing to local Repo
+4) Push
+
+So far we've shown a difference between adding (staging) and committing, but
+this still causes confusion for people - what's the point of this?
+
+Let's demonstrate how you might want to use this with a simple example:
+
+----
+mkdir tmpgit
+cd tmpgit
+git init
+cat > file1 << END
+This is file1
+END
+cat > file2 << END
+This is file2
+END
+git add file1 file2
+git commit -am 'files added'
+cat > file1 << END
+Good change
+This is file1
+Experimental change
+END
+cat > file2 << END
+All good
+This is file2
+END
+git add -i
+p
+1
+
+s
+y
+n
+q
+#imiell@Ians-Air:~/tmpgit$ git add -i
+#           staged     unstaged path
+#  1:    unchanged        +2/-0 file1
+#
+#*** Commands ***
+#  1: status	  2: update	  3: revert	  4: add untracked
+#  5: patch	  6: diff	  7: quit	  8: help
+#What now> p
+#           staged     unstaged path
+#  1:    unchanged        +2/-0 file1
+#Patch update>> 1
+#           staged     unstaged path
+#* 1:    unchanged        +2/-0 file1
+#Patch update>>
+#diff --git a/file1 b/file1
+#index 6a00e12..014f6e4 100644
+#--- a/file1
+#+++ b/file1
+#@@ -1 +1,3 @@
+#+Good change
+# This is file 1
+#+Experimental change
+#Stage this hunk [y,n,q,a,d,/,s,e,?]? s
+#Split into 2 hunks.
+#@@ -1 +1,2 @@
+#+Good change
+# This is file 1
+#Stage this hunk [y,n,q,a,d,/,j,J,g,e,?]? y
+#@@ -1 +2,2 @@
+# This is file 1
+#+Experimental change
+#Stage this hunk [y,n,q,a,d,/,K,g,e,?]? n
+#
+#*** Commands ***
+#  1: status	  2: update	  3: revert	  4: add untracked
+#  5: patch	  6: diff	  7: quit	  8: help
+#What now> q
+#Bye.
+git status # There are both staged and unstaged changes
+git diff   # One change has been added (but not committed), and the other is still a change only in section 1
+#1) Local changes
+#2) Staging/adding
+#3) Committing to local Repo
+#4) Push
+----
+
+Now we have staged the good change, but not lost the other changes we have made.
+This gives us more granular control over the changes committed.
+
+If we are happy with the changes we can go ahead and commit all the changes we made.
+
+NOTE:
+Committing will still commit all the changes we have made.
+What is the point of staging then? It is to confirm that you want to commit some
+changes made locally, but not others.
+
+These changes are added to the 'index' (as opposed to the repository).
+Remember:   index==staging==adding
+Committing: goes to the repository, which can then be pushed to remote
+            repositories
+
+
+
+What we learned
+---------------
+
+- Difference between staging and committing
+- Why the distinction exists
+- How to stage specific 'hunks' of code to the index
+

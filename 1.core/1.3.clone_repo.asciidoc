@@ -1,0 +1,30 @@
+- git clone
+- git reset
+
+----
+git clone https://github.com/ianmiell/shutit
+----
+
+# there's .git, just as before
+
+----
+git log
+git log --oneline
+git log --oneline --graph
+cd ..
+mkdir tmpcopy
+git clone ../folder 
+ls .git
+rm -rf *
+git status  # deleted in working tree/directory
+git add .  # added to staging area
+# oops!
+git status
+git reset --soft # out of staging area, but still deleted! soft is the default
+git reset --hard # does a re-check out
+git status
+----
+
+
+
+

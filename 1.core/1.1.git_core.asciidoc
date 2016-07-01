@@ -1,0 +1,48 @@
+- source control
+- git vs trad SCs
+- the four phases of the git lifecycle
+- benefits of git
+- git config
+
+Source control basics.
+
+Database for files.
+
+Trad SC (CVS, SVN):
+
+Local changes
+Commit - pushes to server
+
+
+Git:
+
+1) Local changes
+2) Staging/Adding/Index
+3) Committing to local Repo
+4) Push
+
+The 4) stages are key to understanding. If this seems over-complicated now, it won't as you grow to know and love git. I still remember a time when people complained about using source control at all!
+
+Key to understanding this is that ALL GIT REPOSITORIES ARE EQUAL. Remember git was created so people could work on the linux kernel across the globe, and offline.
+
+In practice, some are more equal than others (eg GitHub)
+
+Every GH outage causes a flurry of smart-alec comments about Git being decentralised - xkcd diagram
+
+Keeping your local repo sync'd with others is 
+
+History is more malleable.
+
+Branching is cheap
+
+
+Pre-reqs - git install
+
+----
+git config --global user.email "you@example.com" && git config --global user.name "Your Name"
+----
+
+What we learned:
+- setting up git
+- what git is - the four stages
+- differences to other SC systems

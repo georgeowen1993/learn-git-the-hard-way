@@ -1,0 +1,9 @@
+imiell@Ians-MacBook-Air:/space/git/shutit$ git push origin run:run
+Counting objects: 3, done.
+Delta compression using up to 4 threads.
+Compressing objects: 100% (3/3), done.
+Writing objects: 100% (3/3), 733 bytes | 0 bytes/s, done.
+Total 3 (delta 2), reused 0 (delta 0)
+To git@github.com:ianmiell/shutit.git
+ * [new branch]      run -> run
+

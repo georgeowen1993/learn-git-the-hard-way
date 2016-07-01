@@ -1,0 +1,188 @@
+In part one we emphasized the point that all git repositories are equal.
+
+This section covers how git repositories communicate with each other and manage
+their differences.
+
+We have already covered git clone, but let's create a simple git repo and then
+clone it:
+
+----
+mkdir git_origin
+cd git_origin
+git init
+echo 'first commit' > file1
+git add file1
+git commit -am file1
+cd ..
+git clone git_origin git_cloned
+----
+
+These two repositories are now contain identical content:
+
+----
+diff git_origin/file1 git_cloned/file1
+----
+
+However, their .git/config files differ in instructive ways.
+
+The git_origin folder has this:
+
+----
+[core]
+	repositoryformatversion = 0
+	filemode = true
+	bare = false
+	logallrefupdates = true
+	ignorecase = true
+	precomposeunicode = true
+----
+
+while the git_cloned has this:
+
+----
+[core]
+	repositoryformatversion = 0
+	filemode = true
+	bare = false
+	logallrefupdates = true
+	ignorecase = true
+	precomposeunicode = true
+[remote "origin"]
+	url = /Users/imiell/gitcourse/git_origin
+	fetch = +refs/heads/*:refs/remotes/origin/*
+[branch "master"]
+	remote = origin
+	merge = refs/heads/master
+----
+
+While the git_origin has no visibility of any 'remotes', the cloned one does.
+
+Its url is (in this case) pointed at the file. URLs can be http(s), ssh, or git.
+
+If I go to the cloned repo and ask it for information about remotes:
+
+----
+git remote
+# origin
+----
+
+I get the name 'origin' back.
+
+The name 'origin' is the default name for a remote, but it has no special meaning.
+It could be renamed to 'bitbucket', or 'gitlab' for example.
+
+To get more defailed information, I run with -v:
+
+----
+git remote -v
+# origin	/Users/imiell/gitcourse/git_origin (fetch)
+# origin	/Users/imiell/gitcourse/git_origin (push)
+----
+
+which gives me the information about the URLs we saw.
+
+
+fetch
+-----
+The above remotes are divided into fetch and push. First we look at fetch.
+
+'git fetch' gets the latest changes from the remote repository and copies them
+into the local repository.
+
+Crucially, these changes are kept in a separate place. You can see this if you
+use the 'git branch -a' command.
+
+First make a change to the origin's repo:
+
+----
+cd git_origin
+echo 'fetchable change' >> file1
+git commit -am fetchable
+----
+
+Then go to the cloned repository and fetch the changes on master:
+
+----
+cd ../git_cloned
+git fetch origin master
+# remote: Counting objects: 3, done.
+# remote: Total 3 (delta 0), reused 0 (delta 0)
+# Unpacking objects: 100% (3/3), done.
+# From /Users/imiell/gitcourse/git_origin
+#  * branch            master     -> FETCH_HEAD
+#    ceed883..056dd2c  master     -> origin/master
+----
+
+What the above output means is that the origin's master has been brought into
+this repo's references (origin/master).
+
+This has not affected the local master branch at all:
+
+----
+git log
+----
+
+We can see this repository's view of all the branches by running a git branch
+command with '--all':
+
+----
+git branch --all
+# * master
+#   remotes/origin/HEAD -> origin/master
+#   remotes/origin/master
+----
+
+Here we see the local 'master' branch, followed by the remotes/origin/HEAD
+pointer (remember HEAD is a pointer to a location in the repository), which is
+linked to remotes/origin/master.
+
+If you want to dig into the internals at this point, you can peek at the .git
+folder again:
+
+----
+ls .git/refs/
+# heads	remotes	tags
+----
+
+which has 'heads' which contains references to local branch:
+
+----
+cat .git/refs/heads/master
+# ceed883eec5a797471cd1c62365d9f2899b857c7
+----
+
+and similarly for remote branches:
+
+----
+cat .git/refs/remotes/origin/master 
+# 056dd2ce64da1e746214107b74866c375a85ffc2
+----
+
+So we've 'fetch'ed the remote branch and have it locally.
+
+To apply the remote master's changes to the local one we merge it just as we
+would for any other reference:
+
+----
+git merge origin/master
+# Updating ceed883..056dd2c
+# Fast-forward
+#  file1 | 1 +
+#  1 file changed, 1 insertion(+)
+git log 
+# commit 056dd2ce64da1e746214107b74866c375a85ffc2
+# Author: Ian Miell <ian.miell@gmail.com>
+# Date:   Tue Jun 28 18:41:41 2016 +0100
+# 
+#     fetchable
+# 
+# commit ceed883eec5a797471cd1c62365d9f2899b857c7
+# Author: Ian Miell <ian.miell@gmail.com>
+# Date:   Tue Jun 28 17:30:44 2016 +0100
+# 
+#     file1
+----
+
+What we've just seen, ie a fetch followed by a merge, is what 'git pull' does
+in one go.
+
