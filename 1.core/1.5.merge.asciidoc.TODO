@@ -1,1 +1,201 @@
- 
+Merging
+-------
+
+We've already covered basic branching in previous sections. As you will recall,
+branching gives you the ability to work on parallel streams of development in
+the same codebase.
+
+A
+|
+B
+|
+C
+|\
+D E
+| |
+F H (experimental)
+|
+G (master, HEAD)
+
+In a sense, merging is the opposite of branching. When we merge, we take two
+separate points in our development tree and fuse them together.
+
+It's important to understand merging as it's a routine job of a repository
+maintainer to merge branches together.
+
+In the above diagram, the repository is positioned at the tip of master (G). We
+know this because the HEAD is pointed at it.
+
+If you merge the experimental branch into master with a 'git merge experimental',
+you end up with a tree that looks like this:
+
+A
+|
+B
+|
+C
+|\
+D E
+| |
+F H (experimental)
+| |
+G |
+|/
+I (master, HEAD)
+
+A new change has been made (I) which merges together the changes made on
+experimental with the changes made on master.
+
+You can run through the above scenario step-by-step by following these commands:
+
+----
+rm -rf git-course-1.5 && mkdir -p git-course-1.5 && cd git-course-1.5
+git init
+echo A > file1
+git add file1
+git commit -am 'A'
+echo B >> file1
+git commit -am 'B'
+echo C >> file1
+git commit -am 'C'
+----
+
+Now you are at this point:
+
+A
+|
+B
+|
+C (master, HEAD)
+
+you can branch to experimental and make your changes:
+
+----
+git branch experimental
+git checkout experimental
+git branch
+echo E >> file1
+git commit -am 'E'
+echo H >> file1
+git commit -am 'H'
+----
+
+and the repository is now in this state:
+
+A
+|
+B
+|
+C (master)
+ \
+  E
+  |
+  H (HEAD, experimental)
+
+Return to master and make changes D, F and G:
+
+----
+git checkout master
+git branch
+echo D >> file1
+git commit -am 'D'
+echo F >> file1
+git commit -am 'F'
+echo G >> file1
+git commit -am 'G'
+----
+
+A
+|
+B
+|
+C
+|\
+D E
+| |
+F H (experimental)
+| 
+G (master, HEAD)
+
+and you are ready to merge!
+
+----
+git merge experimental
+# Auto-merging file1
+# CONFLICT (content): Merge conflict in file1
+# Automatic merge failed; fix conflicts and then commit the result.
+----
+
+Oh dear, that does not look good. The merge failed with a conflict.
+
+What's going on?
+----------------
+
+So what exactly happens when you perform a merge? 
+
+When you run a merge, git looks at the branch you are on (here it is master),
+and the branch you are merging in, and works out what the first common ancestor
+is. In this case, it's point C, as that's where you branched experimental.
+
+It then takes the changes on the branch you are merging in from that point
+and applies them to the branch you are on in one go.
+
+These changes create a new commit, and the git log graph shows the branches
+joined back up.
+
+Sometimes though, the changes made on the branches conflict with one another.
+In this case, the D, F and G of the master changed the same lines as the E and
+H of experimental.
+
+Git doesn't know what to do with these lines. Should it put the E and H in 
+instead of the D, F and G, or put them all in? If it should put them all in,
+then what order should they go in?
+
+Changing lines around the same area in code can have disastrous effects, so
+git does not make a decision when this happens. Instead it tells you that there
+was a conflict, and asks you to 'fix conflicts and then commit the result'.
+
+If you look at file1 now:
+
+----
+A
+B
+C
+<<<<<<< HEAD
+D
+F
+G
+=======
+E
+H
+>>>>>>> experimental
+----
+
+all the lines from both branches are in the file. There are three sections here.
+The file up to line C is untouched, as there was no conflict. Then we see a
+line with arrows indicating the start of a conflicting section, followed by 
+the point in the repo that those changes were made on (in this case, HEAD)
+'<<<<<<< HEAD'. Then a line of just equals signs indicates the end of a
+conflicting set of changes, followed by the changes on the other conflicting
+branch (the E and H on experimental).
+
+What you choose to do here is up to you as maintainers of this repository. You
+could add or remove lines as you wish until you were happy the merge has been 
+completed. At that point you can commit 
+
+You could even leave the file as is, though this is unlikely to be what you
+want! It's surprising how easily you can forget to resolve all the conflicting
+sections in your codebase when doing a merge.
+
+TODO: finish merge, log --graph
+
+
+
+
+
+
+What we learned:
+
+- What a merge is
+- What a conflict is and how it can occur
+- How to resolve a conflict

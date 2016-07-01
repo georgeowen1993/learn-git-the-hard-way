@@ -88,9 +88,7 @@ git log
 We have a problem! There is no history to look at.
 
 Git has followed the 'HEAD' pointer to the refs/heads/master entry and found
-nothing!
-
-and indeed there is nothing there:
+nothing! And indeed there is nothing there:
 
 ----
 ls .git/refs/heads/master

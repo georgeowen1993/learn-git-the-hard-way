@@ -95,7 +95,7 @@ a matter of convention. I can use a github repo as a secondary repo for my
 workflow - it's up to me (indeed I do this for some of my private repos).
 
 This is why every GH outage causes a flurry of smart-alec comments about Git being
-decentralised - xkcd diagram
+decentralised.
 
 Keeping your local repo sync'd with others is one of the challenges of git, but
 the first step to mastering git is understanding this equality of repos.
@@ -103,7 +103,8 @@ the first step to mastering git is understanding this equality of repos.
 Other differences with git
 --------------------------
 
-History is more malleable.
+History is more malleable. You can change the history in your own copy of
+the repo and others' (if you have permission).
 
 Branching is cheap. In CVS it's very slow to branch a (O(n) to number of files).
 In git it's an O(1) step.

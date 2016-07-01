@@ -51,6 +51,10 @@ SO:
 A 'branch' is just a pointer on a line of changes
 HEAD is just your 'current' branch
 
+It's worth also pointing out here that apart from its default status, there is
+nothing special about the 'master' branch. It's just a name. Your principal
+branch might be called 'live', 'alice', 'pristine', or whatever you like.
+
 
 What we've learned
 ------------------
