@@ -35,7 +35,7 @@ rm -rf *                          # delete all the files!
 ls .git                           # The .git folder is still there
 ----
 
-We have cloned the repository, and 'accidentally' deleting
+We have cloned the repository, and 'accidentally' deleted all the files.
 
 ----
 git status        # reports that we have deleted files in working tree/directory

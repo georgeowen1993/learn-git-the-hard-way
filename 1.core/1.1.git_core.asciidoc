@@ -7,17 +7,22 @@ Core git concepts
 - benefits of git
 - git config
 
-If you're not familiar with source control, it solves a simple problem: how do we
-keep track of changes in our codebase? It's a database of files
+If you're not familiar with source control, it solves a simple problem: how do
+we keep track of changes in our codebase? It's a database of files and the
+histories of their states.
 
-I'm old enough to remember a time when people complained about using source control at all!
+I'm old enough to remember a time when people complained about using source
+control at all!
 
-Traditional source control tools such as CVS and SVN were centralised. You communicated with
-a server which maintained the state of the system. This could mean several things:
+Traditional source control tools such as CVS and SVN were centralised. You
+communicated with a server which maintained the state of the system. This could
+mean several things:
 
 - The source control database could get very big
 - The history could get very messy
 - Managing your 'checkouts' of code could get complicated and painful
+
+These code databases are known as 'repositories'.
 
 In the old world, if you checked out source code, that was a copy of some code
 that was 'inferior' in status to the centralised version.
@@ -29,8 +34,8 @@ As far as the user was concerned, code was in one of two states:
 
 My local changes could not be shared with anyone else until
 
-Git, by contrast, is fundamentally distributed. Each git repo is a full
-copy of each other git repo.
+Git, by contrast, is fundamentally distributed. Each git repository is a full
+copy of each other git repositories.
 
 ALL GIT REPOSITORIES ARE EQUAL.
 
@@ -47,6 +52,40 @@ The 4) stages are key to understanding git.
 If this seems over-complicated now, it won't as you grow to know and love git.
 If you've ever been confused by git, it's likely because these stages were
 not understood.
+
+Branches
+--------
+
+In case you've not looked at a SC tool before, a branch is a core concept.
+
+A series of changes to a repository might look like this:
+
+A
+|
+B
+|
+C
+
+Change A is made, then B, then C. This might be called the 'main line'.
+
+But let's say someone wants to make an experimental change but not affect
+the 'main line'. Then they might 'branch' at point C:
+
+A
+|
+B
+|
+C
+|\
+| F (experimental)
+|
+D
+|
+E (main line)
+
+That way users can choose to get a view of the source on the 'main line' branch
+or the 'experimental' one.
+
 
 But What About Github?
 ----------------------
@@ -68,6 +107,7 @@ History is more malleable.
 
 Branching is cheap. In CVS it's very slow to branch a (O(n) to number of files).
 In git it's an O(1) step.
+This makes experimentation much easier.
 
 ----
 # Assume you have git installed
