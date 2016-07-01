@@ -1,11 +1,27 @@
+Cloning a repo
+--------------
+
 - git clone
 - git reset
 
+In this section we're going to play with the contents of our repository by
+deleting the content and seeing what our options are to recover from the
+repository.
+
 ----
 git clone https://github.com/ianmiell/shutit
+cd shutit
+ls .git
 ----
 
-# there's .git, just as before
+There's .git, just as before.
+
+Recall the 4 stages of data in a git repo:
+
+1) Local changes (working directory)
+2) Staging/Adding/Index
+3) Committing to local Repo
+4) Pushing to remote
 
 ----
 git log
@@ -13,18 +29,31 @@ git log --oneline
 git log --oneline --graph
 cd ..
 mkdir tmpcopy
-git clone ../folder 
+git clone ../folder
 ls .git
 rm -rf *
-git status  # deleted in working tree/directory
-git add .  # added to staging area
+----
+
+We have cloned the repository, and 'accidentally' deleting
+
+----
+ls .git          # The .git folder is still there
+git status       # deleted in working tree/directory
+git add .        # added to staging area
 # oops!
 git status
-git reset --soft # out of staging area, but still deleted! soft is the default
-git reset --hard # does a re-check out
+git reset --soft  # out of staging/index area, but still deleted!
+git status
+git reset --mixed # the default. does not change the working directory, but does the index
+git status
+git reset --hard  # does a re-check out of the whole repository, discarding working directory
 git status
 ----
 
 
+What we learned
+---------------
 
+- git clone
+- git reset
 

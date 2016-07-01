@@ -1,3 +1,6 @@
+Git basics
+----------
+
 - git init
 - the .git folder
 - git log
@@ -6,77 +9,82 @@
 - git commit
 - git diff
 
+To initialise a git repository, run 'git init' from within the root folder
+of the source you want to manage.
+
 ----
 git init
-cd .git
-ls
 ----
 
-branches
-COMMIT_EDITMSG
-config
-description
-HEAD
-hooks
-index
-info
-logs
-objects
-refs
+This initialises a database
 
-# call out HEAD and refs - master is the default, just convention
+----
+cd .git
+ls
+# branches
+# COMMIT_EDITMSG
+# config
+# description
+# HEAD
+# hooks
+# index
+# info
+# logs
+# objects
+# refs
+----
+
+
+call out HEAD and refs - master is the default, just convention
 # logs
 
 ----
 git log
+# fatal: bad default revision 'HEAD'
 ----
-fatal: bad default revision 'HEAD'
 
 ----
 git status
 touch mycode.py
 git status
+# On branch master
+# 
+# Initial commit
+# 
+# Untracked files:
+#   (use "git add <file>..." to include in what will be committed)
+# 
+# 	mycode.c
 ----
-On branch master
-
-Initial commit
-
-Untracked files:
-  (use "git add <file>..." to include in what will be committed)
-
-	mycode.c
 
 nothing added to commit but untracked files present (use "git add" to track)
 
 ----
 git add mycode.py
 git status
+# On branch master
+# 
+# Initial commit
+# 
+# Changes to be committed:
+#   (use "git rm --cached <file>..." to unstage)
+# 
+# 	new file:   mycode.py
 ----
-On branch master
-
-Initial commit
-
-Changes to be committed:
-  (use "git rm --cached <file>..." to unstage)
-
-	new file:   mycode.py
 
 ----
 git log
+# fatal: bad default revision 'HEAD'
 ----
-fatal: bad default revision 'HEAD'
 
 ----
 git commit
 git log
-----
-commit e5fb099e952e8754b54f9b99be93d62e3fce0fca
-Author: ianmiell <ian.miell@gmail.com>
-Date:   Tue Apr 26 07:46:58 2016 +0100
-
-    Some message
-
-----
+# commit e5fb099e952e8754b54f9b99be93d62e3fce0fca
+# Author: ianmiell <ian.miell@gmail.com>
+# Date:   Tue Apr 26 07:46:58 2016 +0100
+# 
+#     Some message
 vi mycode.py
 git diff
 git status
