@@ -1,37 +1,54 @@
+Git branching
+-------------
+
+In this section you will learn about:
+
 - git branch
 - git checkout
-- git merge
 
 ----
-rm -rf tmpgit
-mkdir tmpgit
-cd tmpgit
+rm -rf tmpgit && mkdir tmpgit && cd tmpgit
 git init
 echo newfile > file1
 git add file1
-git commit -am file1
+git commit -am 'new file1'
 git status
-git branch newfeature
-git status
-vi  # add Line_master1
-git commit -am 'master change'  # add and message
-git log --decorate --graph --oneline
-git checkout newfeature
-git log --decorate --graph --oneline --all
-vi  # add Line_feature1
-git commit -am 'feature change' 
+git branch newfeature                      # Create the 'newfeature' branch
+git status                                 # You are still on the master branch!
+git branch                                 # git branch shows the branches in your repository
+echo Line_master1 >> file1                 # add Line_master1
+git commit -am 'master change'             # add, commit and message
+git log --decorate --graph --oneline       # graphical view of this branch
+git log --decorate --graph --oneline --all # graphical view of all branches
+git checkout newfeature                    # Check out the newfeature branch
+cat file1                                  # This has been checked out at the 'branch point'
+echo Line_feature1 >> file1                # add Line_feature1
+git commit -am 'feature change'            # add, commit and message
+git log --decorate --graph --oneline --all # graphical view of all branches
+git checkout master                        # checkout the master branch
+cat file1                                  # The feature change is not there
 ----
 
-HEAD (and branch) moves forward with each commit.
-But can be moved (git checkout does this)
-You are on a branch at the same time.
+Note that the HEAD (and branch) moves forward with each commit.
 
-Git checkout
-Detached head? means not associated with a branch. you can commit etc, but can discard these changes with 'git checkout <branch>' or create a branch.
-This is why it 'feels wrong' to be on a detached head. It's like an un-logged temp table in a database. Handy, but without a safety rope.
+The head is where git is pointed at right now, the branch is where that branch
+reference is pointed to.
+
+HEAD can be moved to an arbitrary point (git checkout does this)
+
+----
+git log
+git checkout
+git status
+----
+
+Detached head means you are not associated with a branch. 
+
+It 'feels wrong' to be on a detached head because you have no pointer to a
+branch to reference.
 
 SO:
-A branch is just a pointer on a line of changes
+A 'branch' is just a pointer on a line of changes
 HEAD is just your 'current' branch
 
 
@@ -39,6 +56,7 @@ What we've learned
 ------------------
 - git branch
 - git checkout
-- git merge
+- Detached head
+- git log decoration
 
 
