@@ -24,30 +24,29 @@ Recall the 4 stages of data in a git repo:
 4) Pushing to remote
 
 ----
-git log
-git log --oneline
-git log --oneline --graph
-cd ..
-mkdir tmpcopy
-git clone ../folder
-ls .git
-rm -rf *
+git log                           # default history of this repo
+git log --oneline                 # more concise history of this repo
+git log --oneline --graph         # graphical view of the history of this repo
+cd ..                             # exit this repo's root folder
+git clone shutit cloned_shutit    # clone the repository
+cd cloned_shutit                  # enter the repository
+ls .git                           # we have a copy of the repository's history
+rm -rf *                          # delete all the files!
+ls .git                           # The .git folder is still there
 ----
 
 We have cloned the repository, and 'accidentally' deleting
 
 ----
-ls .git          # The .git folder is still there
-git status       # deleted in working tree/directory
-git add .        # added to staging area
-# oops!
-git status
-git reset --soft  # out of staging/index area, but still deleted!
-git status
-git reset --mixed # the default. does not change the working directory, but does the index
-git status
-git reset --hard  # does a re-check out of the whole repository, discarding working directory
-git status
+git status        # reports that we have deleted files in working tree/directory
+git add .         # added to staging/index area
+git status        # reports that . Note there's a helpful message about resetting now! Let's explore that.
+git reset --mixed # the default. out of staging/index area, but still deleted in the working directory!
+git status        # we are back to 'deleted in the working directory' with a message about being ready to add
+rm -rf *          # delete all the files again
+git add .         # added to staging/index area ready to commit again
+git reset --hard  # does a re-check out of the whole repository, discarding working directory and changes to the index
+git status        # we now have a consistent state between 1 (local changes) and 3 (committed)
 ----
 
 

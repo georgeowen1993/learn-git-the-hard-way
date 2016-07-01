@@ -7,47 +7,70 @@ Core git concepts
 - benefits of git
 - git config
 
-Source control basics.
+If you're not familiar with source control, it solves a simple problem: how do we
+keep track of changes in our codebase? It's a database of files
 
-Database for files.
+I'm old enough to remember a time when people complained about using source control at all!
 
-Traditional SC (CVS, SVN):
+Traditional source control tools such as CVS and SVN were centralised. You communicated with
+a server which maintained the state of the system. This could mean several things:
 
-Local changes
-Commit - pushes to server
+- The source control database could get very big
+- The history could get very messy
+- Managing your 'checkouts' of code could get complicated and painful
 
+In the old world, if you checked out source code, that was a copy of some code
+that was 'inferior' in status to the centralised version.
 
-Git:
+As far as the user was concerned, code was in one of two states:
 
+- Local changes ('dirty')
+- Committed - pushed to server
+
+My local changes could not be shared with anyone else until
+
+Git, by contrast, is fundamentally distributed. Each git repo is a full
+copy of each other git repo.
+
+ALL GIT REPOSITORIES ARE EQUAL.
+
+Remember, git was created so people could work on the linux kernel across the
+globe, and offline. So there is no concept of 
 
 1) Local changes (working directory)
 2) Staging/Adding/Index
 3) Committing to local Repo
 4) Pushing to remote
 
-The 4) stages are key to understanding. If this seems over-complicated now, it
-won't as you grow to know and love git. I still remember a time when people
-complained about using source control at all!
+The 4) stages are key to understanding git.
 
-Key to understanding this is that ALL GIT REPOSITORIES ARE EQUAL. Remember git
-was created so people could work on the linux kernel across the globe, and
-offline.
+If this seems over-complicated now, it won't as you grow to know and love git.
+If you've ever been confused by git, it's likely because these stages were
+not understood.
 
-In practice, some are more equal than others (eg GitHub)
+But What About Github?
+----------------------
 
-Every GH outage causes a flurry of smart-alec comments about Git being
+In practice, some repositories are more equal than others (eg GitHub). This is
+a matter of convention. I can use a github repo as a secondary repo for my
+workflow - it's up to me (indeed I do this for some of my private repos).
+
+This is why every GH outage causes a flurry of smart-alec comments about Git being
 decentralised - xkcd diagram
 
-Keeping your local repo sync'd with others is
+Keeping your local repo sync'd with others is one of the challenges of git, but
+the first step to mastering git is understanding this equality of repos.
+
+Other differences with git
+--------------------------
 
 History is more malleable.
 
-Branching is cheap.
-
-
-Pre-reqs - git install
+Branching is cheap. In CVS it's very slow to branch a (O(n) to number of files).
+In git it's an O(1) step.
 
 ----
+# Assume you have git installed
 git config --global user.email "you@example.com" && git config --global user.name "Your Name"
 ----
 
