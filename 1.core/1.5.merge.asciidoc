@@ -43,7 +43,7 @@ G |
 |/
 I (master, HEAD)
 
-A new change has been made (I) which merges together the changes made on
+A new change has been made (I). This change merges together the changes made on
 experimental with the changes made on master.
 
 You can run through the above scenario step-by-step by following these commands:
@@ -126,7 +126,7 @@ git merge experimental
 # Automatic merge failed; fix conflicts and then commit the result.
 ----
 
-Oh dear, that does not look good. The merge failed with a conflict.
+Oh dear, that does not look good. The merge failed with a CONFLICT.
 
 What's going on?
 ----------------
@@ -181,21 +181,50 @@ branch (the E and H on experimental).
 
 What you choose to do here is up to you as maintainers of this repository. You
 could add or remove lines as you wish until you were happy the merge has been 
-completed. At that point you can commit 
+completed. At that point you can commit your change, and the merge has taken
+place.
 
-You could even leave the file as is, though this is unlikely to be what you
-want! It's surprising how easily you can forget to resolve all the conflicting
-sections in your codebase when doing a merge.
+You could even leave the file as is (including the '<<<<<<<','=======', and
+'>>>>>>>' lines, though this is unlikely to be what you want! It's surprising
+how easily you can forget to resolve all the conflicting sections in your
+codebase when doing a merge.
 
-TODO: finish merge, log --graph
+When you are done you can commit the change, and view the history with
+the git log command.
 
+----
+git commit -am 'merged experimental in'
+git log --all --oneline --graph --decorate
+# *   69441b0 (HEAD, master) merged
+# |\  
+# | * b3d54fe (experimental) H
+# | * 4a013db E
+# * | d9d3722 G
+# * | bf0fc3e F
+# * | ccedaee D
+# |/  
+# * 8835191 C
+# * f9e5b4f B
+# * 38471fe A
+----
 
+NOTE: git prefers to show the history from most recent to oldest, which is
+the opposite of the diagrams in this section. The git man pages like to show
+time from left to right, like this:
 
+                             A'--B'--C' topic
+                            /
+               D---E---F---G master
 
+If you think this is confusing, I won't disagree. However, for git log it makes
+some sense: if you are looking at a repository with a long history, you are more
+likely to be interested in recent changes than older ones.
 
-
-What we learned:
-
+What we have learned
+--------------------
 - What a merge is
-- What a conflict is and how it can occur
-- How to resolve a conflict
+- What a merge conflict is
+- How to resolve a merge conflict
+- How to read a merged log history
+
+
