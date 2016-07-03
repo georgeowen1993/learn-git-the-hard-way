@@ -116,6 +116,6 @@ here.
 What we learned
 ---------------
 
-- What stash is
+- What the stash is
 - How it works
 - How to re-apply changes

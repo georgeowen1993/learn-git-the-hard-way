@@ -1,3 +1,6 @@
+Git Rebase
+----------
+
 Rebasing is one of the most commonly-discussed advanced git topics.
 
 In essence it's quite simple, but it can get very confusing.
@@ -329,3 +332,10 @@ git merge feature1
 Because the changes are in a line, no new changes need to be made - the master
 branch pointer merely needs to be 'fast-forwarded' to the same point as 
 feature1! The HEAD pointer, naturally, moves with the branch we're on (master).
+
+
+What we have learned
+--------------------
+
+- What a rebase is 
+- What fast-forward means

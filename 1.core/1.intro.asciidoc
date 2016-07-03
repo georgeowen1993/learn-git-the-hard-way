@@ -1,0 +1,18 @@
+
+
+This git course has been written to help git users get a clearer understanding
+of source control and git concepts. After following it they will be able to:
+
+- use git to contribute to projects
+- understand how to troubleshoot git when it gets confusing
+- not be fazed when people talk about things like rebasing, bisecting, remotes,
+  merges
+
+It assumes:
+
+- No prior knowledge of source control
+- No prior knowledge of git
+
+It aims to:
+
+- Give users a hands-on, practical understanding of git

@@ -1,4 +1,5 @@
-
+Cherry Picking
+--------------
 
 Next we look at 'cherry-picking'.
 
@@ -24,7 +25,7 @@ At this point we branch off into two branches, master and experimental.
 ----
 git branch experimental
 git checkout experimental
-ex -sc '1i|crazy change' -cx file1
+ex -sc '1i|crazy change' -cx file1  # Magic to insert before the first line
 cat file1
 git commit -am crazy
 echo more sensible change >> file1
@@ -107,3 +108,9 @@ imiell@Ians-MacBook-Air:~/tmpgit$ git status
 
 Cherry-picking is often a simple and easy to follow way to move changes between
 different branches, which can be very useful.
+
+
+What you have learned
+---------------------
+
+- what git cherry pick does

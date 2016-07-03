@@ -26,6 +26,9 @@ git checkout master
 git log
 ----
 
+NOTE: don't worry about what we just did - it's a more advanced set of commands
+that mess with git's history.
+
 The last commit has disappeared! We have fully reverted the master branch
 to where it was before.
 
@@ -66,6 +69,8 @@ even if those points are no longer apparently reachable within the repo.
 
 
 
-We have learned
----------------
-git reflog
+What you have learned
+---------------------
+- git reflog
+- git reset (--mixed)
+- git reset --hard
