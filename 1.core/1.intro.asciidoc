@@ -13,6 +13,8 @@ It assumes:
 - No prior knowledge of source control
 - No prior knowledge of git
 
-It aims to:
+It aims to give users:
 
-- Give users a hands-on, practical understanding of git
+- A hands-on, practical understanding of git
+- Enough information to understand what is going on as they go deeper into git
+- A familiarity with advanced git usage

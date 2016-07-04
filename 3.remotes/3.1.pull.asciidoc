@@ -1,3 +1,6 @@
+Fetching and Pulling Content
+----------------------------
+
 In part one we emphasized the point that all git repositories are equal.
 
 This section covers how git repositories communicate with each other and manage
@@ -183,6 +186,14 @@ git log
 #     file1
 ----
 
-What we've just seen, ie a fetch followed by a merge, is what 'git pull' does
-in one go.
+What we've just seen:
+
+- a fetch followed by
+- a merge
+
+is what 'git pull' does in one go. A pull fetches the mapped branch, and then
+merges it into the local branch.
+
+We will cover what your branch locally is mapped to remotely in the next
+section, where we cover remote repository management in more depth.
 

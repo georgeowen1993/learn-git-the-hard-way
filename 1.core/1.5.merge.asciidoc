@@ -208,6 +208,9 @@ git log --all --oneline --graph --decorate
 # * 38471fe A
 ----
 
+Reading this from bottom to top, you can read commit C and commit H as being
+merged into the HEAD of master.
+
 NOTE: git prefers to show the history from most recent to oldest, which is
 the opposite of the diagrams in this section. The git man pages like to show
 time from left to right, like this:

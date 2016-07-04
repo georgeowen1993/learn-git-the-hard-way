@@ -132,10 +132,10 @@ git submodule status
 
 Now, you may have some questions at this point, such as:
 
-- What happens if alice's branch changes? Does my code automatically update?
 - How do you get to the experimental branch?
+- What happens if alice's branch changes? Does my code automatically update?
 - What if I make a change to alicelib within my repository submodule checkout?
-Can I push those to alice's? Can I keep those private to my repository
+Can I push those to alice's? Can I keep those private to my repository?
 - What if there are conflicts between these repositories?
 
 ... and so on. I certainly had these questions when I came to git submodules,
@@ -143,4 +143,156 @@ and with some trial and error it took me some time to understand what was going
 on, so I really recommend playing with these simple examples to get the 
 relationships clear in your mind.
 
-TODO
+
+Get the experimental branch
+---------------------------
+
+Since your 'alicelib' submodule is a straightforward clone of the remote
+'alicelib' origin, you have the master branch and the origin's experimental
+branch:
+
+----
+git branch -a -vv
+# * master                      ff75b7f [origin/master] B
+#   remotes/origin/HEAD         -> origin/master
+#   remotes/origin/experimental 969b840 C EXPERIMENTAL
+#   remotes/origin/master       ff75b7f B
+----
+
+You are on the master branch (indicated with a *), which is mapped to
+remotes/origin/master. 
+
+NOTE: the refs (eg ff75b7f) may be different in your output
+
+You do not have an experimental branch locally. However, if you checkout a 
+branch that does not exist locally but does exist remotely, git will assume you
+want to track that remote branch.
+
+----
+git checkout experimental
+# Branch experimental set up to track remote branch experimental from origin.
+# Switched to a new branch 'experimental'
+git branch -a -vv
+# * experimental                969b840 [origin/experimental] C EXPERIMENTAL
+#   remotes/origin/HEAD         -> origin/master
+#   remotes/origin/experimental 969b840 C EXPERIMENTAL
+#   remotes/origin/master       ff75b7f B
+----
+
+NOTE: If more than one remote has the same name, git will not perform this
+matching. In that case you would have to run the full command:
+
+----
+git checkout -b experimental --track origin/master
+----
+
+assuming it's the origin's master branch you want to track.
+
+
+Git tracks the submodule's state
+--------------------------------
+
+Now that you've checked out and tracked the remote experimental branch in your
+submodule, a change has taken place in bob_repo. If you return to bob_repo's
+root folder and run 'git diff' you will see that the subproject commit of
+'alicelib' has changed:
+
+----
+cd ..
+git diff
+# diff --git a/alicelib b/alicelib
+# index ff75b7f..969b840 160000
+# --- a/alicelib
+# +++ b/alicelib
+# @@ -1 +1 @@
+# -Subproject commit ff75b7fc52c3a7d52d89a47fd27d7d22ed280b6f
+# +Subproject commit 969b840142f389de55357350a6f26f0825e02393
+----
+
+The commit identifier now matches the experimental. 
+
+Note that bob_repo tracks the _specific commit_ and not the remote branch.
+This means that changes to alicelib in the origin repository are not
+automatically tracked within bob_repo's submodule.
+
+We want to commit this change to the submodule:
+
+----
+git commit -am 'alicelib moved to experimental'
+# [master 1f67953] alicelib moved to experimental
+#  2 files changed, 4 insertions(+)
+#  create mode 100644 .gitmodules
+#  create mode 160000 alicelib
+----
+
+Alice makes a change
+--------------------
+
+Alice now spots a bug in her experimental branch that she wants to fix:
+
+----
+cd ../alicelib
+git checkout experimental
+echo 'D' >> file1
+git commit -am 'D - a fix added'
+----
+
+Now there is a mismatch between alicelib's experimental branch and bob_repo's
+experimental branch.
+
+----
+cd ../bob_repo/alicelib
+git status
+# On branch experimental
+# Your branch is up-to-date with 'origin/experimental'.
+# nothing to commit, working directory clean
+----
+
+git status reports that bob_repo's alicelib is up-to-date with
+origin/experimental. Remember that origin/experimental is the locally stored
+representation of alicelib's experimental branch. Since you have not contacted
+alicelib to see if there are any updates, this is still the case.
+
+To get the latest changes you can perform a fetch and merge, or save time by
+running a 'pull', which does both:
+
+----
+git pull
+# remote: Counting objects: 3, done.
+# remote: Total 3 (delta 0), reused 0 (delta 0)
+# Unpacking objects: 100% (3/3), done.
+# From /Users/imiell/gitcourse/alicelib
+#    969b840..1a725f6  experimental -> origin/experimental
+# Updating 969b840..1a725f6
+# Fast-forward
+#  file1 | 1 +
+#  1 file changed, 1 insertion(+)
+----
+
+GOTCHAS: Generally I would advise not editing repositories that are checked
+out as submodules until you are more experienced with git. You quickly may find
+yourself in a 'detached HEAD' state and confused about what you've done.
+
+Checking out a project with submodules
+--------------------------------------
+
+Submodules have a special status within git repositories. Since they are both
+included within a repository, but at the same time referencing a remote
+repository, a simple clone will not check out the included submodule:
+
+----
+cd ../..
+rm -rf bob_repo_cloned
+git clone bob_repo bob_repo_cloned
+----
+
+TODO: git submodule --recursive
+
+
+You have learned
+----------------
+
+- How to set up git submodules
+- How to track remote branches
+- How to manage submodules
+- How to checkout submodules
