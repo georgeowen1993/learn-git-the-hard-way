@@ -3,6 +3,11 @@ Git Submodules
 
 Submodules are a useful concept, and often seen in real projects.
 
+Git submodules can be very confusing if you stumble into them without much
+preparation or experience. Following this tutorial, you should have a good
+understanding for a simple submodule workflow and what is going on when you
+run the core submodule commands.
+
 Sometimes you want to 'include' one repository in another, but not simply copy
 it over. Submodules allow you to manage the separate codebase with your
 repository without changing the other repository.
@@ -277,22 +282,70 @@ Checking out a project with submodules
 --------------------------------------
 
 Submodules have a special status within git repositories. Since they are both
-included within a repository, but at the same time referencing a remote
+included within a repository and at the same time referencing a remote
 repository, a simple clone will not check out the included submodule:
 
 ----
 cd ../..
 rm -rf bob_repo_cloned
 git clone bob_repo bob_repo_cloned
+cd bob_repo_cloned
+ls -1
+# alicelib
+# file1
+cd alicelib
+ls ## No output
 ----
 
-TODO: git submodule --recursive
+Alicelib is not there. Confusingly, 'git submodule status' gives us little clue
+what's going on here.
+
+----
+git submodule status
+# -969b840142f389de55357350a6f26f0825e02393 alicelib
+----
+
+The dash (or minus sign) at the front indicates the submodule is not cheked out.
+Only by running a 'git submodule init' and a 'git submodule update' can you
+retrieve the appropriate submodule repository:
+
+----
+git submodule init
+# Submodule 'alicelib' (/Users/imiell/gitcourse/alicelib) registered for path 'alicelib'
+git submodule update
+# Submodule path 'alicelib': checked out '969b840142f389de55357350a6f26f0825e02393'
+git submodule status
+# 969b840142f389de55357350a6f26f0825e02393 alicelib (969b840)
+----
+
+Now the submodule status has no dash, and a commit ID has been added to the
+output (969b840).
+
+git clone --recursive
+---------------------
+
+Fortunately there is an easier way. You can clone the repository with a 
+--recursive flag to automatically init and update any submodules (and submodules
+of those submodules ad infinitum) within the cloned repo:
+
+----
+cd ..
+git clone --recursive bob_repo bob_repo_cloned_recursive
+# Cloning into 'bob_repo_cloned'...
+# done.
+# Submodule 'alicelib' (/Users/imiell/gitcourse/alicelib) registered for path 'alicelib'
+# Cloning into 'alicelib'...
+# done.
+# Submodule path 'alicelib': checked out '969b840142f389de55357350a6f26f0825e02393'
+----
+
 
 
 You have learned
 ----------------
 
 - How to set up git submodules
+- How to add a submodule to a repo
 - How to track remote branches
-- How to manage submodules
-- How to checkout submodules
+- How to checkout submodules with init and update
+- How to checkout submodules with recursive
