@@ -1,6 +1,9 @@
-Now we are going to work with multiple repos.
+Working with multiple repos
+---------------------------
 
-Let's do the same as we did before, but create cloned_1 and cloned_2:
+Now you are going to work with multiple repos.
+
+Let's do the same as you did before, but create alice_cloned and bob_cloned:
 
 ---
 mkdir git_origin
@@ -36,12 +39,15 @@ echo alice_change >> file1
 #  1 file changed, 1 insertion(+)
 ----
 
-The question is: how does Bob get this change into his master branch?
+Alice <-> Origin <-> Bob
+
+The question is: how does Bob get Alice's change into his master branch without
+going to origin?
 
 This is a common scenario in distributed teams. If you consider that git was
 created for managing the codebase of the Linux operating system, it's easy
-to imagine the git_origin as Linus Torvald's repository, alice as a contributor
-and bob as a so-called lieutenant.
+to imagine the git_origin as Linus Torvalds' repository, Alice as a contributor
+and Bob as a so-called lieutenant.
 
 
 So here is how:
@@ -111,16 +117,14 @@ git merge remotes/alice/master
 ----
 
 which will do the same. Git assumes that the branch is a remote (presumably
-from the '/') and adds the 'remotes' for you.
-
-
+from seeing the '/' in the branch) and adds the 'remotes' for you.
 
 This 'Lieutenants' model is one example of a git workflow. Although it was the
 one git was originally created for, it is still common for developers to use
 a traditional centralised model around a repository such as GitLab or BitBucket.
 
 This is why people make jokes when GitHub is down about the fact that it should
-not be a problems because it is a distributed source control tool.
+not be a problem because it is a distributed source control tool.
 
 
 What we learned

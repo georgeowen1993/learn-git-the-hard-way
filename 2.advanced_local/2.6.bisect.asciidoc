@@ -1,0 +1,34 @@
+Git Bisect
+----------
+
+Bisecting is a very powerful tool for finding bugs.
+
+Let's say you have a set of changes on a master branch:
+
+AA
+|
+AB
+|
+AC
+|
+...
+BA
+|
+BB
+|
+...
+|
+ZZ
+
+Figure 2.6.1
+
+You discover a previously-unseen bug at point ZZ
+
+TODO
+# FOLLOW GIT BISECT TUTORIAL
+
+What we have learned
+--------------------
+
+- What git bisect is
+- How to git bisect
