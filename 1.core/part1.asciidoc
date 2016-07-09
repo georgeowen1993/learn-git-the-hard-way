@@ -1,0 +1,19 @@
+:chapter: 1
+
+Core Git Concepts
+=================
+
+include::1.intro.asciidoc[]
+
+include::1.1.git_core.asciidoc[]
+
+include::1.2.create_repo.asciidoc[]
+
+include::1.3.clone_repo.asciidoc[]
+
+include::1.4.branch.asciidoc[]
+
+include::1.5.merge.asciidoc[]
+
+include::1.summary.asciidoc[]
+

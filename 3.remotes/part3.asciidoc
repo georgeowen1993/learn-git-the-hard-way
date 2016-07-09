@@ -1,0 +1,19 @@
+:chapter: 3
+
+Remote Repositories
+===================
+
+include::3.intro.asciidoc[]
+
+include::3.1..asciidoc[]
+
+include::3.2..asciidoc[]
+
+include::3.3..asciidoc[]
+
+include::3.4..asciidoc[]
+
+include::3.5..asciidoc[]
+
+include::3.summary.asciidoc[]
+

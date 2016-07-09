@@ -60,17 +60,20 @@ In case you've not looked at a SC tool before, a branch is a core concept.
 
 A series of changes to a repository might look like this:
 
+----
 A
 |
 B
 |
 C
+----
 
 Change A is made, then B, then C. This might be called the 'main line'.
 
 But let's say someone wants to make an experimental change but not affect
 the 'main line'. Then they might 'branch' at point C:
 
+----
 A
 |
 B
@@ -82,6 +85,7 @@ C
 D
 |
 E (main line)
+----
 
 That way users can choose to get a view of the source on the 'main line' branch
 or the 'experimental' one.

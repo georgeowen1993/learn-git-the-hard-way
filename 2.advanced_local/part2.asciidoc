@@ -1,0 +1,19 @@
+:chapter: 2
+
+Advanced local repository management
+====================================
+
+include::2.intro.asciidoc[]
+
+include::2.1..asciidoc[]
+
+include::2.2..asciidoc[]
+
+include::2.3..asciidoc[]
+
+include::2.4..asciidoc[]
+
+include::2.5..asciidoc[]
+
+include::2.summary.asciidoc[]
+
