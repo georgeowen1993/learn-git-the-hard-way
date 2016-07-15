@@ -7,7 +7,9 @@ as we will see here.
 First set up a repo with two commits:
 
 ----
-mkdir tmpgit && cd tmpgit
+rm -rf 2.3.1
+mkdir 2.3.1
+cd 2.3.1
 git init
 echo first commit > file1
 git add file1

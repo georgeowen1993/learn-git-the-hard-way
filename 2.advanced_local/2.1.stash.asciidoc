@@ -15,8 +15,9 @@ reapply at will.
 Here is a basic example of a change I want to 'stash':
 
 ----
-mkdir tmpgit
-cd tmpgit
+rm -rf 2.1.1
+mkdir 2.1.1
+cd 2.1.1
 git init
 echo 'Some content' > file1
 git add file1

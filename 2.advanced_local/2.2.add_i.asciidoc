@@ -16,8 +16,8 @@ this still causes confusion for people - what's the point of this?
 Let's demonstrate how you might want to use this with a simple example:
 
 ----
-mkdir tmpgit
-cd tmpgit
+mkdir 2.2.1
+cd 2.2.1
 git init
 echo 'This is file1' > file1
 echo 'This is file2' > file2
@@ -32,10 +32,10 @@ cat > file2 << END
 All good
 This is file2
 END
-git add -i
 ----
 
 ----
+git add -i
 p
 1
 

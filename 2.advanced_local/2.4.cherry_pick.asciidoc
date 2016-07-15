@@ -9,8 +9,9 @@ port changes from one branch to another.
 To demonstrate this, create a simple repository with two changes:
 
 ----
-mkdir tmpgit
-cd tmpgit
+rm -rf 2.4.1
+mkdir 2.4.1
+cd 2.4.1
 git init
 echo change1 > file1
 git add file1
@@ -18,11 +19,13 @@ git commit -am change1
 echo change2 >> file1
 git commit -am change2
 git log
+cd -
 ----
 
 At this point we branch off into two branches, master and experimental.
 
 ----
+cd 2.4.1
 git branch experimental
 git checkout experimental
 ex -sc '1i|crazy change' -cx file1  # Magic to insert before the first line
@@ -57,8 +60,9 @@ Sometimes the cherry-pick might fail because the diff cannot easily be applied,
 as in this case:
 
 ----
-mkdir tmpgit
-cd tmpgit
+rm -rf 2.4.3
+mkdir 2.4.3
+cd 2.4.3
 git init
 echo change1 > file1
 git add file1
