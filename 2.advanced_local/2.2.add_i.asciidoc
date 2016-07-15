@@ -1,3 +1,6 @@
+Git add interactive
+===================
+
 Earlier we discussed the four stages of working in Git:
 
 Git:

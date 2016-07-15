@@ -5,30 +5,211 @@ Bisecting is a very powerful tool for finding bugs.
 
 Let's say you have a set of changes on a master branch:
 
-AA
+----
+A1
 |
-AB
+A2
 |
-AC
-|
-...
-BA
-|
-BB
+A3
 |
 ...
 |
-ZZ
+A50
+|
+A51
+|
+...
+|
+A100
+----
 
 Figure 2.6.1
 
-You discover a previously-unseen bug at point ZZ
+You discover a previously-unseen bug at point A100 and want to debug it. One way
+to do this is to read over the code, add logging etc.. This can be
+time-consuming, and there is another simpler way to gather information about
+what change caused the bug.
 
-TODO
-# FOLLOW GIT BISECT TUTORIAL
+Git bisect is a very useful tool for finding out where a bug was introduced.
+If you know where a bug was introduced, you can look at the diff of the commit
+that caused it and 
 
-What we have learned
---------------------
+It works by picking a start point where the bug definitely did not exist (the
+'good' point). In this case we'll choose point A1. Then you pick a point where
+the bug definitely did exist (the 'bad' point). In this case, that's A100.
 
-- What git bisect is
-- How to git bisect
+----
+A1     GOOD
+|
+A2     ?
+|
+A3     ?
+|
+...
+|
+A50    ?
+|
+A51    ?
+|
+...
+|
+A100   BAD
+----
+
+Once the git bisect session has that information, it can hand you a version
+at the hafway point between the 'good' and 'bad' points and asks you to run 
+whatever you need to run to determine whether it's good or bad. If you tell it
+it's 'good' it will mark all version at that point and before as 'good'. 
+
+----
+A1     GOOD
+|
+A2     GOOD
+|
+...
+|
+A49    GOOD
+|
+A50    GOOD
+|
+A51    ?
+|
+...
+|
+A99    ?
+|
+A100   BAD
+----
+
+It then repeats the process, giving you a version at the halfway point between
+'good' and 'bad', asking you for its status. In this sequence, we are given
+A75:
+
+----
+A50    GOOD
+|
+A51    ?
+|
+A75    GOOD OR BAD?
+|
+A76    ?
+|
+...
+|
+A100   BAD
+----
+
+If we determine that this version was 'bad', then all the versions after it are
+marked as bad:
+
+----
+A1     GOOD
+...
+A50    GOOD
+|
+A51    ?
+|
+A52    ?
+...
+A74    ?
+|
+A75    BAD
+|
+A76    BAD
+...
+A99    BAD
+|
+A100   BAD
+----
+
+This binary search process repeats until we know which versions were good
+and bad. One outcome might be:
+
+----
+A1    GOOD
+|
+A2    GOOD
+...
+A62   GOOD
+|
+A63   BAD
+|
+A64   BAD
+...
+A100  BAD
+----
+
+Once we know that the first 'bad' commit was A63, we can examine the difference
+between A62 and A63, and this gives us a clue.
+
+A 'real' git bisect session
+---------------------------
+
+Let's make this more realistic with an actual git bisect session.
+
+What you're going to do is create a git repo with one file (projectfile). In
+this file you are going to add a line for each commit. The first line will
+be 1, the second 2, and so on until the hundredth commit which adds the line
+'100'.
+
+In this scenario the 'bug' is the line '63', but we don't know that yet. All
+we know is that we can tell if the bug is in the code with the shell script:
+
+----
+grep -v 
+
+----
+rm -rf git-bisect && mkdir -p git-bisect && cd git-bisect
+git init
+touch projectfile
+git add projectfile
+for ((i=1;i<=100;i++)); do echo $i >> projectfile; git commit -am "A$i"; done
+git log
+git bisect start
+git bisect bad
+git status
+git checkout HEAD~99   # Check out the first checkout
+git log
+git status
+git bisect good
+git log                # Now at A50
+git status
+git bisect good        
+git log                # Now at A75
+git bisect bad         
+git log                # Now at A62
+git bisect good        
+git log                # Now at A68
+git bisect bad         
+git log                # Now at A65
+git bisect bad        
+git log                # Now at A64
+git bisect bad         
+git log                # Now at A63
+git bisect bad
+# 79583459dc6061bd91d55cfcf8c34fae845f836b is the first bad commit
+# commit 79583459dc6061bd91d55cfcf8c34fae845f836b
+# Author: Ian Miell <ian.miell@gmail.com>
+# Date:   Sun Jul 10 11:53:47 2016 +0100
+# 
+#     A63
+# 
+# :100644 100644 aea6bd8ad6845cca3804a87230fee1b69651643d 55200b3d5d7c0e515eaccaf8465a295017e88249 M	projectfile
+----
+
+The bisect is complete, and has reported 79583459dc6061bd91d55cfcf8c34fae845f836b as the first bad commit (this may differ for you).
+
+We can get the diff between this commit and its parent by using the '^' operator with diff:
+
+----
+git diff 79583459dc6061bd91d55cfcf8c34fae845f836b^ 79583459dc6061bd91d55cfcf8c34fae845f836b
+# diff --git a/projectfile b/projectfile
+# index aea6bd8..55200b3 100644
+# --- a/projectfile
+# +++ b/projectfile
+# @@ -60,3 +60,4 @@
+#  60
+#  61
+#  62
+# +63
+----

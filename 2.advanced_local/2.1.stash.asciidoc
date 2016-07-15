@@ -1,13 +1,18 @@
+Git Stash
+=========
+
 Next we introduce a concept that you may end up using a lot!
 
 Often when you are working you want to return to a pristine state, but not lose
 the work you have done so far.
 
-Traditionally with other source control tools we've copied files away
+Traditionally with other source control tools we've copied files changed locally
+aside, then updated our repo, and diffed and re-applied the changed files.
 
-However, git has a concept of the stash to store all local changes.
+However, git has a concept of the stash to store all local changes ready to
+reapply at will.
 
-Basic example:
+Here is a basic example of a change I want to 'stash':
 
 ----
 mkdir tmpgit
@@ -16,10 +21,7 @@ git init
 echo 'Some content' > file1
 git add file1
 git commit -am initial
-cat > file1 << END
-Some content
-Some changes I'm not sure about...
-END
+echo 'Some changes I'm not sure about' >> file1
 ----
 
 You can get very sophisticated with the cache, but 99% of the time I use it like this:
@@ -76,9 +78,8 @@ of the HEAD.
 Don't worry too much about the details: it's basically stored
 all the changes we've made but not _committed_ ready to be re-applied.
 
-'stash' is a special branch
-which is kept local to our repository. The message 'WIP on master' is added
-automatically for us.
+'stash' is a special branch which is kept local to our repository. The message
+'WIP on master' is added automatically for us.
 
 The master branch is still where it was and the HEAD pointer is pointed at it
 (that is where our repo now is).
@@ -91,7 +92,7 @@ git stash list
 # stash@{0}: WIP on master: 34509a0 initial
 ----
 
-Once done, I can reapply those changes by running:
+Once done, I can reapply those changes by running 'git stash pop':
 
 ----
 git stash pop
@@ -106,7 +107,7 @@ git stash pop
 # Dropped refs/stash@{0} (279ee87c68798caaf2ea3d45fcfa0ac42df6ba4b)
 ----
 
-which restores me to where I was.
+which pops the change off the stash stack and restores me to where I was.
 
 There are more sophisticated ways to deal with stash, but these are not covered
 here.
