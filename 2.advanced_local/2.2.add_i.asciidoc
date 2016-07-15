@@ -19,12 +19,8 @@ Let's demonstrate how you might want to use this with a simple example:
 mkdir tmpgit
 cd tmpgit
 git init
-cat > file1 << END
-This is file1
-END
-cat > file2 << END
-This is file2
-END
+echo 'This is file1' > file1
+echo 'This is file2' > file2
 git add file1 file2
 git commit -am 'files added'
 cat > file1 << END
@@ -37,6 +33,9 @@ All good
 This is file2
 END
 git add -i
+----
+
+----
 p
 1
 
