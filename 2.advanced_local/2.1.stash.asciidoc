@@ -1,5 +1,5 @@
 Git Stash
-=========
+---------
 
 Next we introduce a concept that you may end up using a lot!
 
@@ -27,11 +27,13 @@ echo 'Some changes I'm not sure about' >> file1
 
 You can get very sophisticated with the cache, but 99% of the time I use it like this:
 
+----
 git stash
 
 [do my other work]
 
 git stash pop
+----
 
 Let's imagine I'm in the middle of some work, and Alice lets me know that 
 there's an important update to the code I need to pull from BitBucket.
