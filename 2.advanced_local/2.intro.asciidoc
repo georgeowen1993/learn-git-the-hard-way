@@ -1,0 +1,13 @@
+
+Part 1 dealt with core git concepts, and setting up and managing code within
+a local git repository.
+                                                                                                                                  
+Part 2 deals with advanced local repository management and techniques, before
+moving onto to Part 3, which looks at working with other git repositories.
+                                                                                                                                                                                                            
+
+In Part 2 you will cover:
+
+- a
+- b
+

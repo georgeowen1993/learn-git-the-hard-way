@@ -132,8 +132,9 @@ a slightly different scneario that uses the same rebase command.
 Let's walk through the above scenario with git commands.
 
 ----
-mkdir tmprebase
-cd tmprebase
+rm -rf 2.5.1
+mkdir 2.5.1
+cd 2.5.1
 git init
 echo A > file1
 git add file1
