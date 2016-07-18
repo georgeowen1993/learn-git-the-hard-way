@@ -15,7 +15,7 @@ include::3.4.push.asciidoc[]
 
 
 
-include::3.6.subodule.asciidoc[]
+include::3.6.submodule.asciidoc[]
 
 include::3.summary.asciidoc[]
 

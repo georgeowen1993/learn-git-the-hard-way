@@ -5,7 +5,7 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.4">
-<title>Remote Repositories</title>
+<title>Git Stash</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /* Asciidoctor default stylesheet | MIT License | http://asciidoctor.org */
@@ -419,416 +419,144 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </head>
 <body class="article">
 <div id="header">
-<h1>Remote Repositories</h1>
 </div>
 <div id="content">
 <div class="sect1">
-<h2 id="_fetching_and_pulling_content">Fetching and Pulling Content</h2>
+<h2 id="_git_stash">Git Stash</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>In part one we emphasized the point that all git repositories are equal.</p>
+<p>Next we introduce a concept that you may end up using a lot!</p>
 </div>
 <div class="paragraph">
-<p>This section covers how git repositories communicate with each other and manage
-their differences.</p>
+<p>Often when you are working you want to return to a pristine state, but not lose
+the work you have done so far.</p>
 </div>
 <div class="paragraph">
-<p>We have already covered git clone, but let&#8217;s create a simple git repo and then
-clone it:</p>
+<p>Traditionally with other source control tools we&#8217;ve copied files changed locally
+aside, then updated our repo, and diffed and re-applied the changed files.</p>
+</div>
+<div class="paragraph">
+<p>However, git has a concept of the stash to store all local changes ready to
+reapply at will.</p>
+</div>
+<div class="paragraph">
+<p>Here is a basic example of a change I want to 'stash':</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>mkdir git_origin
-cd git_origin
+<pre>rm -rf 2.1.1
+mkdir 2.1.1
+cd 2.1.1
 git init
-echo 'first commit' &gt; file1
+echo 'Some content' &gt; file1
 git add file1
-git commit -am file1
-cd ..
-git clone git_origin git_cloned</pre>
+git commit -am initial
+echo 'Some changes I'm not sure about' &gt;&gt; file1</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>These two repositories are now contain identical content:</p>
+<p>You can get very sophisticated with the cache, but 99% of the time I use it like this:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>diff git_origin/file1 git_cloned/file1</pre>
+<pre>git stash
+
+[do my other work]
+
+git stash pop</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>However, their .git/config files differ in instructive ways.</p>
-</div>
-<div class="paragraph">
-<p>The git_origin folder has this:</p>
+<p>Let&#8217;s imagine I&#8217;m in the middle of some work, and Alice lets me know that
+there&#8217;s an important update to the code I need to pull from BitBucket.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>[core]
-	repositoryformatversion = 0
-	filemode = true
-	bare = false
-	logallrefupdates = true
-	ignorecase = true
-	precomposeunicode = true</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>while the git_cloned has this:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>[core]
-	repositoryformatversion = 0
-	filemode = true
-	bare = false
-	logallrefupdates = true
-	ignorecase = true
-	precomposeunicode = true
-[remote "origin"]
-	url = /Users/imiell/gitcourse/git_origin
-	fetch = +refs/heads/*:refs/remotes/origin/*
-[branch "master"]
-	remote = origin
-	merge = refs/heads/master</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>While the git_origin has no visibility of any <em>remotes</em>, the cloned one does.</p>
-</div>
-<div class="paragraph">
-<p>Its url is (in this case) pointed at the file. URLs can be http(s), ssh, or git.</p>
-</div>
-<div class="paragraph">
-<p>If I go to the cloned repo and ask it for information about remotes:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>git remote
-# origin</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>I get the name <em>origin</em> back.</p>
-</div>
-<div class="paragraph">
-<p>The name <em>origin</em> is the default name for a remote, but it has no special meaning.
-It could be renamed to <em>bitbucket</em>, or <em>gitlab</em> for example.</p>
-</div>
-<div class="paragraph">
-<p>To get more defailed information, I run with -v:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>git remote -v
-# origin	/Users/imiell/gitcourse/git_origin (fetch)
-# origin	/Users/imiell/gitcourse/git_origin (push)</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>which gives me the information about the URLs we saw.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_fetch">fetch</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>The above remotes are divided into fetch and push. First we look at fetch.</p>
-</div>
-<div class="paragraph">
-<p><em>git fetch</em> gets the latest changes from the remote repository and copies them
-into the local repository.</p>
-</div>
-<div class="paragraph">
-<p>Crucially, these changes are kept in a separate place. You can see this if you
-use the <em>git branch -a</em> command.</p>
-</div>
-<div class="paragraph">
-<p>First make a change to the origin&#8217;s repo:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>cd git_origin
-echo 'fetchable change' &gt;&gt; file1
-git commit -am fetchable</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Then go to the cloned repository and fetch the changes on master:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>cd ../git_cloned
-git fetch origin master
-# remote: Counting objects: 3, done.
-# remote: Total 3 (delta 0), reused 0 (delta 0)
-# Unpacking objects: 100% (3/3), done.
-# From /Users/imiell/gitcourse/git_origin
-#  * branch            master     -&gt; FETCH_HEAD
-#    ceed883..056dd2c  master     -&gt; origin/master</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>What the above output means is that the origin&#8217;s master has been brought into
-this repo&#8217;s references (origin/master).</p>
-</div>
-<div class="paragraph">
-<p>This has not affected the local master branch at all:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>git log</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>We can see this repository&#8217;s view of all the branches by running a git branch
-command with <em>--all</em>:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>git branch --all
-# * master
-#   remotes/origin/HEAD -&gt; origin/master
-#   remotes/origin/master</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Here we see the local <em>master</em> branch, followed by the remotes/origin/HEAD
-pointer (remember HEAD is a pointer to a location in the repository), which is
-linked to remotes/origin/master.</p>
-</div>
-<div class="paragraph">
-<p>If you want to dig into the internals at this point, you can peek at the .git
-folder again:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>ls .git/refs/
-# heads	remotes	tags</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>which has <em>heads</em> which contains references to local branch:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>cat .git/refs/heads/master
-# ceed883eec5a797471cd1c62365d9f2899b857c7</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>and similarly for remote branches:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>cat .git/refs/remotes/origin/master
-# 056dd2ce64da1e746214107b74866c375a85ffc2</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>So we&#8217;ve 'fetch&#8217;ed the remote branch and have it locally.</p>
-</div>
-<div class="paragraph">
-<p>To apply the remote master&#8217;s changes to the local one we merge it just as we
-would for any other reference:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>git merge origin/master
-# Updating ceed883..056dd2c
-# Fast-forward
-#  file1 | 1 +
-#  1 file changed, 1 insertion(+)
-git log
-# commit 056dd2ce64da1e746214107b74866c375a85ffc2
-# Author: Ian Miell &lt;ian.miell@gmail.com&gt;
-# Date:   Tue Jun 28 18:41:41 2016 +0100
+<pre>git diff
+# diff --git a/file1 b/file1
+# index 0ee3895..5554e0f 100644
+# --- a/file1
+# +++ b/file1
+# @@ -1 +1,2 @@
+#  Some content
+# +Some changes I'm not sure about...
+git stash
+# Saved working directory and index state WIP on master: 34509a0 initial
+# HEAD is now at 34509a0 initial
+git status
+# On branch master
+# nothing to commit, working directory clean
+git log --graph --all --decorate
+# *   commit 6a2fda32eaf55fedf90c3aa237a528cf7cf50a95 (refs/stash)
+# |\  Merge: 34509a0 9ff137c
+# | | Author: Ian Miell &lt;ian.miell@gmail.com&gt;
+# | | Date:   Tue Jun 28 12:02:45 2016 +0100
+# | |
+# | |     WIP on master: 34509a0 initial
+# | |
+# | * commit 9ff137cd51373afe6db37cbac4f1011b0db78ace
+# |/  Author: Ian Miell &lt;ian.miell@gmail.com&gt;
+# |   Date:   Tue Jun 28 12:02:45 2016 +0100
+# |
+# |       index on master: 34509a0 initial
+# |
+# * commit 34509a0afaf3eb9b7ff31dee3ab804903c8d36b0 (HEAD, master)
+#   Author: Ian Miell &lt;ian.miell@gmail.com&gt;
+#   Date:   Tue Jun 28 12:01:49 2016 +0100
 #
-#     fetchable
+#       initial</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>As you can see, it&#8217;s committed the state of the index (9ff&#8230;&#8203;) and then
+committed the local change to the refs/stash branch, and merged them as a child
+of the HEAD.</p>
+</div>
+<div class="paragraph">
+<p>Don&#8217;t worry too much about the details: it&#8217;s basically stored
+all the changes we&#8217;ve made but not <em>committed</em> ready to be re-applied.</p>
+</div>
+<div class="paragraph">
+<p>'stash' is a special branch which is kept local to our repository. The message
+'WIP on master' is added automatically for us.</p>
+</div>
+<div class="paragraph">
+<p>The master branch is still where it was and the HEAD pointer is pointed at it
+(that is where our repo now is).</p>
+</div>
+<div class="paragraph">
+<p>I can now do my other work (in this case pulling the latest changes) without
+concern for whether it conflicts with those changes.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>git stash list
+# stash@{0}: WIP on master: 34509a0 initial</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Once done, I can reapply those changes by running 'git stash pop':</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>git stash pop
+# On branch master
+# Changes not staged for commit:
+#   (use "git add &lt;file&gt;..." to update what will be committed)
+#   (use "git checkout -- &lt;file&gt;..." to discard changes in working directory)
 #
-# commit ceed883eec5a797471cd1c62365d9f2899b857c7
-# Author: Ian Miell &lt;ian.miell@gmail.com&gt;
-# Date:   Tue Jun 28 17:30:44 2016 +0100
+# 	modified:   file1
 #
-#     file1</pre>
+# no changes added to commit (use "git add" and/or "git commit -a")
+# Dropped refs/stash@{0} (279ee87c68798caaf2ea3d45fcfa0ac42df6ba4b)</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>What we&#8217;ve just seen:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>a fetch followed by</p>
-</li>
-<li>
-<p>a merge</p>
-</li>
-</ul>
+<p>which pops the change off the stash stack and restores me to where I was.</p>
 </div>
 <div class="paragraph">
-<p>is what <em>git pull</em> does in one go. A pull fetches the mapped branch, and then
-merges it into the local branch.</p>
-</div>
-<div class="paragraph">
-<p>We will cover what your branch locally is mapped to remotely in the next
-section, where we cover remote repository management in more depth.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_working_with_multiple_repos">Working with multiple repos</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Now you are going to work with multiple repos.</p>
-</div>
-<div class="paragraph">
-<p>Let&#8217;s do the same as you did before, but create alice_cloned and bob_cloned:</p>
-</div>
-<hr>
-<div class="paragraph">
-<p>mkdir git_origin
-cd git_origin
-git init
-echo <em>first commit</em> &gt; file1
-git add file1
-git commit -am file1
-cd ..
-git clone git_origin alice_cloned
-git clone git_origin bob_cloned
----</p>
-</div>
-<div class="paragraph">
-<p>Now alice_cloned and bob_cloned have git_origin as the origin:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>cd alice_cloned
-git remote -v
-# origin	/Users/imiell/gitcourse/git_origin (fetch)
-# origin	/Users/imiell/gitcourse/git_origin (push)
-cd ../bob_cloned
-git remote -v
-# origin	/Users/imiell/gitcourse/git_origin (fetch)
-# origin	/Users/imiell/gitcourse/git_origin (push)</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Now alice makes a change in her master branch:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>echo alice_change &gt;&gt; file1
-# imiell@Ians-MacBook-Air:~/gitcourse/alice_cloned$ git commit -am 'alice change'
-# [master 9077a48] alice change
-#  1 file changed, 1 insertion(+)</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Alice &lt;&#8594; Origin &lt;&#8594; Bob</p>
-</div>
-<div class="paragraph">
-<p>The question is: how does Bob get Alice&#8217;s change into his master branch without
-going to origin?</p>
-</div>
-<div class="paragraph">
-<p>This is a common scenario in distributed teams. If you consider that git was
-created for managing the codebase of the Linux operating system, it&#8217;s easy
-to imagine the git_origin as Linus Torvalds' repository, Alice as a contributor
-and Bob as a so-called lieutenant.</p>
-</div>
-<div class="paragraph">
-<p>So here is how:</p>
-</div>
-<div class="paragraph">
-<p>1) ADD alice&#8217;s repository as a remote to Bob&#8217;s
-2) FETCH alice&#8217;s updated master branch
-3) MERGE alice&#8217;s master branch into Bob&#8217;s local one</p>
-</div>
-<div class="paragraph">
-<p>As we have already seen, steps 2) and 3) can be collapsed into a <em>git pull</em>,
-but it is more instructive to keep these separate.</p>
-</div>
-<div class="paragraph">
-<p>1) ADD alice&#8217;s repository as a remote to Bob&#8217;s
-First, Bob needs to add alice&#8217;s repository as a remote.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>git remote add alice ../alice_cloned
-git remote -v
-# alice	../alice_cloned/ (fetch)
-# alice	../alice_cloned/ (push)
-# origin	/Users/imiell/gitcourse/git_origin (fetch)
-# origin	/Users/imiell/gitcourse/git_origin (push)</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>We have now linked up our repository to alice&#8217;s, and given it the name <em>alice</em>.</p>
-</div>
-<div class="paragraph">
-<p>2) FETCH alice&#8217;s updated master branch</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>git fetch alice master
-# remote: Counting objects: 3, done.
-# remote: Total 3 (delta 0), reused 0 (delta 0)
-# Unpacking objects: 100% (3/3), done.
-# From ../alice_cloned
-#  * branch            master     -&gt; FETCH_HEAD
-#  * [new branch]      master     -&gt; alice/master</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Alice&#8217;s master branch is now fetched to our local repository.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>git branch -vv -a
-# * master                fdc7132 [origin/master] file1
-#   remotes/alice/master  9077a48 alice change
-#   remotes/origin/HEAD   -&gt; origin/master
-#   remotes/origin/master fdc7132 file1</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>3) MERGE alice&#8217;s master branch into Bob&#8217;s local one</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>git merge alice/master
-# Updating fdc7132..9077a48
-# Fast-forward
-#  file1 | 1 +
-#  1 file changed, 1 insertion(+)
-cat file1
-# first commit
-# alice_change</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>You may be wondering why we use alice/master and not remotes/alice/master,
-as the output of <em>git branch -vv -a</em> tells us. You can run:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>git merge remotes/alice/master</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>which will do the same. Git assumes that the branch is a remote (presumably
-from seeing the <em>/</em> in the branch) and adds the <em>remotes</em> for you.</p>
-</div>
-<div class="paragraph">
-<p>This <em>Lieutenants</em> model is one example of a git workflow. Although it was the
-one git was originally created for, it is still common for developers to use
-a traditional centralised model around a repository such as GitLab or BitBucket.</p>
-</div>
-<div class="paragraph">
-<p>This is why people make jokes when GitHub is down about the fact that it should
-not be a problem because it is a distributed source control tool.</p>
+<p>There are more sophisticated ways to deal with stash, but these are not covered
+here.</p>
 </div>
 </div>
 </div>
@@ -838,505 +566,13 @@ not be a problem because it is a distributed source control tool.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>How to add a remote repo</p>
+<p>What the stash is</p>
 </li>
 <li>
-<p>How to fetch changes from the remote repo</p>
+<p>How it works</p>
 </li>
 <li>
-<p>How to merge changes from the remote repo</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>imiell@Ians-MacBook-Air:/space/git/shutit$ git push origin run:run
-Counting objects: 3, done.
-Delta compression using up to 4 threads.
-Compressing objects: 100% (3/3), done.
-Writing objects: 100% (3/3), 733 bytes | 0 bytes/s, done.
-Total 3 (delta 2), reused 0 (delta 0)
-To <a href="mailto:git@github.com">git@github.com</a>:ianmiell/shutit.git
- * [new branch]      run &#8594; run</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_git_submodules">Git Submodules</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Submodules are a useful concept, and often seen in real projects.</p>
-</div>
-<div class="paragraph">
-<p>Git submodules can be very confusing if you stumble into them without much
-preparation or experience. Following this tutorial, you should have a good
-understanding for a simple submodule workflow and what is going on when you
-run the core submodule commands.</p>
-</div>
-<div class="paragraph">
-<p>Sometimes you want to <em>include</em> one repository in another, but not simply copy
-it over. Submodules allow you to manage the separate codebase with your
-repository without changing the other repository.</p>
-</div>
-<div class="paragraph">
-<p>Let&#8217;s look at a concrete example.</p>
-</div>
-<div class="paragraph">
-<p>Let&#8217;s say Alice maintains a library:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>rm -rf alicelib &amp;&amp; mkdir alicelib &amp;&amp; cd alicelib
-git init
-echo 'A' &gt; file1
-git add file1
-git commit -am 'A'
-git checkout -b experimental      # Branch to experimental
-echo 'C - EXPERIMENTAL' &gt;&gt; file1
-git commit -am EXPERIMENTAL
-git checkout master
-echo 'B' &gt;&gt; file1
-git commit -am 'B'</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Alice&#8217;s library&#8217;s history looks like this:</p>
-</div>
-<div class="paragraph">
-<p>A
-|\
-| C (experimental)
-|
-B (master)</p>
-</div>
-<div class="paragraph">
-<p>Now Bob wants to use Alice&#8217;s library, but specifically wants to use what&#8217;s on
-the experimental branch.</p>
-</div>
-<div class="paragraph">
-<p>One option is to copy the code over directly, but that seems to be against the
-spirit of git.</p>
-</div>
-<div class="paragraph">
-<p>If an improvement is made on the experimental branch, or Bob wants to move later
-to follow what&#8217;s on the master branch, then he must copy over the code he wants.
-For one file it might be manageable, but for a more realistic and large project,
-managing this will be completely impractical.</p>
-</div>
-<div class="paragraph">
-<p>Another option is to check out the code in another folder and link to it in
-some predictable way in the code (eg 'source ../alice_experimental). Again,
-this causes management problems, as the user checking out the source must
-remember to keep code outside this git repository in a certain place for it
-all to work.</p>
-</div>
-<div class="paragraph">
-<p>Git submodules solve these management issues, with a little overhead.</p>
-</div>
-<div class="paragraph">
-<p>They use git commands to track copies of other repositories within your
-repository. The tracking is under your control (so you decide when it gets
-<em>updated</em>), and the tracking is done within a file that is stored with your git
-repository.</p>
-</div>
-<div class="admonitionblock warning">
-<table>
-<tr>
-<td class="icon">
-<div class="title">Warning</div>
-</td>
-<td class="content">
-git submodules can be confusing if you don&#8217;t follow a few basic
-patterns or understand how they work, so it&#8217;s worth paying attention to this.
-</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>Let&#8217;s make this clearer with a walkthrough.</p>
-</div>
-<div class="paragraph">
-<p>We are going to assume you have the <em>alicelib</em> repository created as above.</p>
-</div>
-<div class="paragraph">
-<p>Now create Bob&#8217;s repository:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>rm -rf bob_repo &amp;&amp; mkdir bob_repo &amp;&amp; cd bob_repo
-git init
-echo 'source alicelib' &gt; file1
-git add file1
-git commit -am 'sourcing alicelib'
-echo 'do something with alicelib experimental' &gt;&gt; file1
-git commit -am 'using alicelib experimental'
-cat file1
-# source alicelib
-# do something with alicelib</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Now we have alice&#8217;s repo referenced in bob_repo&#8217;s code, but bob_repo has no link
-to alice_repo&#8217;s code.</p>
-</div>
-<div class="paragraph">
-<p>The first step to including alicelib in bob_repo is to initialise submodules:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>git submodule init</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Once a git submodule init has been performed, you can <em>add</em> the submodule you
-want:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>git submodule add ../alicelib
-# Cloning into 'alicelib'...
-# done.</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>A new file has been created (.gitmodules), and the folder alicelib has been
-created:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>ls -a
-# .		..		.git		.gitmodules	alicelib	file1</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>alicelib has been clone just as any other git repository would be anywhere
-else:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>ls -a alicelib/
-.	..	.git	file1</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>but the .gitmodules file tracks where the submodule comes from:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>cat .gitmodules
-# [submodule "alicelib"]
-# 	path = alicelib
-# 	url = ../alicelib</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>If you get confused, git provides a useful <em>status</em> command for gitmodules:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>git submodule status
-# ff75b7fc52c3a7d52d89a47fd27d7d22ed280b6f alicelib (heads/master)</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Now, you may have some questions at this point, such as:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>How do you get to the experimental branch?</p>
-</li>
-<li>
-<p>What happens if alice&#8217;s branch changes? Does my code automatically update?</p>
-</li>
-<li>
-<p>What if I make a change to alicelib within my repository submodule checkout?
-Can I push those to alice&#8217;s? Can I keep those private to my repository?</p>
-</li>
-<li>
-<p>What if there are conflicts between these repositories?</p>
-<div class="olist lowerroman">
-<ol class="lowerroman" type="i">
-<li>
-<p>and so on. I certainly had these questions when I came to git submodules,
-and with some trial and error it took me some time to understand what was going
-on, so I really recommend playing with these simple examples to get the
-relationships clear in your mind.</p>
-</li>
-</ol>
-</div>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_get_the_experimental_branch">Get the experimental branch</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Since your <em>alicelib</em> submodule is a straightforward clone of the remote
-<em>alicelib</em> origin, you have the master branch and the origin&#8217;s experimental
-branch:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>git branch -a -vv
-# * master                      ff75b7f [origin/master] B
-#   remotes/origin/HEAD         -&gt; origin/master
-#   remotes/origin/experimental 969b840 C EXPERIMENTAL
-#   remotes/origin/master       ff75b7f B</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>You are on the master branch (indicated with a *), which is mapped to
-remotes/origin/master.</p>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<div class="title">Note</div>
-</td>
-<td class="content">
-the refs (eg ff75b7f) may be different in your output
-</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>You do not have an experimental branch locally. However, if you checkout a
-branch that does not exist locally but does exist remotely, git will assume you
-want to track that remote branch.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>git checkout experimental
-# Branch experimental set up to track remote branch experimental from origin.
-# Switched to a new branch 'experimental'
-git branch -a -vv
-# * experimental                969b840 [origin/experimental] C EXPERIMENTAL
-#   remotes/origin/HEAD         -&gt; origin/master
-#   remotes/origin/experimental 969b840 C EXPERIMENTAL
-#   remotes/origin/master       ff75b7f B</pre>
-</div>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<div class="title">Note</div>
-</td>
-<td class="content">
-If more than one remote has the same name, git will not perform this
-matching. In that case you would have to run the full command:
-</td>
-</tr>
-</table>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>git checkout -b experimental --track origin/master</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>assuming it&#8217;s the origin&#8217;s master branch you want to track.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_git_tracks_the_submodule_s_state">Git tracks the submodule&#8217;s state</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Now that you&#8217;ve checked out and tracked the remote experimental branch in your
-submodule, a change has taken place in bob_repo. If you return to bob_repo&#8217;s
-root folder and run <em>git diff</em> you will see that the subproject commit of
-<em>alicelib</em> has changed:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>cd ..
-git diff
-# diff --git a/alicelib b/alicelib
-# index ff75b7f..969b840 160000
-# --- a/alicelib
-# +++ b/alicelib
-# @@ -1 +1 @@
-# -Subproject commit ff75b7fc52c3a7d52d89a47fd27d7d22ed280b6f
-# +Subproject commit 969b840142f389de55357350a6f26f0825e02393</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>The commit identifier now matches the experimental.</p>
-</div>
-<div class="paragraph">
-<p>Note that bob_repo tracks the <em>specific commit</em> and not the remote branch.
-This means that changes to alicelib in the origin repository are not
-automatically tracked within bob_repo&#8217;s submodule.</p>
-</div>
-<div class="paragraph">
-<p>We want to commit this change to the submodule:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>git commit -am 'alicelib moved to experimental'
-# [master 1f67953] alicelib moved to experimental
-#  2 files changed, 4 insertions(+)
-#  create mode 100644 .gitmodules
-#  create mode 160000 alicelib</pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_alice_makes_a_change">Alice makes a change</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Alice now spots a bug in her experimental branch that she wants to fix:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>cd ../alicelib
-git checkout experimental
-echo 'D' &gt;&gt; file1
-git commit -am 'D - a fix added'</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Now there is a mismatch between alicelib&#8217;s experimental branch and bob_repo&#8217;s
-experimental branch.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>cd ../bob_repo/alicelib
-git status
-# On branch experimental
-# Your branch is up-to-date with 'origin/experimental'.
-# nothing to commit, working directory clean</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>git status reports that bob_repo&#8217;s alicelib is up-to-date with
-origin/experimental. Remember that origin/experimental is the locally stored
-representation of alicelib&#8217;s experimental branch. Since you have not contacted
-alicelib to see if there are any updates, this is still the case.</p>
-</div>
-<div class="paragraph">
-<p>To get the latest changes you can perform a fetch and merge, or save time by
-running a <em>pull</em>, which does both:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>git pull
-# remote: Counting objects: 3, done.
-# remote: Total 3 (delta 0), reused 0 (delta 0)
-# Unpacking objects: 100% (3/3), done.
-# From /Users/imiell/gitcourse/alicelib
-#    969b840..1a725f6  experimental -&gt; origin/experimental
-# Updating 969b840..1a725f6
-# Fast-forward
-#  file1 | 1 +
-#  1 file changed, 1 insertion(+)</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>GOTCHAS: Generally I would advise not editing repositories that are checked
-out as submodules until you are more experienced with git. You quickly may find
-yourself in a <em>detached HEAD</em> state and confused about what you&#8217;ve done.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_checking_out_a_project_with_submodules">Checking out a project with submodules</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Submodules have a special status within git repositories. Since they are both
-included within a repository and at the same time referencing a remote
-repository, a simple clone will not check out the included submodule:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>cd ../..
-rm -rf bob_repo_cloned
-git clone bob_repo bob_repo_cloned
-cd bob_repo_cloned
-ls -1
-# alicelib
-# file1
-cd alicelib
-ls ## No output</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Alicelib is not there. Confusingly, <em>git submodule status</em> gives us little clue
-what&#8217;s going on here.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>git submodule status
-# -969b840142f389de55357350a6f26f0825e02393 alicelib</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>The dash (or minus sign) at the front indicates the submodule is not cheked out.
-Only by running a <em>git submodule init</em> and a <em>git submodule update</em> can you
-retrieve the appropriate submodule repository:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>git submodule init
-# Submodule 'alicelib' (/Users/imiell/gitcourse/alicelib) registered for path 'alicelib'
-git submodule update
-# Submodule path 'alicelib': checked out '969b840142f389de55357350a6f26f0825e02393'
-git submodule status
-# 969b840142f389de55357350a6f26f0825e02393 alicelib (969b840)</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Now the submodule status has no dash, and a commit ID has been added to the
-output (969b840).</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_git_clone_recursive">git clone --recursive</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Fortunately there is an easier way. You can clone the repository with a
---recursive flag to automatically init and update any submodules (and submodules
-of those submodules ad infinitum) within the cloned repo:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>cd ..
-git clone --recursive bob_repo bob_repo_cloned_recursive
-# Cloning into 'bob_repo_cloned'...
-# done.
-# Submodule 'alicelib' (/Users/imiell/gitcourse/alicelib) registered for path 'alicelib'
-# Cloning into 'alicelib'...
-# done.
-# Submodule path 'alicelib': checked out '969b840142f389de55357350a6f26f0825e02393'</pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_you_have_learned">You have learned</h2>
-<div class="sectionbody">
-<div class="ulist">
-<ul>
-<li>
-<p>How to set up git submodules</p>
-</li>
-<li>
-<p>How to add a submodule to a repo</p>
-</li>
-<li>
-<p>How to track remote branches</p>
-</li>
-<li>
-<p>How to checkout submodules with init and update</p>
-</li>
-<li>
-<p>How to checkout submodules with recursive</p>
+<p>How to re-apply changes</p>
 </li>
 </ul>
 </div>
@@ -1345,7 +581,7 @@ git clone --recursive bob_repo bob_repo_cloned_recursive
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-07-18 08:36:47 BST
+Last updated 2016-07-18 08:11:18 BST
 </div>
 </div>
 </body>
