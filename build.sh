@@ -1,6 +1,7 @@
 #!/bin/bash
 set -e
-for f in $(find * -maxdepth 1 -type d)
+set -x
+for f in $(find * -maxdepth 0 -type d)
 do
 	pushd $f
 	asciidoctor $f.asciidoc
