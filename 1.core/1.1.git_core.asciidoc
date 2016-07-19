@@ -44,10 +44,13 @@ ALL GIT REPOSITORIES ARE EQUAL.
 Remember, git was created so people could work on the linux kernel across the
 globe, and offline. So there is no concept of 
 
-# Local changes (working directory)
-# Staging/Adding/Index
-# Committing to local Repo
-# Pushing to remote
+1) Local changes (working directory)
+
+2) Staging/Adding/Index
+
+3) Committing to local Repo
+
+4) Pushing to remote
 
 The 4) stages are key to understanding git.
 
@@ -62,14 +65,7 @@ In case you've not looked at a SC tool before, a branch is a core concept.
 
 A series of changes to a repository might look like this:
 
-include::diagrams/1.1.1.png[]
-----
-A
-|
-B
-|
-C
-----
+image::diagrams/1.1.1.mermaid.png[]
 
 Change A is made, then B, then C. This might be called the 'main line'.
 

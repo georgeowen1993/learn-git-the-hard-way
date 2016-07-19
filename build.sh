@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 set -x
-for d in $(find - -name diagrams)
+for d in $(find . -name diagrams)
 do
 	pushd $d
 	for f in $(ls -1 *mermaid)
