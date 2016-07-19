@@ -3,11 +3,6 @@
 Advanced local repository management
 ====================================
 
-Part 2 deals with advanced local repository management.
-
-Before we get to working with other git repositories we are going to cover
-
-
 include::2.intro.asciidoc[]
 
 include::2.1.stash.asciidoc[]

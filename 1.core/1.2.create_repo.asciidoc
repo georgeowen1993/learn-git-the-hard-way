@@ -1,7 +1,7 @@
 Git basics
 ----------
 
-In this section we will cover:
+This section covers:
 
 - git init
 - the .git folder
@@ -18,9 +18,9 @@ To initialise a git repository, run 'git init' from within the root folder
 of the source you want to manage.
 
 ----
-rm -rf tmpgit
-mkdir tmpgit
-cd tmpgit
+rm -rf 1.2.1
+mkdir 1.2.1
+cd 1.2.1
 git init
 ----
 

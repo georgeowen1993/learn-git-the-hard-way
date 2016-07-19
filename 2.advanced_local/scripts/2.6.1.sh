@@ -1,5 +1,7 @@
 #!/bin/bash
-rm -rf git-bisect && mkdir -p git-bisect && cd git-bisect
+rm -rf 2.6.1.gitrepo
+mkdir -p 2.6.1.gitrepo
+cd 2.6.1.gitrepo
 git init
 touch projectfile
 git add projectfile

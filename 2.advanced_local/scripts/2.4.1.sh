@@ -1,7 +1,7 @@
 #!/bin/bash
-rm -rf 2.4.1
-mkdir 2.4.1
-cd 2.4.1
+rm -rf 2.4.1.gitrepo
+mkdir 2.4.1.gitrepo
+cd 2.4.1.gitrepo
 git init
 echo change1 > file1
 git add file1

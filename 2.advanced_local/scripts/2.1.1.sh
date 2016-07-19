@@ -1,7 +1,7 @@
 #!/bin/bash
-rm -rf 2.1.1
-mkdir 2.1.1
-cd 2.1.1
+rm -rf 2.1.1.gitrepo
+mkdir 2.1.1.gitrepo
+cd 2.1.1.gitrepo
 git init
 echo 'Some content' > file1
 git add file1

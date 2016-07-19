@@ -5,10 +5,10 @@ Earlier we discussed the four stages of working in Git:
 
 Git:
 
-1) Local changes
-2) Staging/Adding/Index
-3) Committing to local Repo
-4) Push
+# Local changes
+# Staging/Adding/Index
+# Committing to local Repo
+# Push
 
 So far we've shown a difference between adding (staging) and committing, but
 this still causes confusion for people - what's the point of this?

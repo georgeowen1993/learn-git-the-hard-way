@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cd 2.4.1
+cd 2.4.1.gitrepo
 git branch experimental
 git checkout experimental
 ex -sc '1i|crazy change' -cx file1  # Magic to insert before the first line

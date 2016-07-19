@@ -1,7 +1,7 @@
 #!/bin/bash
-rm -rf 2.3.1
-mkdir 2.3.1
-cd 2.3.1
+rm -rf 2.3.1.gitrepo
+mkdir 2.3.1.gitrepo
+cd 2.3.1.gitrepo
 git init
 echo first commit > file1
 git add file1

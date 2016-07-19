@@ -1,6 +1,8 @@
 Core git concepts
 -----------------
 
+This section covers:
+
 - source control
 - git vs trad SCs
 - the four phases of the git lifecycle
@@ -42,10 +44,10 @@ ALL GIT REPOSITORIES ARE EQUAL.
 Remember, git was created so people could work on the linux kernel across the
 globe, and offline. So there is no concept of 
 
-1) Local changes (working directory)
-2) Staging/Adding/Index
-3) Committing to local Repo
-4) Pushing to remote
+# Local changes (working directory)
+# Staging/Adding/Index
+# Committing to local Repo
+# Pushing to remote
 
 The 4) stages are key to understanding git.
 
@@ -60,6 +62,7 @@ In case you've not looked at a SC tool before, a branch is a core concept.
 
 A series of changes to a repository might look like this:
 
+include::diagrams/1.1.1.png[]
 ----
 A
 |
@@ -91,8 +94,8 @@ That way users can choose to get a view of the source on the 'main line' branch
 or the 'experimental' one.
 
 
-But What About Github?
-----------------------
+What About Github?
+------------------
 
 In practice, some repositories are more equal than others (eg GitHub). This is
 a matter of convention. I can use a github repo as a secondary repo for my
@@ -119,7 +122,9 @@ This makes experimentation much easier.
 git config --global user.email "you@example.com" && git config --global user.name "Your Name"
 ----
 
-What we learned:
+What we learned
+---------------
+
 - setting up git
 - what git is - the four stages
 - differences to other SC systems
