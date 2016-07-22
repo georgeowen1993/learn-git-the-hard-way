@@ -1,4 +1,4 @@
-= Core git concepts
+== Core git concepts
 
 === Introduction 
 

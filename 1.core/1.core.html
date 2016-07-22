@@ -473,7 +473,11 @@ merges</p>
 </div>
 </div>
 </div>
-<h1 id="_core_git_concepts" class="sect0">Core git concepts</h1>
+<div class="sect1">
+<h2 id="_core_git_concepts">Core git concepts</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_introduction">Introduction</h3>
 <div class="paragraph">
 <p>This section covers:</p>
 </div>
@@ -519,16 +523,16 @@ mean several things:</p>
 <p>The history could get very messy</p>
 </li>
 <li>
-<p>Managing your <em>checkouts</em> of code could get complicated and painful</p>
+<p>Managing your 'checkouts' of code could get complicated and painful</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>These code databases are known as <em>repositories</em>.</p>
+<p>These code databases are known as 'repositories'.</p>
 </div>
 <div class="paragraph">
 <p>In the old world, if you checked out source code, that was a copy of some code
-that was <em>inferior</em> in status to the centralised version.</p>
+that was 'inferior' in status to the centralised version.</p>
 </div>
 <div class="paragraph">
 <p>As far as the user was concerned, code was in one of two states:</p>
@@ -536,7 +540,7 @@ that was <em>inferior</em> in status to the centralised version.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Local changes (<em>dirty</em>)</p>
+<p>Local changes ('dirty')</p>
 </li>
 <li>
 <p>Committed - pushed to server</p>
@@ -555,7 +559,11 @@ copy of each other git repositories.</p>
 </div>
 <div class="paragraph">
 <p>Remember, git was created so people could work on the linux kernel across the
-globe, and offline. So there is no concept of</p>
+globe, and offline. So there is no concept of a central server that holds the
+golden source.</p>
+</div>
+<div class="paragraph">
+<p>In the git world you have four phases your code can go through:</p>
 </div>
 <div class="paragraph">
 <p>1) Local changes (working directory)</p>
@@ -577,6 +585,7 @@ globe, and offline. So there is no concept of</p>
 If you&#8217;ve ever been confused by git, it&#8217;s likely because these stages were
 not understood.</p>
 </div>
+</div>
 <div class="sect2">
 <h3 id="_branches">Branches</h3>
 <div class="paragraph">
@@ -592,11 +601,11 @@ not understood.</p>
 </div>
 <div class="paragraph">
 <p>Change A is made, then B, then C. This might be informally called the
-<em>main line</em>.</p>
+'main line'.</p>
 </div>
 <div class="paragraph">
 <p>But let&#8217;s say someone wants to make an experimental change but not affect
-the <em>main line</em>. Then they might <em>branch</em> the code at point C:</p>
+the 'main line'. Then they might 'branch' the code at point C:</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -604,8 +613,8 @@ the <em>main line</em>. Then they might <em>branch</em> the code at point C:</p>
 </div>
 </div>
 <div class="paragraph">
-<p>That way users can choose to get a view of the source on the <em>main line</em> branch
-or the <em>experimental</em> one.</p>
+<p>That way users can choose to get a view of the source on the 'main line' branch
+or the 'experimental' one.</p>
 </div>
 </div>
 <div class="sect2">
@@ -622,6 +631,8 @@ being decentralised.</p>
 <div class="paragraph">
 <p>Keeping your local repo sync&#8217;d with others is one of the challenges of git, but
 the first step to mastering git is understanding this equality of repos.</p>
+</div>
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -696,11 +707,8 @@ details up as per the below:</p>
 </div>
 </div>
 </div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_what_we_learned">What we learned</h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="_what_we_learned">What we learned</h3>
 <div class="ulist">
 <ul>
 <li>
@@ -715,8 +723,17 @@ details up as per the below:</p>
 </ul>
 </div>
 </div>
+<div class="sect2">
+<h3 id="_exercises">Exercises</h3>
+<div class="paragraph">
+<p>TODO</p>
 </div>
-<h1 id="_git_basics" class="sect0">Git basics</h1>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_git_basics">Git basics</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>This section covers:</p>
 </div>
@@ -750,7 +767,7 @@ details up as per the below:</p>
 use with git.</p>
 </div>
 <div class="paragraph">
-<p>To initialise a git repository, run <em>git init</em> from within the root folder
+<p>To initialise a git repository, run 'git init' from within the root folder
 of the source you want to manage.</p>
 </div>
 <div class="listingblock">
@@ -762,7 +779,7 @@ $ git init</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>This initialises a database in the folder <em>.git</em> locally.
+<p>This initialises a database in the folder '.git' locally.
 Your repository is entirely stored within this .git folder. There are no
 other files elsewhere on your filesystem you need to be concerned about.
 (There are config files for git, but these are global to the host. We can ignore
@@ -792,7 +809,7 @@ internals files seen here.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>the <em>HEAD</em> file</p>
+<p>the 'HEAD' file</p>
 </li>
 <li>
 <p>config</p>
@@ -802,13 +819,13 @@ internals files seen here.</p>
 <div class="sect2">
 <h3 id="_head">HEAD</h3>
 <div class="paragraph">
-<p>The HEAD is key - it points to the current branch you are <em>on</em>.</p>
+<p>The HEAD is key - it points to the current branch you are 'on'.</p>
 </div>
 <div class="paragraph">
 <p>If we look at the file, we see it points to the refs/heads/master.</p>
 </div>
 <div class="paragraph">
-<p>This is an internal representation of the default <em>master</em> branch.</p>
+<p>This is an internal representation of the default 'master' branch.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -820,7 +837,7 @@ ref: refs/heads/master</pre>
 <div class="sect2">
 <h3 id="_config">config</h3>
 <div class="paragraph">
-<p><em>config</em> stores information about your repository&#8217;s local configuration, eg
+<p>'config' stores information about your repository&#8217;s local configuration, eg
 what branches and remote repositories your repository is aware of. It&#8217;s a plain
 text file:</p>
 </div>
@@ -853,7 +870,7 @@ fatal: bad default revision 'HEAD'</pre>
 <p>We have a problem! This repository has no history to look at.</p>
 </div>
 <div class="paragraph">
-<p>Git has followed the <em>HEAD</em> pointer to the refs/heads/master entry and found
+<p>Git has followed the 'HEAD' pointer to the refs/heads/master entry and found
 nothing there! And indeed there is nothing there:</p>
 </div>
 <div class="listingblock">
@@ -884,7 +901,7 @@ nothing to commit (create/copy files and use "git add" to track)</pre>
 </div>
 <div class="paragraph">
 <p>It tells you where the HEAD is pointed at (the non-existent master branch), and
-that there is <em>nothing to commit</em>.</p>
+that there is 'nothing to commit'.</p>
 </div>
 <div class="paragraph">
 <p>Create a file and check status again:</p>
@@ -904,8 +921,8 @@ Untracked files:
 </div>
 </div>
 <div class="paragraph">
-<p>We are now advised that we have an <em>untracked</em> file. Git has detected that it
-exists but the repository is not <em>aware</em> of it.</p>
+<p>We are now advised that we have an 'untracked' file. Git has detected that it
+exists but the repository is not 'aware' of it.</p>
 </div>
 <div class="paragraph">
 <p>Make git aware of it by adding it to the repository.</p>
@@ -984,7 +1001,7 @@ $ git diff</pre>
 </div>
 <div class="paragraph">
 <p>Again, you can see what&#8217;s going on by looking at the status. You can commit
-changes to files and add at the same time by doing <em>commit -a</em></p>
+changes to files and add at the same time by doing 'commit -a'</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1001,9 +1018,9 @@ $ git status</pre>
 <pre>$ git log</pre>
 </div>
 </div>
-<div class="paragraph">
-<p>What you learned:</p>
 </div>
+<div class="sect2">
+<h3 id="_what_you_learned">What you learned</h3>
 <div class="ulist">
 <ul>
 <li>
@@ -1033,7 +1050,17 @@ $ git status</pre>
 </ul>
 </div>
 </div>
-<h1 id="_cloning_a_repo" class="sect0">Cloning a repo</h1>
+<div class="sect2">
+<h3 id="_exercises_2">Exercises</h3>
+<div class="paragraph">
+<p>TODO</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_cloning_a_repo">Cloning a repo</h2>
+<div class="sectionbody">
 <div class="ulist">
 <ul>
 <li>
@@ -1088,7 +1115,7 @@ $ ls .git                           # The .git folder is still there</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>We have cloned the repository, and <em>accidentally</em> deleted all the files.</p>
+<p>We have cloned the repository, and 'accidentally' deleted all the files.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1103,9 +1130,8 @@ $ git reset --hard  # does a re-check out of the whole repository, discarding wo
 $ git status        # we now have a consistent state between 1 (local changes) and 3 (committed)</pre>
 </div>
 </div>
-<div class="sect1">
-<h2 id="_what_we_learned_2">What we learned</h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="_what_we_learned_2">What we learned</h3>
 <div class="ulist">
 <ul>
 <li>
@@ -1115,6 +1141,13 @@ $ git status        # we now have a consistent state between 1 (local changes) a
 <p>git reset</p>
 </li>
 </ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_exercises_3">Exercises</h3>
+<div class="paragraph">
+<p>TODO</p>
+</div>
 </div>
 </div>
 </div>
@@ -1174,7 +1207,7 @@ $ cat file1                                  # The feature change is not there</
 </div>
 </div>
 <div class="paragraph">
-<p>which reflects the output of the last <em>git log</em> command.</p>
+<p>which reflects the output of the last 'git log' command.</p>
 </div>
 <div class="paragraph">
 <p>Note that the HEAD (and branch) moves forward with each commit.</p>
@@ -1194,27 +1227,27 @@ $ git status</pre>
 </div>
 </div>
 <div class="paragraph">
+<p>TODO: more here</p>
+</div>
+<div class="paragraph">
 <p>Detached head means you are not associated with a branch.</p>
 </div>
 <div class="paragraph">
-<p>It <em>feels wrong</em> to be on a detached head because you have no pointer to a
+<p>It 'feels wrong' to be on a detached head because you have no pointer to a
 branch to reference.</p>
 </div>
 <div class="paragraph">
 <p>SO:
-A <em>branch</em> is just a pointer on a line of changes
-HEAD is just your <em>current</em> branch</p>
+A 'branch' is just a pointer on a line of changes
+HEAD is just your 'current' branch</p>
 </div>
 <div class="paragraph">
 <p>It&#8217;s worth also pointing out here that apart from its default status, there is
-nothing special about the <em>master</em> branch. It&#8217;s just a name. Your principal
-branch might be called <em>live</em>, <em>alice</em>, <em>pristine</em>, or whatever you like.</p>
+nothing special about the 'master' branch. It&#8217;s just a name. Your principal
+branch might be called 'live', 'alice', 'pristine', or whatever you like.</p>
 </div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_what_we_ve_learned">What we&#8217;ve learned</h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="_what_you_ve_learned">What you&#8217;ve learned</h3>
 <div class="ulist">
 <ul>
 <li>
@@ -1230,6 +1263,13 @@ branch might be called <em>live</em>, <em>alice</em>, <em>pristine</em>, or what
 <p>git log decoration</p>
 </li>
 </ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_exercises_4">Exercises</h3>
+<div class="paragraph">
+<p>TODO</p>
+</div>
 </div>
 </div>
 </div>
@@ -1259,7 +1299,7 @@ maintainer to merge branches together.</p>
 know this because the HEAD is pointed at it.</p>
 </div>
 <div class="paragraph">
-<p>If you merge the experimental branch into master with a <em>git merge experimental</em>,
+<p>If you merge the experimental branch into master with a 'git merge experimental',
 you end up with a tree that looks like this:</p>
 </div>
 <div class="imageblock">
@@ -1353,11 +1393,8 @@ Automatic merge failed; fix conflicts and then commit the result.</pre>
 <div class="paragraph">
 <p>Oh dear, that does not look good. The merge failed with a CONFLICT.</p>
 </div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_what_s_going_on">What&#8217;s going on?</h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="_what_s_going_on">What&#8217;s going on?</h3>
 <div class="paragraph">
 <p>So what exactly happens when you perform a merge?</p>
 </div>
@@ -1387,7 +1424,7 @@ then what order should they go in?</p>
 <div class="paragraph">
 <p>Changing lines around the same area in code can have disastrous effects, so
 git does not make a decision when this happens. Instead it tells you that there
-was a conflict, and asks you to <em>fix conflicts and then commit the result</em>.</p>
+was a conflict, and asks you to 'fix conflicts and then commit the result'.</p>
 </div>
 <div class="paragraph">
 <p>If you look at file1 now:</p>
@@ -1412,7 +1449,7 @@ H
 The file up to line C is untouched, as there was no conflict. Then we see a
 line with arrows indicating the start of a conflicting section, followed by
 the point in the repo that those changes were made on (in this case, HEAD)
-<em>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</em>. Then a line of just equals signs indicates the end of a
+'&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD'. Then a line of just equals signs indicates the end of a
 conflicting set of changes, followed by the changes on the other conflicting
 branch (the E and H on experimental).</p>
 </div>
@@ -1423,8 +1460,8 @@ completed. At that point you can commit your change, and the merge has taken
 place.</p>
 </div>
 <div class="paragraph">
-<p>You could even leave the file as is (including the <em>&lt;&lt;&lt;&lt;&lt;&lt;&lt;</em>,<em>=======</em>, and
-<em>&gt;&gt;&gt;&gt;&gt;&gt;&gt;</em> lines, though this is unlikely to be what you want! It&#8217;s surprising
+<p>You could even leave the file as is (including the '&lt;&lt;&lt;&lt;&lt;&lt;&lt;','=======', and
+'&gt;&gt;&gt;&gt;&gt;&gt;&gt;' lines, though this is unlikely to be what you want! It&#8217;s surprising
 how easily you can forget to resolve all the conflicting sections in your
 codebase when doing a merge.</p>
 </div>
@@ -1480,10 +1517,8 @@ some sense: if you are looking at a repository with a long history, you are more
 likely to be interested in recent changes than older ones.</p>
 </div>
 </div>
-</div>
-<div class="sect1">
-<h2 id="_what_we_have_learned">What we have learned</h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="_what_you_have_learned">What you have learned</h3>
 <div class="ulist">
 <ul>
 <li>
@@ -1501,11 +1536,18 @@ likely to be interested in recent changes than older ones.</p>
 </ul>
 </div>
 </div>
+<div class="sect2">
+<h3 id="_exercises_5">Exercises</h3>
+<div class="paragraph">
+<p>TODO</p>
+</div>
+</div>
+</div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-07-22 14:52:19 BST
+Last updated 2016-07-22 18:45:48 BST
 </div>
 </div>
 </body>

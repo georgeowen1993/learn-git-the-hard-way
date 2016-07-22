@@ -1,4 +1,4 @@
-= Merging
+== Merging
 
 We've already covered basic branching in previous sections. As you will recall,
 branching gives you the ability to work on parallel streams of development in

@@ -1,4 +1,4 @@
-= Cloning a repo
+== Cloning a repo
 
 - git clone
 - git reset
