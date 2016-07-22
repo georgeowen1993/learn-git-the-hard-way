@@ -595,35 +595,17 @@ not understood.</p>
 <img src="diagrams/1.1.1.mermaid.png" alt="1.1.1.mermaid">
 </div>
 </div>
-<div class="listingblock">
-<div class="content">
-<pre>A
-|
-B
-|
-C</pre>
-</div>
-</div>
 <div class="paragraph">
-<p>Change A is made, then B, then C. This might be called the <em>main line</em>.</p>
+<p>Change A is made, then B, then C. This might be informally called the
+<em>main line</em>.</p>
 </div>
 <div class="paragraph">
 <p>But let&#8217;s say someone wants to make an experimental change but not affect
-the <em>main line</em>. Then they might <em>branch</em> at point C:</p>
+the <em>main line</em>. Then they might <em>branch</em> the code at point C:</p>
 </div>
-<div class="listingblock">
+<div class="imageblock">
 <div class="content">
-<pre>A
-|
-B
-|
-C
-|\
-| F (experimental)
-|
-D
-|
-E (main line)</pre>
+<img src="diagrams/1.1.2.mermaid.png" alt="1.1.2.mermaid">
 </div>
 </div>
 <div class="paragraph">
@@ -633,16 +615,16 @@ or the <em>experimental</em> one.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_what_about_github">What About Github?</h2>
+<h2 id="_what_about_github">What About GitHub?</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>In practice, some repositories are more equal than others (eg GitHub). This is
-a matter of convention. I can use a github repo as a secondary repo for my
+a matter of convention. I can use a GitHub repo as a secondary repo for my
 workflow - it&#8217;s up to me (indeed I do this for some of my private repos).</p>
 </div>
 <div class="paragraph">
-<p>This is why every GH outage causes a flurry of smart-alec comments about Git being
-decentralised.</p>
+<p>This is why every GitHub outage causes a flurry of smart-alec comments about git
+being decentralised.</p>
 </div>
 <div class="paragraph">
 <p>Keeping your local repo sync&#8217;d with others is one of the challenges of git, but
@@ -651,21 +633,77 @@ the first step to mastering git is understanding this equality of repos.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_other_differences_with_git">Other differences with git</h2>
+<h2 id="_other_differences_with_git_vs_traditional_vcses">Other differences with git vs traditional VCSes</h2>
 <div class="sectionbody">
-<div class="paragraph">
-<p>History is more malleable. You can change the history in your own copy of
-the repo and others' (if you have permission).</p>
+<div class="ulist">
+<ul>
+<li>
+<p>History is more malleable.</p>
+</li>
+</ul>
 </div>
 <div class="paragraph">
-<p>Branching is cheap. In CVS it&#8217;s very slow to branch a (O(n) to number of files).
+<p>You can change the history in your own copy of the repo and others' (if you have
+the appropriate permission).</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Branching is cheap</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>In CVS it&#8217;s very slow to branch a (O(n) to number of files).
 In git it&#8217;s an O(1) step.
-This makes experimentation much easier.</p>
+This makes experimentation much easier.
+Branch deletion is a common and cheap operation.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Commits are across the whole poject</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>In contrast to other source control tools, changes are made across the whole
+project, not per file.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>No version numbers</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Git does not automatically number versions of files/changes. It instead assigns
+a hash (effectively random) to the change.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>File renaming</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>You can rename files in git and the content will be tracked. This is a massive
+win compared to CVS.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_assumptions">Assumptions</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>At this point I assume you have git installed, and that you have set your
+details up as per the below:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre># Assume you have git installed
-git config --global user.email "you@example.com" &amp;&amp; git config --global user.name "Your Name"</pre>
+<pre>$ git config --global user.email "you@example.com" &amp;&amp; git config --global user.name "Your Name"</pre>
 </div>
 </div>
 </div>
@@ -729,10 +767,10 @@ of the source you want to manage.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>rm -rf 1.2.1
-mkdir 1.2.1
-cd 1.2.1
-git init</pre>
+<pre>$ rm -rf 1.2.1
+$ mkdir 1.2.1
+$ cd 1.2.1
+$ git init</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -743,16 +781,16 @@ other files elsewhere on your filesystem you need to be concerned about.
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>cd .git
-ls
-# config
-# description
-# HEAD
-# hooks
-# info
-# objects
-# refs
-cd ..</pre>
+<pre>$ cd .git
+$ ls
+config
+description
+HEAD
+hooks
+info
+objects
+refs
+$ cd ..</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -783,8 +821,8 @@ stored in here.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>cat HEAD
-# ref: refs/heads/master</pre>
+<pre>$ cat HEAD
+ref: refs/heads/master</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -794,7 +832,7 @@ text file:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>cat config
+<pre>$ cat config
 [core]
 	repositoryformatversion = 0
 	filemode = true
@@ -810,9 +848,9 @@ command:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>cd ..
-git log
-# fatal: bad default revision 'HEAD'</pre>
+<pre>$ cd ..
+$ git log
+fatal: bad default revision 'HEAD'</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -824,8 +862,8 @@ nothing! And indeed there is nothing there:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>ls .git/refs/heads/master
-# ls: .git/refs/heads/master: No such file or directory</pre>
+<pre>$ ls .git/refs/heads/master
+ls: .git/refs/heads/master: No such file or directory</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -841,12 +879,12 @@ nothing! And indeed there is nothing there:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>git status
-# On branch master
-#
-# Initial commit
-#
-# nothing to commit (create/copy files and use "git add" to track)</pre>
+<pre>$ git status
+On branch master
+
+Initial commit
+
+nothing to commit (create/copy files and use "git add" to track)</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -858,16 +896,16 @@ that there is <em>nothing to commit</em>.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>touch mycode.py
-git status
-# On branch master
-#
-# Initial commit
-#
-# Untracked files:
-#   (use "git add &lt;file&gt;..." to include in what will be committed)
-#
-# 	mycode.c</pre>
+<pre>$ touch mycode.py
+$ git status
+On branch master
+
+Initial commit
+
+Untracked files:
+  (use "git add &lt;file&gt;..." to include in what will be committed)
+
+	mycode.c</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -879,16 +917,16 @@ exists but the repository is not <em>aware</em> of it.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>git add mycode.py
-git status
-# On branch master
-#
-# Initial commit
-#
-# Changes to be committed:
-#   (use "git rm --cached &lt;file&gt;..." to unstage)
-#
-# 	new file:   mycode.py</pre>
+<pre>$ git add mycode.py
+$ git status
+On branch master
+
+Initial commit
+
+Changes to be committed:
+  (use "git rm --cached &lt;file&gt;..." to unstage)
+
+	new file:   mycode.py</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -912,8 +950,8 @@ and then committed to the local repository.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>git log
-# fatal: bad default revision 'HEAD'</pre>
+<pre>$ git log
+fatal: bad default revision 'HEAD'</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -921,13 +959,13 @@ and then committed to the local repository.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>git commit
-git log
-# commit e5fb099e952e8754b54f9b99be93d62e3fce0fca
-# Author: ianmiell &lt;ian.miell@gmail.com&gt;
-# Date:   Tue Apr 26 07:46:58 2016 +0100
-#
-#     Some message</pre>
+<pre>$ git commit
+$ git log
+commit e5fb099e952e8754b54f9b99be93d62e3fce0fca
+Author: ianmiell &lt;ian.miell@gmail.com&gt;
+Date:   Tue Apr 26 07:46:58 2016 +0100
+
+    Some message</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -936,8 +974,8 @@ how the local change looks using git diff:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>vi mycode.py
-git diff</pre>
+<pre>$ vi mycode.py
+$ git diff</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -946,9 +984,9 @@ changes to files and add at the same time by doing <em>commit -a</em></p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>git status
-git commit -a
-git status</pre>
+<pre>$ git status
+$ git commit -a
+$ git status</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -956,7 +994,7 @@ git status</pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>git log</pre>
+<pre>$ git log</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1012,9 +1050,9 @@ repository.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>git clone https://github.com/ianmiell/shutit
-cd shutit
-ls .git</pre>
+<pre>$ git clone https://github.com/ianmiell/shutit
+$ cd shutit
+$ ls .git</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1024,22 +1062,28 @@ ls .git</pre>
 <p>Recall the 4 stages of data in a git repo:</p>
 </div>
 <div class="paragraph">
-<p>1) Local changes (working directory)
-2) Staging/Adding/Index
-3) Committing to local Repo
-4) Pushing to remote</p>
+<p>1) Local changes (working directory)</p>
+</div>
+<div class="paragraph">
+<p>2) Staging/Adding/Index</p>
+</div>
+<div class="paragraph">
+<p>3) Committing to local Repo</p>
+</div>
+<div class="paragraph">
+<p>4) Pushing to remote</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>git log                           # default history of this repo
-git log --oneline                 # more concise history of this repo
-git log --oneline --graph         # graphical view of the history of this repo
-cd ..                             # exit this repo's root folder
-git clone shutit cloned_shutit    # clone the repository
-cd cloned_shutit                  # enter the repository
-ls .git                           # we have a copy of the repository's history
-rm -rf *                          # delete all the files!
-ls .git                           # The .git folder is still there</pre>
+<pre>$ git log                           # default history of this repo
+$ git log --oneline                 # more concise history of this repo
+$ git log --oneline --graph         # graphical view of the history of this repo
+$ cd ..                             # exit this repo's root folder
+$ git clone shutit cloned_shutit    # clone the repository
+$ cd cloned_shutit                  # enter the repository
+$ ls .git                           # we have a copy of the repository's history
+$ rm -rf *                          # delete all the files!
+$ ls .git                           # The .git folder is still there</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1047,15 +1091,15 @@ ls .git                           # The .git folder is still there</pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>git status        # reports that we have deleted files in working tree/directory
-git add .         # added to staging/index area
-git status        # reports that . Note there's a helpful message about resetting now! Let's explore that.
-git reset --mixed # the default. out of staging/index area, but still deleted in the working directory!
-git status        # we are back to 'deleted in the working directory' with a message about being ready to add
-rm -rf *          # delete all the files again
-git add .         # added to staging/index area ready to commit again
-git reset --hard  # does a re-check out of the whole repository, discarding working directory and changes to the index
-git status        # we now have a consistent state between 1 (local changes) and 3 (committed)</pre>
+<pre>$ git status        # reports that we have deleted files in working tree/directory
+$ git add .         # added to staging/index area
+$ git status        # reports that . Note there's a helpful message about resetting now! Let's explore that.
+$ git reset --mixed # the default. out of staging/index area, but still deleted in the working directory!
+$ git status        # we are back to 'deleted in the working directory' with a message about being ready to add
+$ rm -rf *          # delete all the files again
+$ git add .         # added to staging/index area ready to commit again
+$ git reset --hard  # does a re-check out of the whole repository, discarding working directory and changes to the index
+$ git status        # we now have a consistent state between 1 (local changes) and 3 (committed)</pre>
 </div>
 </div>
 </div>
@@ -1091,29 +1135,47 @@ git status        # we now have a consistent state between 1 (local changes) and
 </li>
 </ul>
 </div>
+<div class="paragraph">
+<p>In the next section of code we will create a git repository with a single file.
+This file will have separate changes made on two branches - master and
+newfeature.</p>
+</div>
 <div class="listingblock">
 <div class="content">
-<pre>rm -rf tmpgit &amp;&amp; mkdir tmpgit &amp;&amp; cd tmpgit
-git init
-echo newfile &gt; file1
-git add file1
-git commit -am 'new file1'
-git status
-git branch newfeature                      # Create the 'newfeature' branch
-git status                                 # You are still on the master branch!
-git branch                                 # git branch shows the branches in your repository
-echo Line_master1 &gt;&gt; file1                 # add Line_master1
-git commit -am 'master change'             # add, commit and message
-git log --decorate --graph --oneline       # graphical view of this branch
-git log --decorate --graph --oneline --all # graphical view of all branches
-git checkout newfeature                    # Check out the newfeature branch
-cat file1                                  # This has been checked out at the 'branch point'
-echo Line_feature1 &gt;&gt; file1                # add Line_feature1
-git commit -am 'feature change'            # add, commit and message
-git log --decorate --graph --oneline --all # graphical view of all branches
-git checkout master                        # checkout the master branch
-cat file1                                  # The feature change is not there</pre>
+<pre>$ rm -rf 1.4.1
+$ mkdir 1.4.1
+$ cd 1.4.1
+$ git init
+$ echo newfile &gt; file1
+$ git add file1
+$ git commit -am 'new file1'
+$ git status
+$ git branch newfeature                      # Create the 'newfeature' branch
+$ git status                                 # You are still on the master branch!
+$ git branch                                 # git branch shows the branches in your repository
+$ echo Line_master1 &gt;&gt; file1                 # add Line_master1
+$ git commit -am 'master change'             # add, commit and message
+$ git log --decorate --graph --oneline       # graphical view of this branch
+$ git log --decorate --graph --oneline --all # graphical view of all branches
+$ git checkout newfeature                    # Check out the newfeature branch
+$ cat file1                                  # This has been checked out at the 'branch point'
+$ echo Line_feature1 &gt;&gt; file1                # add Line_feature1
+$ git commit -am 'feature change'            # add, commit and message
+$ git log --decorate --graph --oneline --all # graphical view of all branches
+$ git checkout master                        # checkout the master branch
+$ cat file1                                  # The feature change is not there</pre>
 </div>
+</div>
+<div class="paragraph">
+<p>This is the final state of the commit tree.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="diagrams/1.4.1.mermaid.png" alt="1.4.1.mermaid">
+</div>
+</div>
+<div class="paragraph">
+<p>which reflects the output of the last <em>git log</em> command.</p>
 </div>
 <div class="paragraph">
 <p>Note that the HEAD (and branch) moves forward with each commit.</p>
@@ -1127,9 +1189,9 @@ reference is pointed to.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>git log
-git checkout
-git status</pre>
+<pre>$ git log
+$ git checkout
+$ git status</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1180,18 +1242,10 @@ branch might be called <em>live</em>, <em>alice</em>, <em>pristine</em>, or what
 branching gives you the ability to work on parallel streams of development in
 the same codebase.</p>
 </div>
-<div class="paragraph">
-<p>A
-|
-B
-|
-C
-|\
-D E
-| |
-F H (experimental)
-|
-G (master, HEAD)</p>
+<div class="imageblock">
+<div class="content">
+<img src="diagrams/1.5.1.mermaid.png" alt="1.5.1.mermaid">
+</div>
 </div>
 <div class="paragraph">
 <p>In a sense, merging is the opposite of branching. When we merge, we take two
@@ -1209,20 +1263,10 @@ know this because the HEAD is pointed at it.</p>
 <p>If you merge the experimental branch into master with a <em>git merge experimental</em>,
 you end up with a tree that looks like this:</p>
 </div>
-<div class="paragraph">
-<p>A
-|
-B
-|
-C
-|\
-D E
-| |
-F H (experimental)
-| |
-G |
-|/
-I (master, HEAD)</p>
+<div class="imageblock">
+<div class="content">
+<img src="diagrams/1.5.2.mermaid.png" alt="1.5.2.mermaid">
+</div>
 </div>
 <div class="paragraph">
 <p>A new change has been made (I). This change merges together the changes made on
@@ -1233,92 +1277,78 @@ experimental with the changes made on master.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>rm -rf git-course-1.5 &amp;&amp; mkdir -p git-course-1.5 &amp;&amp; cd git-course-1.5
-git init
-echo A &gt; file1
-git add file1
-git commit -am 'A'
-echo B &gt;&gt; file1
-git commit -am 'B'
-echo C &gt;&gt; file1
-git commit -am 'C'</pre>
+<pre>$ rm -rf 1.5.1
+$ mkdir -p 1.5.1
+$ cd 1.5.1
+$ git init
+$ echo A &gt; file1
+$ git add file1
+$ git commit -am 'A'
+$ echo B &gt;&gt; file1
+$ git commit -am 'B'
+$ echo C &gt;&gt; file1
+$ git commit -am 'C'</pre>
 </div>
 </div>
 <div class="paragraph">
 <p>Now you are at this point:</p>
 </div>
-<div class="paragraph">
-<p>A
-|
-B
-|
-C (master, HEAD)</p>
+<div class="imageblock">
+<div class="content">
+<img src="diagrams/1.5.3.mermaid.png" alt="1.5.3.mermaid">
+</div>
 </div>
 <div class="paragraph">
 <p>you can branch to experimental and make your changes:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>git branch experimental
-git checkout experimental
-git branch
-echo E &gt;&gt; file1
-git commit -am 'E'
-echo H &gt;&gt; file1
-git commit -am 'H'</pre>
+<pre>$ git branch experimental
+$ git checkout experimental
+$ git branch
+$ echo E &gt;&gt; file1
+$ git commit -am 'E'
+$ echo H &gt;&gt; file1
+$ git commit -am 'H'</pre>
 </div>
 </div>
 <div class="paragraph">
 <p>and the repository is now in this state:</p>
 </div>
-<div class="paragraph">
-<p>A
-|
-B
-|
-C (master)
- \
-  E
-  |
-  H (HEAD, experimental)</p>
+<div class="imageblock">
+<div class="content">
+<img src="diagrams/1.5.4.mermaid.png" alt="1.5.4.mermaid">
+</div>
 </div>
 <div class="paragraph">
 <p>Return to master and make changes D, F and G:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>git checkout master
-git branch
-echo D &gt;&gt; file1
-git commit -am 'D'
-echo F &gt;&gt; file1
-git commit -am 'F'
-echo G &gt;&gt; file1
-git commit -am 'G'</pre>
+<pre>$ git checkout master
+$ git branch
+$ echo D &gt;&gt; file1
+$ git commit -am 'D'
+$ echo F &gt;&gt; file1
+$ git commit -am 'F'
+$ echo G &gt;&gt; file1
+$ git commit -am 'G'</pre>
 </div>
 </div>
-<div class="paragraph">
-<p>A
-|
-B
-|
-C
-|\
-D E
-| |
-F H (experimental)
-|
-G (master, HEAD)</p>
+<div class="imageblock">
+<div class="content">
+<img src="diagrams/1.5.5.mermaid.png" alt="1.5.5.mermaid">
+</div>
 </div>
 <div class="paragraph">
 <p>and you are ready to merge!</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>git merge experimental
-# Auto-merging file1
-# CONFLICT (content): Merge conflict in file1
-# Automatic merge failed; fix conflicts and then commit the result.</pre>
+<pre>$ git merge experimental
+Auto-merging file1
+CONFLICT (content): Merge conflict in file1
+Automatic merge failed; fix conflicts and then commit the result.</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1405,19 +1435,19 @@ the git log command.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>git commit -am 'merged experimental in'
-git log --all --oneline --graph --decorate
-# *   69441b0 (HEAD, master) merged
-# |\
-# | * b3d54fe (experimental) H
-# | * 4a013db E
-# * | d9d3722 G
-# * | bf0fc3e F
-# * | ccedaee D
-# |/
-# * 8835191 C
-# * f9e5b4f B
-# * 38471fe A</pre>
+<pre>$ git commit -am 'merged experimental in'
+$ git log --all --oneline --graph --decorate
+*   69441b0 (HEAD, master) merged
+|\
+| * b3d54fe (experimental) H
+| * 4a013db E
+* | d9d3722 G
+* | bf0fc3e F
+* | ccedaee D
+|/
+* 8835191 C
+* f9e5b4f B
+* 38471fe A</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1476,7 +1506,7 @@ likely to be interested in recent changes than older ones.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-07-18 08:58:14 BST
+Last updated 2016-07-22 14:52:19 BST
 </div>
 </div>
 </body>

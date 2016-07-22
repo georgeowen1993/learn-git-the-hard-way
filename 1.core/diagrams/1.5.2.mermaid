@@ -1,0 +1,11 @@
+graph LR
+   A-->B
+   B-->C
+   C-- experimental branch -->E
+   E-->H
+   C-- master branch -->F
+   F-->G
+   G-- merged with H -->I
+   H-- merged with G -->I(I <- HEAD)
+
+

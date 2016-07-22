@@ -67,55 +67,71 @@ A series of changes to a repository might look like this:
 
 image::diagrams/1.1.1.mermaid.png[]
 
-Change A is made, then B, then C. This might be called the 'main line'.
+Change A is made, then B, then C. This might be informally called the
+'main line'.
 
 But let's say someone wants to make an experimental change but not affect
-the 'main line'. Then they might 'branch' at point C:
+the 'main line'. Then they might 'branch' the code at point C:
 
-----
-A
-|
-B
-|
-C
-|\
-| F (experimental)
-|
-D
-|
-E (main line)
-----
+image::diagrams/1.1.2.mermaid.png[]
 
 That way users can choose to get a view of the source on the 'main line' branch
 or the 'experimental' one.
 
 
-What About Github?
+What About GitHub?
 ------------------
 
 In practice, some repositories are more equal than others (eg GitHub). This is
-a matter of convention. I can use a github repo as a secondary repo for my
+a matter of convention. I can use a GitHub repo as a secondary repo for my
 workflow - it's up to me (indeed I do this for some of my private repos).
 
-This is why every GH outage causes a flurry of smart-alec comments about Git being
-decentralised.
+This is why every GitHub outage causes a flurry of smart-alec comments about git
+being decentralised.
 
 Keeping your local repo sync'd with others is one of the challenges of git, but
 the first step to mastering git is understanding this equality of repos.
 
-Other differences with git
---------------------------
+Other differences with git vs traditional VCSes
+-----------------------------------------------
 
-History is more malleable. You can change the history in your own copy of
-the repo and others' (if you have permission).
+- History is more malleable.
 
-Branching is cheap. In CVS it's very slow to branch a (O(n) to number of files).
+You can change the history in your own copy of the repo and others' (if you have
+the appropriate permission).
+
+- Branching is cheap
+
+In CVS it's very slow to branch a (O(n) to number of files).
 In git it's an O(1) step.
 This makes experimentation much easier.
+Branch deletion is a common and cheap operation.
+
+- Commits are across the whole poject
+
+In contrast to other source control tools, changes are made across the whole
+project, not per file.
+
+- No version numbers
+
+Git does not automatically number versions of files/changes. It instead assigns
+a hash (effectively random) to the change.
+
+- File renaming
+
+You can rename files in git and the content will be tracked. This is a massive
+win compared to CVS.
+
+
+
+Assumptions
+-----------
+
+At this point I assume you have git installed, and that you have set your
+details up as per the below:
 
 ----
-# Assume you have git installed
-git config --global user.email "you@example.com" && git config --global user.name "Your Name"
+$ git config --global user.email "you@example.com" && git config --global user.name "Your Name"
 ----
 
 What we learned

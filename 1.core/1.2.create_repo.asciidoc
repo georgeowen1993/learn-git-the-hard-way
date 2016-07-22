@@ -18,10 +18,10 @@ To initialise a git repository, run 'git init' from within the root folder
 of the source you want to manage.
 
 ----
-rm -rf 1.2.1
-mkdir 1.2.1
-cd 1.2.1
-git init
+$ rm -rf 1.2.1
+$ mkdir 1.2.1
+$ cd 1.2.1
+$ git init
 ----
 
 This initialises a database in the folder '.git' locally.
@@ -30,16 +30,16 @@ other files elsewhere on your filesystem you need to be concerned about.
 (There are config files for git, but these are global to the host).
 
 ----
-cd .git
-ls
-# config
-# description
-# HEAD
-# hooks
-# info
-# objects
-# refs
-cd ..
+$ cd .git
+$ ls
+config
+description
+HEAD
+hooks
+info
+objects
+refs
+$ cd ..
 ----
 
 It's not part of the scope of this course to go into detail of the git internals
@@ -57,8 +57,8 @@ If we look at the file, we see it points to the refs/heads/master.
 This is an internal representation of the default 'master' branch.
 
 ----
-cat HEAD
-# ref: refs/heads/master
+$ cat HEAD
+ref: refs/heads/master
 ----
 
 'config' stores information about your repository's local configuration, eg
@@ -66,7 +66,7 @@ what branches and remote repositories your repository is aware of. It's a plain
 text file:
 
 ----
-cat config
+$ cat config
 [core]
 	repositoryformatversion = 0
 	filemode = true
@@ -80,9 +80,9 @@ If we want to look at the history of this repository, you can run the git log
 command:
 
 ----
-cd ..
-git log
-# fatal: bad default revision 'HEAD'
+$ cd ..
+$ git log
+fatal: bad default revision 'HEAD'
 ----
 
 We have a problem! There is no history to look at.
@@ -91,8 +91,8 @@ Git has followed the 'HEAD' pointer to the refs/heads/master entry and found
 nothing! And indeed there is nothing there:
 
 ----
-ls .git/refs/heads/master
-# ls: .git/refs/heads/master: No such file or directory
+$ ls .git/refs/heads/master
+ls: .git/refs/heads/master: No such file or directory
 ----
 
 You need to create a history.
@@ -103,12 +103,12 @@ git status
 As is often the case, git status is your friend:
 
 ----
-git status
-# On branch master
-#
-# Initial commit
-#
-# nothing to commit (create/copy files and use "git add" to track)
+$ git status
+On branch master
+
+Initial commit
+
+nothing to commit (create/copy files and use "git add" to track)
 ----
 
 It tells you where the HEAD is pointed at (the non-existent master branch), and
@@ -117,16 +117,16 @@ that there is 'nothing to commit'.
 Create a file and check status again:
 
 ----
-touch mycode.py
-git status
-# On branch master
-#
-# Initial commit
-#
-# Untracked files:
-#   (use "git add <file>..." to include in what will be committed)
-#
-# 	mycode.c
+$ touch mycode.py
+$ git status
+On branch master
+
+Initial commit
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+	mycode.c
 ----
 
 We are now advised that we have an 'untracked' file. Git has detected that it
@@ -135,16 +135,16 @@ exists but the repository is not 'aware' of it.
 Make git aware of it by adding it to the repository:
 
 ----
-git add mycode.py
-git status
-# On branch master
-#
-# Initial commit
-#
-# Changes to be committed:
-#   (use "git rm --cached <file>..." to unstage)
-#
-# 	new file:   mycode.py
+$ git add mycode.py
+$ git status
+On branch master
+
+Initial commit
+
+Changes to be committed:
+  (use "git rm --cached <file>..." to unstage)
+
+	new file:   mycode.py
 ----
 
 We have added a file to the index ready to be committed to the repository.
@@ -162,43 +162,43 @@ and then committed to the local repository.
 Still we have no history!
 
 ----
-git log
-# fatal: bad default revision 'HEAD'
+$ git log
+fatal: bad default revision 'HEAD'
 ----
 
 So we need to commit it to the repository to get a history:
 
 ----
-git commit
-git log
-# commit e5fb099e952e8754b54f9b99be93d62e3fce0fca
-# Author: ianmiell <ian.miell@gmail.com>
-# Date:   Tue Apr 26 07:46:58 2016 +0100
-#
-#     Some message
+$ git commit
+$ git log
+commit e5fb099e952e8754b54f9b99be93d62e3fce0fca
+Author: ianmiell <ian.miell@gmail.com>
+Date:   Tue Apr 26 07:46:58 2016 +0100
+
+    Some message
 ----
 
 Now that git is aware of this file you can make a change to it and show
 how the local change looks using git diff:
 
 ----
-vi mycode.py
-git diff
+$ vi mycode.py
+$ git diff
 ----
 
 Again, you can see what's going on by looking at the status. You can commit
 changes to files and add at the same time by doing 'commit -a'
 
 ----
-git status
-git commit -a
-git status
+$ git status
+$ git commit -a
+$ git status
 ----
 
 git log now shows the history of the file:
 
 ----
-git log
+$ git log
 ----
 
 
