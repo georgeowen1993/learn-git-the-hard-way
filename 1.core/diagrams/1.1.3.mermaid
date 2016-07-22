@@ -1,0 +1,6 @@
+graph LR
+   A(Changes to files in working directory)-- get added to -->B(Staging area/Added content/Git index)
+   B-- get unstaged from -->A
+   B-- committed to -->C(local git repository)
+   C-- pushed to -->D(remote git repository)
+   D-- fetched from -->C
