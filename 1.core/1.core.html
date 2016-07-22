@@ -473,9 +473,7 @@ merges</p>
 </div>
 </div>
 </div>
-<div class="sect1">
-<h2 id="_core_git_concepts">Core git concepts</h2>
-<div class="sectionbody">
+<h1 id="_core_git_concepts" class="sect0">Core git concepts</h1>
 <div class="paragraph">
 <p>This section covers:</p>
 </div>
@@ -579,11 +577,8 @@ globe, and offline. So there is no concept of</p>
 If you&#8217;ve ever been confused by git, it&#8217;s likely because these stages were
 not understood.</p>
 </div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_branches">Branches</h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="_branches">Branches</h3>
 <div class="paragraph">
 <p>In case you&#8217;ve not looked at a SC tool before, a branch is a core concept.</p>
 </div>
@@ -613,10 +608,8 @@ the <em>main line</em>. Then they might <em>branch</em> the code at point C:</p>
 or the <em>experimental</em> one.</p>
 </div>
 </div>
-</div>
-<div class="sect1">
-<h2 id="_what_about_github">What About GitHub?</h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="_what_about_github">What About GitHub?</h3>
 <div class="paragraph">
 <p>In practice, some repositories are more equal than others (eg GitHub). This is
 a matter of convention. I can use a GitHub repo as a secondary repo for my
@@ -629,7 +622,6 @@ being decentralised.</p>
 <div class="paragraph">
 <p>Keeping your local repo sync&#8217;d with others is one of the challenges of git, but
 the first step to mastering git is understanding this equality of repos.</p>
-</div>
 </div>
 </div>
 <div class="sect1">
@@ -692,11 +684,8 @@ a hash (effectively random) to the change.</p>
 <p>You can rename files in git and the content will be tracked. This is a massive
 win compared to CVS.</p>
 </div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_assumptions">Assumptions</h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="_assumptions">Assumptions</h3>
 <div class="paragraph">
 <p>At this point I assume you have git installed, and that you have set your
 details up as per the below:</p>
@@ -704,6 +693,7 @@ details up as per the below:</p>
 <div class="listingblock">
 <div class="content">
 <pre>$ git config --global user.email "you@example.com" &amp;&amp; git config --global user.name "Your Name"</pre>
+</div>
 </div>
 </div>
 </div>
@@ -726,9 +716,7 @@ details up as per the below:</p>
 </div>
 </div>
 </div>
-<div class="sect1">
-<h2 id="_git_basics">Git basics</h2>
-<div class="sectionbody">
+<h1 id="_git_basics" class="sect0">Git basics</h1>
 <div class="paragraph">
 <p>This section covers:</p>
 </div>
@@ -758,8 +746,8 @@ details up as per the below:</p>
 </ul>
 </div>
 <div class="paragraph">
-<p>This is important because these are the basic tools you will most often use
-with git.</p>
+<p>This section is important because these are the basic tools you will most often
+use with git.</p>
 </div>
 <div class="paragraph">
 <p>To initialise a git repository, run <em>git init</em> from within the root folder
@@ -777,7 +765,8 @@ $ git init</pre>
 <p>This initialises a database in the folder <em>.git</em> locally.
 Your repository is entirely stored within this .git folder. There are no
 other files elsewhere on your filesystem you need to be concerned about.
-(There are config files for git, but these are global to the host).</p>
+(There are config files for git, but these are global to the host. We can ignore
+them for now.)</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -794,22 +783,24 @@ $ cd ..</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>It&#8217;s not part of the scope of this course to go into detail of the git internals
-stored in here.</p>
+<p>It&#8217;s not part of the scope of this course to go into detail about the git
+internals files seen here.</p>
 </div>
 <div class="paragraph">
-<p>What&#8217;s worth being aware of here are:</p>
+<p>What is worth being aware of here are:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>the <em>HEAD</em></p>
+<p>the <em>HEAD</em> file</p>
 </li>
 <li>
 <p>config</p>
 </li>
 </ul>
 </div>
+<div class="sect2">
+<h3 id="_head">HEAD</h3>
 <div class="paragraph">
 <p>The HEAD is key - it points to the current branch you are <em>on</em>.</p>
 </div>
@@ -825,6 +816,9 @@ stored in here.</p>
 ref: refs/heads/master</pre>
 </div>
 </div>
+</div>
+<div class="sect2">
+<h3 id="_config">config</h3>
 <div class="paragraph">
 <p><em>config</em> stores information about your repository&#8217;s local configuration, eg
 what branches and remote repositories your repository is aware of. It&#8217;s a plain
@@ -842,6 +836,8 @@ text file:</p>
 	precomposeunicode = true</pre>
 </div>
 </div>
+<div class="sect3">
+<h4 id="_git_log">git log</h4>
 <div class="paragraph">
 <p>If we want to look at the history of this repository, you can run the git log
 command:</p>
@@ -854,11 +850,11 @@ fatal: bad default revision 'HEAD'</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>We have a problem! There is no history to look at.</p>
+<p>We have a problem! This repository has no history to look at.</p>
 </div>
 <div class="paragraph">
 <p>Git has followed the <em>HEAD</em> pointer to the refs/heads/master entry and found
-nothing! And indeed there is nothing there:</p>
+nothing there! And indeed there is nothing there:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -871,9 +867,8 @@ ls: .git/refs/heads/master: No such file or directory</pre>
 </div>
 </div>
 </div>
-<div class="sect1">
-<h2 id="_git_status">git status</h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="_git_status">git status</h3>
 <div class="paragraph">
 <p>As is often the case, git status is your friend:</p>
 </div>
@@ -913,8 +908,11 @@ Untracked files:
 exists but the repository is not <em>aware</em> of it.</p>
 </div>
 <div class="paragraph">
-<p>Make git aware of it by adding it to the repository:</p>
+<p>Make git aware of it by adding it to the repository.</p>
 </div>
+</div>
+<div class="sect2">
+<h3 id="_git_add">git add</h3>
 <div class="listingblock">
 <div class="content">
 <pre>$ git add mycode.py
@@ -955,8 +953,11 @@ fatal: bad default revision 'HEAD'</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>So we need to commit it to the repository to get a history:</p>
+<p>So we need to commit it to the repository to get a history.</p>
 </div>
+</div>
+<div class="sect2">
+<h3 id="_git_commit">git commit</h3>
 <div class="listingblock">
 <div class="content">
 <pre>$ git commit
@@ -970,8 +971,11 @@ Date:   Tue Apr 26 07:46:58 2016 +0100
 </div>
 <div class="paragraph">
 <p>Now that git is aware of this file you can make a change to it and show
-how the local change looks using git diff:</p>
+how the local change looks using git diff.</p>
 </div>
+</div>
+<div class="sect2">
+<h3 id="_git_diff">git diff</h3>
 <div class="listingblock">
 <div class="content">
 <pre>$ vi mycode.py
@@ -1029,10 +1033,7 @@ $ git status</pre>
 </ul>
 </div>
 </div>
-</div>
-<div class="sect1">
-<h2 id="_cloning_a_repo">Cloning a repo</h2>
-<div class="sectionbody">
+<h1 id="_cloning_a_repo" class="sect0">Cloning a repo</h1>
 <div class="ulist">
 <ul>
 <li>
@@ -1100,8 +1101,6 @@ $ rm -rf *          # delete all the files again
 $ git add .         # added to staging/index area ready to commit again
 $ git reset --hard  # does a re-check out of the whole repository, discarding working directory and changes to the index
 $ git status        # we now have a consistent state between 1 (local changes) and 3 (committed)</pre>
-</div>
-</div>
 </div>
 </div>
 <div class="sect1">

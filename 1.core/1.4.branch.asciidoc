@@ -1,5 +1,4 @@
-Git branching
--------------
+= Git branching
 
 In this section you will learn about:
 
@@ -53,6 +52,8 @@ $ git log
 $ git checkout
 $ git status
 ----
+
+TODO: more here
 
 Detached head means you are not associated with a branch. 
 

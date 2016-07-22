@@ -13,6 +13,7 @@ done
 for f in $(find * -maxdepth 0 -type d)
 do
 	pushd $f
+	#asciidoctor -T toc $f.asciidoc
 	asciidoctor $f.asciidoc
 	popd
 done
