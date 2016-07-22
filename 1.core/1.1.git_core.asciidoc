@@ -1,5 +1,7 @@
 = Core git concepts
 
+=== Introduction 
+
 This section covers:
 
 - source control
@@ -41,7 +43,10 @@ copy of each other git repositories.
 ALL GIT REPOSITORIES ARE EQUAL.
 
 Remember, git was created so people could work on the linux kernel across the
-globe, and offline. So there is no concept of 
+globe, and offline. So there is no concept of a central server that holds the
+golden source.
+
+In the git world you have four phases your code can go through:
 
 1) Local changes (working directory)
 
@@ -134,3 +139,7 @@ $ git config --global user.email "you@example.com" && git config --global user.n
 - setting up git
 - what git is - the four stages
 - differences to other SC systems
+
+=== Exercises
+
+TODO

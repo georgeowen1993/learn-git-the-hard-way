@@ -224,3 +224,8 @@ $ git log
 - git add
 - git commit
 - git diff
+
+
+=== Exercises
+
+TODO

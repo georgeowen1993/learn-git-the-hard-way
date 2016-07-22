@@ -57,3 +57,7 @@ $ git status        # we now have a consistent state between 1 (local changes) a
 - git clone
 - git reset
 
+
+=== Exercises
+
+TODO

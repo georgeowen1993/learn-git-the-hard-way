@@ -186,4 +186,6 @@ likely to be interested in recent changes than older ones.
 - How to resolve a merge conflict
 - How to read a merged log history
 
+=== Exercises
 
+TODO
