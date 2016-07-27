@@ -562,23 +562,19 @@ copy of each other git repositories.</p>
 globe, and offline. So there is no concept of a central server that holds the
 golden source.</p>
 </div>
+</div>
+<div class="sect2">
+<h3 id="_the_four_phases_of_git_content">The Four Phases of Git Content</h3>
 <div class="paragraph">
 <p>In the git world you have four phases your code can go through:</p>
 </div>
-<div class="paragraph">
-<p>1) Local changes (working directory)</p>
+<div class="imageblock">
+<div class="content">
+<img src="diagrams/1.1.3.mermaid.png" alt="1.1.3.mermaid">
+</div>
 </div>
 <div class="paragraph">
-<p>2) Staging/Adding/Index</p>
-</div>
-<div class="paragraph">
-<p>3) Committing to local Repo</p>
-</div>
-<div class="paragraph">
-<p>4) Pushing to remote</p>
-</div>
-<div class="paragraph">
-<p>The 4) stages are key to understanding git.</p>
+<p>Understanding these 4) stages are key to understanding git.</p>
 </div>
 <div class="paragraph">
 <p>If this seems over-complicated now, it won&#8217;t as you grow to know and love git.
@@ -699,7 +695,7 @@ win compared to CVS.</p>
 <h3 id="_assumptions">Assumptions</h3>
 <div class="paragraph">
 <p>At this point I assume you have git installed, and that you have set your
-details up as per the below:</p>
+details up as per the below. Replace with your email address and username:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -726,7 +722,9 @@ details up as per the below:</p>
 <div class="sect2">
 <h3 id="_exercises">Exercises</h3>
 <div class="paragraph">
-<p>TODO</p>
+<p>1) Install git and set up your config. Set up user.email and user.name using the --global flag.
+2) Find out where the config is stored.
+3) Research the other config items that are in the file and some of those that are not.</p>
 </div>
 </div>
 </div>
@@ -853,8 +851,9 @@ text file:</p>
 	precomposeunicode = true</pre>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_git_log">git log</h4>
+</div>
+<div class="sect2">
+<h3 id="_git_log">git log</h3>
 <div class="paragraph">
 <p>If we want to look at the history of this repository, you can run the git log
 command:</p>
@@ -881,7 +880,6 @@ ls: .git/refs/heads/master: No such file or directory</pre>
 </div>
 <div class="paragraph">
 <p>You need to create a history.</p>
-</div>
 </div>
 </div>
 <div class="sect2">
@@ -1053,7 +1051,13 @@ $ git status</pre>
 <div class="sect2">
 <h3 id="_exercises_2">Exercises</h3>
 <div class="paragraph">
-<p>TODO</p>
+<p>1) Create a git repo</p>
+</div>
+<div class="paragraph">
+<p>2) Add and commit a file to the repo</p>
+</div>
+<div class="paragraph">
+<p>3) Commit a few more changes, and then run git log to view the history</p>
 </div>
 </div>
 </div>
@@ -1071,6 +1075,8 @@ $ git status</pre>
 </li>
 </ul>
 </div>
+<div class="sect2">
+<h3 id="_clone">Clone</h3>
 <div class="paragraph">
 <p>In this section we&#8217;re going to play with the contents of our repository by
 deleting the content and seeing what our options are to recover from the
@@ -1086,20 +1092,16 @@ $ ls .git</pre>
 <div class="paragraph">
 <p>There&#8217;s .git, just as before.</p>
 </div>
+</div>
+<div class="sect2">
+<h3 id="_accidental_deletion">Accidental Deletion</h3>
 <div class="paragraph">
 <p>Recall the 4 stages of data in a git repo:</p>
 </div>
-<div class="paragraph">
-<p>1) Local changes (working directory)</p>
+<div class="imageblock">
+<div class="content">
+<img src="diagrams/1.1.3.mermaid.png" alt="1.1.3.mermaid">
 </div>
-<div class="paragraph">
-<p>2) Staging/Adding/Index</p>
-</div>
-<div class="paragraph">
-<p>3) Committing to local Repo</p>
-</div>
-<div class="paragraph">
-<p>4) Pushing to remote</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1117,17 +1119,24 @@ $ ls .git                           # The .git folder is still there</pre>
 <div class="paragraph">
 <p>We have cloned the repository, and 'accidentally' deleted all the files.</p>
 </div>
+</div>
+<div class="sect2">
+<h3 id="_git_reset">git reset</h3>
+<div class="paragraph">
+<p>You can use 'git reset' to recover the state of the</p>
+</div>
 <div class="listingblock">
 <div class="content">
 <pre>$ git status        # reports that we have deleted files in working tree/directory
 $ git add .         # added to staging/index area
 $ git status        # reports that . Note there's a helpful message about resetting now! Let's explore that.
-$ git reset --mixed # the default. out of staging/index area, but still deleted in the working directory!
+$ git reset --mixed # --mixed is the default. out of staging/index area, but still deleted in the working directory!
 $ git status        # we are back to 'deleted in the working directory' with a message about being ready to add
 $ rm -rf *          # delete all the files again
 $ git add .         # added to staging/index area ready to commit again
 $ git reset --hard  # does a re-check out of the whole repository, discarding working directory and changes to the index
 $ git status        # we now have a consistent state between 1 (local changes) and 3 (committed)</pre>
+</div>
 </div>
 </div>
 <div class="sect2">
@@ -1146,7 +1155,15 @@ $ git status        # we now have a consistent state between 1 (local changes) a
 <div class="sect2">
 <h3 id="_exercises_3">Exercises</h3>
 <div class="paragraph">
-<p>TODO</p>
+<p>1) Check out a git repo from either your company repository or github</p>
+</div>
+<div class="paragraph">
+<p>2) Browse the git log for that repo</p>
+</div>
+<div class="paragraph">
+<p>3) Look at the man page for git log and explore the options. Don&#8217;t worry about
+understanding everything in there, but play with the options and try to work out
+what is going on.</p>
 </div>
 </div>
 </div>
@@ -1539,7 +1556,15 @@ likely to be interested in recent changes than older ones.</p>
 <div class="sect2">
 <h3 id="_exercises_5">Exercises</h3>
 <div class="paragraph">
-<p>TODO</p>
+<p>1) Initialise a repository, commit a file, make changes on two branches and
+merge</p>
+</div>
+<div class="paragraph">
+<p>2) Read over git merge&#8217;s man page, and research what you don&#8217;t understand</p>
+</div>
+<div class="paragraph">
+<p>3) Create a merge knowing there will be a conflict and understand what you
+need to do to resolve</p>
 </div>
 </div>
 </div>
@@ -1547,7 +1572,7 @@ likely to be interested in recent changes than older ones.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-07-22 18:45:48 BST
+Last updated 2016-07-27 14:56:26 BST
 </div>
 </div>
 </body>
