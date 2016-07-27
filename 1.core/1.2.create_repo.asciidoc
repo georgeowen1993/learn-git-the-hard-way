@@ -80,8 +80,7 @@ $ cat config
 	precomposeunicode = true
 ----
 
-git log
-^^^^^^^
+=== git log
 
 If we want to look at the history of this repository, you can run the git log
 command:
@@ -228,4 +227,8 @@ $ git log
 
 === Exercises
 
-TODO
+1) Create a git repo
+
+2) Add and commit a file to the repo
+
+3) Commit a few more changes, and then run git log to view the history

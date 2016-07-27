@@ -188,4 +188,10 @@ likely to be interested in recent changes than older ones.
 
 === Exercises
 
-TODO
+1) Initialise a repository, commit a file, make changes on two branches and
+merge
+
+2) Read over git merge's man page, and research what you don't understand
+
+3) Create a merge knowing there will be a conflict and understand what you
+need to do to resolve
