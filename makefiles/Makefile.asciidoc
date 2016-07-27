@@ -1,0 +1,15 @@
+MAKE=make
+BASE=$(shell basename $(shell pwd))
+CHAPTER_SOURCE=$(BASE).asciidoc
+CHAPTER_TARGET=$(BASE).html
+
+all: diagrams $(CHAPTER_TARGET)	
+
+.PHONY: diagrams
+diagrams:
+	$(MAKE) -C diagrams
+
+$(CHAPTER_TARGET): $(CHAPTER_SOURCE)
+	asciidoctor $(abspath $(@D))/$(CHAPTER_SOURCE)
+
+	

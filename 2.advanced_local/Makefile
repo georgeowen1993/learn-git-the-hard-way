@@ -1,4 +1,1 @@
-MAKE=make
-
-all:
-	$(MAKE) -C diagrams
+../makefiles/Makefile.asciidoc
