@@ -3,7 +3,7 @@ OUTPUT_DIR=$(shell pwd)/output
 
 include makefiles/Makefile.constants
 
-.PHONY: chapters $(CHAPTERS)
+.PHONY: chapters $(CHAPTERS) deploy
 chapters: $(CHAPTERS) 
 
 $(CHAPTERS):
@@ -13,3 +13,8 @@ $(CHAPTERS):
 
 clean:
 	rm $(OUTPUT_DIR)/*
+
+deploy: /var/www/html/learngitthehardway/1.core.html
+
+/var/www/html/learngitthehardway/1.core.html: output/1.core.html
+	cp output/1.core.html /var/www/html/learngitthehardway/1.core.html
