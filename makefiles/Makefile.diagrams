@@ -6,5 +6,3 @@ OBJ_FILES=$(patsubst %.mermaid,%.mermaid.png,$(MERMAID_FILES))
 
 all: $(OBJ_FILES)
 
-clean:
-	rm -f *.png
