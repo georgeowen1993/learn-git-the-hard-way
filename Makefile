@@ -9,6 +9,8 @@ chapters: $(CHAPTERS)
 $(CHAPTERS):
 	$(MAKE) -C $@
 
+all: clean chapters deploy
+
 ifeq ($(shell hostname),rothko)
 deploy: chapters zip /var/www/html/learngitthehardway
 
