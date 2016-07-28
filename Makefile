@@ -1,9 +1,12 @@
-CHAPTERS=$(shell ls -d [0-9]*)
-OUTPUT_DIR=$(shell pwd)/output
+CHAPTERS:=$(shell ls -d [1-9]*)
+OUTPUT_DIR:=$(shell pwd)/output
+DEPLOY_DIR:=/var/www/html/learngitthehardway
+BOOK_NAME:=learngitthehardway
 
 include makefiles/Makefile.constants
 
 .PHONY: chapters $(CHAPTERS) deploy
+
 chapters: $(CHAPTERS) 
 
 $(CHAPTERS):
@@ -12,18 +15,20 @@ $(CHAPTERS):
 all: clean chapters deploy
 
 ifeq ($(shell hostname),rothko)
-deploy: chapters zip /var/www/html/learngitthehardway
 
-/var/www/html/learngitthehardway/: zip
-		cp -R output/* /var/www/html/learngitthehardway
+deploy: chapters $(DEPLOY_DIR)
+
+$(DEPLOY_DIR): zip
+	cp -R output/* $(DEPLOY_DIR)
+	cp $(DEPLOY_DIR)/9999.learngitthehardway.html $(DEPLOY_DIR)/index.html
 
 zip:
-	tar -zcf output/learngitthehardway.tar.gz output
+	tar -zcf $(DEPLOY_DIR)/$(BOOK_NAME).tar.gz output
+
 else
 deploy:
 	$(error not on rothko)
 endif
 
 clean:
-	rm -rf $(OUTPUT_DIR)/*
-	rm -rf /var/www/html/learngitthehardway/*
+	rm -rf $(OUTPUT_DIR)/* $(DEPLOY_DIR)/*
