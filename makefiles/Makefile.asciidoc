@@ -15,4 +15,3 @@ diagrams:
 $(CHAPTER_TARGET): $(CHAPTER_SOURCE)
 	asciidoctor -n -D $(OUTPUT_DIR) $(CHAPTER_SOURCE)
 
-

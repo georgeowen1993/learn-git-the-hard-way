@@ -1,4 +1,4 @@
-CHAPTERS=$(shell ls -d [1-9]*)
+CHAPTERS=$(shell ls -d [0-9]*)
 OUTPUT_DIR=$(shell pwd)/output
 
 include makefiles/Makefile.constants
@@ -17,6 +17,9 @@ deploy: chapters zip /var/www/html/learngitthehardway
 
 zip:
 	tar -zcf output/learngitthehardway.tar.gz output
+else
+deploy:
+	$(error not on rothko)
 endif
 
 clean:
