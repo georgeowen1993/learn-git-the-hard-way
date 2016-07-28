@@ -1,0 +1,3 @@
+:toc:
+
+include::1.core/1.core.asciidoc[]

@@ -1,6 +1,10 @@
-FILES=$(shell ls *png)
+MERMAID_FILES=$(wildcard *.mermaid)
+OBJ_FILES=$(patsubst %.mermaid,%.mermaid.png,$(MERMAID_FILES))
 
 %.mermaid.png: %.mermaid
 	mermaid $<
 
-all: $(FILES)
+all: $(OBJ_FILES)
+
+clean:
+	rm -f *.png
