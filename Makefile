@@ -10,9 +10,13 @@ $(CHAPTERS):
 	$(MAKE) -C $@
 
 ifeq ($(shell hostname),rothko)
-deploy: chapters /var/www/html/learngitthehardway/1.core.html
-/var/www/html/learngitthehardway/1.core.html: output/1.core.html
+deploy: chapters zip /var/www/html/learngitthehardway
+
+/var/www/html/learngitthehardway/: zip
 		cp -R output/* /var/www/html/learngitthehardway
+
+zip:
+	tar -zcf output/learngitthehardway.tar.gz output
 endif
 
 clean:
