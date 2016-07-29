@@ -107,6 +107,7 @@ imiell@Ians-MacBook-Air:~/tmpgit$ git status
 #	both modified:   file1
 #
 #no changes added to commit (use "git add" and/or "git commit -a")
+----
 
 
 Cherry-picking is often a simple and easy to follow way to move changes between
