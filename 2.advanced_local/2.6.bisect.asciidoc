@@ -22,8 +22,6 @@ A51
 A100
 ----
 
-Figure 2.6.1
-
 You discover a previously-unseen bug at point A100 and want to debug it. One way
 to do this is to read over the code, add logging etc.. This can be
 time-consuming, and there is another simpler way to gather information about
@@ -152,9 +150,6 @@ be 1, the second 2, and so on until the hundredth commit which adds the line
 
 In this scenario the 'bug' is the line '63', but we don't know that yet. All
 we know is that we can tell if the bug is in the code with the shell script:
-
-----
-grep -v 
 
 ----
 rm -rf git-bisect && mkdir -p git-bisect && cd git-bisect

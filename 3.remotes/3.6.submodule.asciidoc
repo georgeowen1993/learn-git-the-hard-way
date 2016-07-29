@@ -31,11 +31,13 @@ git commit -am 'B'
 
 Alice's library's history looks like this:
 
+----
 A
 |\
 | C (experimental)
 |
 B (master)
+----
 
 
 Now Bob wants to use Alice's library, but specifically wants to use what's on
