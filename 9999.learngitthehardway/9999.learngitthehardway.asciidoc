@@ -1,6 +1,8 @@
 = Learn Git The Hard Way
 
-:toc:
+:toc: left
+
+An introduction to Git using 'The Hard Way' method.
 
 include::../1.core/1.core.asciidoc[]
 
