@@ -1,7 +1,0 @@
-:toc:
-
-include::1.core/1.core.asciidoc[]
-
-include::2.advanced_local/2.advanced_local.asciidoc[]
-
-include::3.remotes/3.remotes.asciidoc[]
