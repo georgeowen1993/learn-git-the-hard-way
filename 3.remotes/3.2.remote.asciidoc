@@ -1,5 +1,4 @@
-Working with multiple repos
----------------------------
+=== Working with multiple repos
 
 Now you are going to work with multiple repos.
 
@@ -127,8 +126,7 @@ This is why people make jokes when GitHub is down about the fact that it should
 not be a problem because it is a distributed source control tool.
 
 
-What we learned
----------------
+==== What we learned
 
 - How to add a remote repo
 - How to fetch changes from the remote repo

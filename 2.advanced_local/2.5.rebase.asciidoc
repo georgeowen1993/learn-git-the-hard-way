@@ -1,5 +1,4 @@
-Git Rebase
-----------
+=== Git Rebase
 
 Rebasing is one of the most commonly-discussed advanced git topics.
 
@@ -10,16 +9,21 @@ a simple example, so pay attention!
 
 Let's say we have a set of changes on a master branch:
 
+----
 A
 |
 B
 |
 C
+----
+A
 
 Figure 2.5.1
 
 and at this point we branch off to 'feature1' and make another change:
 
+----
+A
 A
 |
 B
@@ -27,11 +31,15 @@ B
 C (HEAD, master)
  \
   D (feature1)
+----
+A
 
 Figure 2.5.2
 
 Now we go back to master and make a couple more changes:
 
+----
+A
 A
 |
 B
@@ -41,6 +49,8 @@ C
 E D (feature1)
 |
 F (HEAD, master)
+----
+A
 
 Figure 2.5.3
 
@@ -49,6 +59,7 @@ from point C on the master branch, but the situation has moved on. Now if master
 wants to merge in the change on feature1, it could merge it in, and the tree
 would look like this:
 
+----
 A
 |
 B
@@ -61,6 +72,7 @@ F D (feature1)
 | |
 |/
 G (HEAD, master)
+----
 
 Figure 2.5.4
 
@@ -71,6 +83,7 @@ That is OK, but not entirely desirable for two reasons:
 
 Wouldn't it be better if the history looked like this?
 
+----
 A
 |
 B
@@ -82,6 +95,7 @@ E
 F
 |
 D (head, master, feature1)
+----
 
 Figure 2.5.5
 
@@ -95,6 +109,7 @@ If we remind ourselves of the situation pre-merge (Figure 2.5.3) then we can
 visualise 'picking up' the changes on the feature1 branch and moving them
 to the HEAD. So from this:
 
+----
 A
 |
 B
@@ -104,11 +119,13 @@ C
 E D (feature1)
 |
 F (HEAD, master)
+----
 
 Figure 2.5.3 (again)
 
 To this:
 
+----
 A
 |
 B
@@ -120,6 +137,7 @@ E
 F (HEAD, master)
  \
   D (feature1)
+----
 
 Figure 2.5.6
 
@@ -194,6 +212,7 @@ git log --all --decorate --graph
 
 We are now in this state:
 
+----
 A
 |
 B
@@ -203,6 +222,7 @@ C
 E D (feature1)
 |
 F (HEAD, master)
+----
 
 Figure 2.5.3 (again)
 
@@ -317,8 +337,7 @@ git log --all --decorate --graph
 ----
 
 
-Fast-forwarding
----------------
+==== Fast-forwarding
 
 What's interesting about the above is this:
 
@@ -335,8 +354,7 @@ branch pointer merely needs to be 'fast-forwarded' to the same point as
 feature1! The HEAD pointer, naturally, moves with the branch we're on (master).
 
 
-What we have learned
---------------------
+==== What we have learned
 
 - What a rebase is 
 - What fast-forward means

@@ -1,7 +1,6 @@
 :chapter: 3
 
-Remote Repositories
-===================
+== Remote Repositories
 
 include::3.intro.asciidoc[]
 

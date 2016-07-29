@@ -1,5 +1,3 @@
-== Core git concepts
-
 === Introduction 
 
 This section covers:
@@ -46,7 +44,7 @@ Remember, git was created so people could work on the linux kernel across the
 globe, and offline. So there is no concept of a central server that holds the
 golden source.
 
-=== The Four Phases of Git Content
+==== The Four Phases of Git Content
 
 In the git world you have four phases your code can go through:
 
@@ -58,7 +56,7 @@ If this seems over-complicated now, it won't as you grow to know and love git.
 If you've ever been confused by git, it's likely because these stages were
 not understood.
 
-=== Branches
+==== Branches
 
 In case you've not looked at a SC tool before, a branch is a core concept.
 
@@ -78,7 +76,7 @@ That way users can choose to get a view of the source on the 'main line' branch
 or the 'experimental' one.
 
 
-=== What About GitHub?
+==== What About GitHub?
 
 In practice, some repositories are more equal than others (eg GitHub). This is
 a matter of convention. I can use a GitHub repo as a secondary repo for my
@@ -121,7 +119,7 @@ win compared to CVS.
 
 
 
-=== Assumptions
+==== Assumptions
 
 At this point I assume you have git installed, and that you have set your
 details up as per the below. Replace with your email address and username:
@@ -130,7 +128,7 @@ details up as per the below. Replace with your email address and username:
 $ git config --global user.email "you@example.com" && git config --global user.name "Your Name"
 ----
 
-=== What we learned
+==== What we learned
 
 - setting up git
 - what git is - the four stages

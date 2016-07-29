@@ -1,5 +1,4 @@
-Fetching and Pulling Content
-----------------------------
+=== Fetching and Pulling Content
 
 In part one we emphasized the point that all git repositories are equal.
 
@@ -85,8 +84,8 @@ git remote -v
 which gives me the information about the URLs we saw.
 
 
-fetch
------
+==== fetch
+
 The above remotes are divided into fetch and push. First we look at fetch.
 
 'git fetch' gets the latest changes from the remote repository and copies them
@@ -186,7 +185,7 @@ git log
 #     file1
 ----
 
-What we've just seen:
+==== What you've learned 
 
 - a fetch followed by
 - a merge

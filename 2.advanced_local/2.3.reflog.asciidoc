@@ -1,3 +1,5 @@
+=== Reflog
+
 In this section we're going to look at the reflog.
 
 The reflog gives us references to a sequential history of what we did to the

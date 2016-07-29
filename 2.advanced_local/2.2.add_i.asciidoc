@@ -1,5 +1,4 @@
-Git add interactive
--------------------
+=== Git add interactive
 
 Earlier we discussed the four stages of working in Git:
 
@@ -109,8 +108,7 @@ Committing: goes to the repository, which can then be pushed to remote
 
 
 
-What we learned
----------------
+==== What we learned
 
 - Difference between staging and committing
 - Why the distinction exists

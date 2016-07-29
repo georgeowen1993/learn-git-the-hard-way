@@ -1,7 +1,6 @@
 :chapter: 2
 
-Advanced local repository management
-====================================
+== Advanced local repository management
 
 include::2.intro.asciidoc[]
 

@@ -1,3 +1,5 @@
+= Learn Git The Hard Way
+
 :toc:
 
 include::../1.core/1.core.asciidoc[]

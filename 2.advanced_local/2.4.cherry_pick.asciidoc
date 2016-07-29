@@ -1,5 +1,4 @@
-Cherry Picking
---------------
+=== Cherry Picking
 
 Next we look at 'cherry-picking'.
 
@@ -114,7 +113,6 @@ Cherry-picking is often a simple and easy to follow way to move changes between
 different branches, which can be very useful.
 
 
-What you have learned
----------------------
+==== What you have learned
 
 - what git cherry pick does

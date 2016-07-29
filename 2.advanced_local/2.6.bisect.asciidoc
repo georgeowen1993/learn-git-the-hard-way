@@ -1,5 +1,4 @@
-Git Bisect
-----------
+=== Git Bisect
 
 Bisecting is a very powerful tool for finding bugs.
 
@@ -142,8 +141,7 @@ A100  BAD
 Once we know that the first 'bad' commit was A63, we can examine the difference
 between A62 and A63, and this gives us a clue.
 
-A 'real' git bisect session
----------------------------
+==== A 'real' git bisect session
 
 Let's make this more realistic with an actual git bisect session.
 

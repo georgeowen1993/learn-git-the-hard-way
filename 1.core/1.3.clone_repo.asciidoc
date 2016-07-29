@@ -1,9 +1,9 @@
-== Cloning a repo
+=== Cloning a repo
 
 - git clone
 - git reset
 
-=== Clone
+==== Clone
 
 In this section we're going to play with the contents of our repository by
 deleting the content and seeing what our options are to recover from the
@@ -18,7 +18,7 @@ $ ls .git
 There's .git, just as before.
 
 
-=== Accidental Deletion
+==== Accidental Deletion
 
 Recall the 4 stages of data in a git repo:
 
@@ -38,7 +38,7 @@ $ ls .git                           # The .git folder is still there
 
 We have cloned the repository, and 'accidentally' deleted all the files.
 
-=== git reset
+==== git reset
 
 You can use 'git reset' to recover the state of the 
 
@@ -55,13 +55,13 @@ $ git status        # we now have a consistent state between 1 (local changes) a
 ----
 
 
-=== What we learned
+==== What we learned
 
 - git clone
 - git reset
 
 
-=== Exercises
+==== Exercises
 
 1) Check out a git repo from either your company repository or github
 
