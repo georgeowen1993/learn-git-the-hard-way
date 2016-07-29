@@ -118,7 +118,7 @@ which pops the change off the stash stack and restores me to where I was.
 There are more sophisticated ways to deal with stash, but these are not covered
 here.
 
-
+TODO: multiple stashing example
 
 ==== What you learned
 

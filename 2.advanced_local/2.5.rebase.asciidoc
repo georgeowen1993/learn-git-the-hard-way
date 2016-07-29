@@ -17,10 +17,12 @@ B
 C
 ----
 
+NOTE: The diagrams in this book are top-bottom in time order, whereas the
+'git log' is bottom-up in time order.
+
 and at this point we branch off to 'feature1' and make another change:
 
 ----
-A
 A
 |
 B
@@ -33,7 +35,6 @@ C (HEAD, master)
 Now we go back to master and make a couple more changes:
 
 ----
-A
 A
 |
 B
