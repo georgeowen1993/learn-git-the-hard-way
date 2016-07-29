@@ -3,10 +3,11 @@ MAKEFILE_BASENAME:=$(shell basename $(MAKEFILE_DIR))
 
 include ../makefiles/Makefile.constants
 
-CHAPTER_SOURCE=$(MAKEFILE_DIR)/$(MAKEFILE_BASENAME).asciidoc
-CHAPTER_TARGET=$(OUTPUT_DIR)/$(MAKEFILE_BASENAME).html
+CHAPTER_SOURCE:=$(shell ls $(MAKEFILE_DIR)/*.asciidoc)
+#CHAPTER_SOURCE:=$(MAKEFILE_DIR)/$(MAKEFILE_BASENAME).asciidoc
+CHAPTER_TARGET:=$(OUTPUT_DIR)/$(MAKEFILE_BASENAME).html
 
-all: diagrams $(CHAPTER_TARGET)	
+all: diagrams $(CHAPTER_TARGET)
 
 .PHONY: diagrams
 diagrams:
