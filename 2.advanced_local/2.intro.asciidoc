@@ -8,6 +8,8 @@ moving onto to Part 3, which looks at working with other git repositories.
 
 In Part 2 you will cover:
 
-- a
-- b
+- git stash
+- git cherry-pick
+- git rebase
+- git bisect
 

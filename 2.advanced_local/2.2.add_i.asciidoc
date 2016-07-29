@@ -2,7 +2,7 @@
 
 Previously we discussed the four stages of working in Git:
 
-image::diagrams/1.1.2.mermaid.png[]
+image::diagrams/1.1.3.mermaid.png[scaledwidth="50%",height=200]
 
 So far we've shown a difference between adding (staging) and committing, but
 this still causes confusion for people - what's the point of this?

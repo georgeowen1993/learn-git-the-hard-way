@@ -48,7 +48,7 @@ golden source.
 
 In the git world you have four phases your code can go through:
 
-image::diagrams/1.1.3.mermaid.png[]
+image::diagrams/1.1.3.mermaid.png[scaledwidth="50%",height=200]
 
 Understanding these 4) stages are key to understanding git.
 

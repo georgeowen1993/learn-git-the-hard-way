@@ -11,5 +11,5 @@ CHAPTER_TARGET:=$(OUTPUT_DIR)/learngitthehardway.pdf
 #$(CHAPTER_TARGET): $(CHAPTER_SOURCE)
 $(CHAPTER_TARGET): $(CHAPTER_SOURCE)
 	#asciidoctor -n -b book -D $(OUTPUT_DIR) $(CHAPTER_SOURCE)
-	asciidoctor -r asciidoctor-pdf -d book -b pdf -D $(OUTPUT_DIR) 9999.learngitthehardway.asciidoc
+	asciidoctor -n -r asciidoctor-pdf -d book -b pdf -D $(OUTPUT_DIR) 9999.learngitthehardway.asciidoc
 

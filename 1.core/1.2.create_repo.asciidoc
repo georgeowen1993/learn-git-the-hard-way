@@ -158,7 +158,7 @@ We have added a file to the index ready to be committed to the repository.
 
 Remember the four stages we talked about before:
 
-image::diagrams/1.1.3.mermaid.png[]
+image::diagrams/1.1.3.mermaid.png[scaledwidth="50%",height=200]
 
 We create our file (1- local changes), then added/staged it to the index (2)
 and then committed to the local repository.

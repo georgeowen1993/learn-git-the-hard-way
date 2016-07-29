@@ -24,12 +24,16 @@ git commit -am initial
 echo 'Some changes I'm not sure about' >> file1
 ----
 
-You can get very sophisticated with the cache, but 99% of the time I use it like this:
+You can get very sophisticated with the stash, but 99% of the time I use it like this:
 
 ----
+[do some work]
+
+[get interupted]
+
 git stash
 
-[do my other work]
+[deal with interruption]
 
 git stash pop
 ----
