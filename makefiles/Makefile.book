@@ -5,14 +5,11 @@ include ../makefiles/Makefile.constants
 
 CHAPTER_SOURCE:=$(shell find .. | grep asciidoc)
 #CHAPTER_SOURCE:=$(MAKEFILE_DIR)/$(MAKEFILE_BASENAME).asciidoc
-CHAPTER_TARGET:=$(OUTPUT_DIR)/$(MAKEFILE_BASENAME).html
+#CHAPTER_TARGET:=$(OUTPUT_DIR)/$(MAKEFILE_BASENAME).html
+CHAPTER_TARGET:=$(OUTPUT_DIR)/learngitthehardway.pdf
 
-all: diagrams $(CHAPTER_TARGET)
-
-.PHONY: diagrams
-diagrams:
-	$(MAKE) -C diagrams
-
+#$(CHAPTER_TARGET): $(CHAPTER_SOURCE)
 $(CHAPTER_TARGET): $(CHAPTER_SOURCE)
-	asciidoctor -n -d book -D $(OUTPUT_DIR) $(CHAPTER_SOURCE)
+	#asciidoctor -n -b book -D $(OUTPUT_DIR) $(CHAPTER_SOURCE)
+	asciidoctor -r asciidoctor-pdf -d book -b pdf -D $(OUTPUT_DIR) 9999.learngitthehardway.asciidoc
 
