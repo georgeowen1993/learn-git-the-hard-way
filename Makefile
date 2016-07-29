@@ -18,14 +18,10 @@ ifeq ($(shell hostname),rothko)
 
 deploy: chapters $(DEPLOY_DIR)
 
-$(DEPLOY_DIR): zip
-	cp -R output/9999.learngitthehardway.pdf $(DEPLOY_DIR)/learngitthehardway.pdf
-	cp -R output/9999.learngitthehardway.pdf learngitthehardway.pdf
+$(DEPLOY_DIR):
+	cp -R output/9999.learngitthehardway.pdf output/learngitthehardway.pdf
+	cp -R output/learngitthehardway.pdf learngitthehardway.pdf
 	cp -R output/* $(DEPLOY_DIR)
-	#cp $(DEPLOY_DIR)/9999.learngitthehardway.html $(DEPLOY_DIR)/index.html
-
-zip:
-	tar -zcf $(DEPLOY_DIR)/$(BOOK_NAME).tar.gz output
 
 else
 deploy:
