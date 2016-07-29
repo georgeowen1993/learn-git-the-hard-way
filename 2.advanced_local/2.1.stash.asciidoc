@@ -116,7 +116,7 @@ here.
 
 
 
-==== What we learned
+==== What you learned
 
 - What the stash is
 - How it works

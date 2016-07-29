@@ -113,6 +113,6 @@ Cherry-picking is often a simple and easy to follow way to move changes between
 different branches, which can be very useful.
 
 
-==== What you have learned
+==== What you learned
 
 - what git cherry pick does

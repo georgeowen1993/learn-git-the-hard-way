@@ -55,7 +55,7 @@ $ git status        # we now have a consistent state between 1 (local changes) a
 ----
 
 
-==== What we learned
+==== What you learned
 
 - git clone
 - git reset

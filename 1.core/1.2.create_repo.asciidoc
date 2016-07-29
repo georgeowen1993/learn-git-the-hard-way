@@ -80,7 +80,7 @@ $ cat config
 	precomposeunicode = true
 ----
 
-=== git log
+==== git log
 
 If we want to look at the history of this repository, you can run the git log
 command:
@@ -139,7 +139,7 @@ exists but the repository is not 'aware' of it.
 
 Make git aware of it by adding it to the repository.
 
-=== git add
+==== git add
 
 ----
 $ git add mycode.py
@@ -210,7 +210,7 @@ $ git log
 ----
 
 
-=== What you learned
+==== What you learned
 
 - git init
 - the .git folder

@@ -69,7 +69,7 @@ nothing special about the 'master' branch. It's just a name. Your principal
 branch might be called 'live', 'alice', 'pristine', or whatever you like.
 
 
-==== What you've learned
+==== What you learned
 
 - git branch
 - git checkout

@@ -1,4 +1,4 @@
-=== Merging
+== Merging
 
 We've already covered basic branching in previous sections. As you will recall,
 branching gives you the ability to work on parallel streams of development in
@@ -85,7 +85,7 @@ Automatic merge failed; fix conflicts and then commit the result.
 
 Oh dear, that does not look good. The merge failed with a CONFLICT.
 
-==== What's going on?
+=== What's going on?
 
 So what exactly happens when you perform a merge? 
 
@@ -179,14 +179,14 @@ If you think this is confusing, I won't disagree. However, for git log it makes
 some sense: if you are looking at a repository with a long history, you are more
 likely to be interested in recent changes than older ones.
 
-==== What you have learned
+=== What you learned
 
 - What a merge is
 - What a merge conflict is
 - How to resolve a merge conflict
 - How to read a merged log history
 
-==== Exercises
+=== Exercises
 
 1) Initialise a repository, commit a file, make changes on two branches and
 merge

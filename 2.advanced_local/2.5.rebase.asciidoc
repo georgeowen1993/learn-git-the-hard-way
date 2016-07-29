@@ -354,7 +354,7 @@ branch pointer merely needs to be 'fast-forwarded' to the same point as
 feature1! The HEAD pointer, naturally, moves with the branch we're on (master).
 
 
-==== What we have learned
+==== What you learned
 
 - What a rebase is 
 - What fast-forward means

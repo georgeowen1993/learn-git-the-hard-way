@@ -73,8 +73,8 @@ even if those points are no longer apparently reachable within the repo.
 
 
 
-What you have learned
----------------------
+==== What you have learned
+
 - git reflog
 - git reset (--mixed)
 - git reset --hard

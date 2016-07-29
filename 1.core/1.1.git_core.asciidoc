@@ -88,7 +88,7 @@ being decentralised.
 Keeping your local repo sync'd with others is one of the challenges of git, but
 the first step to mastering git is understanding this equality of repos.
 
-## Other differences with git vs traditional VCSes
+==== Other differences with git vs traditional VCSes
 
 - History is more malleable.
 
@@ -134,7 +134,7 @@ $ git config --global user.email "you@example.com" && git config --global user.n
 - what git is - the four stages
 - differences to other SC systems
 
-=== Exercises
+==== Exercises
 
 1) Install git and set up your config. Set up user.email and user.name using the --global flag.
 2) Find out where the config is stored.

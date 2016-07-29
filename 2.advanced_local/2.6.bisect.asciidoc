@@ -211,3 +211,8 @@ git diff 79583459dc6061bd91d55cfcf8c34fae845f836b^ 79583459dc6061bd91d55cfcf8c34
 #  62
 # +63
 ----
+
+
+==== WHat you learned
+
+- How to bisect a git repo

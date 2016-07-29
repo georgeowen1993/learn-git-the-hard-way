@@ -4,15 +4,11 @@ MAKEFILE_BASENAME:=$(shell basename $(MAKEFILE_DIR))
 include ../makefiles/Makefile.constants
 
 CHAPTER_SOURCE:=$(shell ls $(MAKEFILE_DIR)/*.asciidoc)
-#CHAPTER_SOURCE:=$(MAKEFILE_DIR)/$(MAKEFILE_BASENAME).asciidoc
 CHAPTER_TARGET:=$(OUTPUT_DIR)/$(MAKEFILE_BASENAME).html
 
-all: diagrams $(CHAPTER_TARGET)
+all: diagrams 
 
 .PHONY: diagrams
 diagrams:
 	$(MAKE) -C diagrams
-
-$(CHAPTER_TARGET): $(CHAPTER_SOURCE)
-	asciidoctor -v -n -D $(OUTPUT_DIR) $(CHAPTER_SOURCE)
 

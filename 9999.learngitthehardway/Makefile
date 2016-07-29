@@ -1,1 +1,1 @@
-../makefiles/Makefile.asciidoc
+../makefiles/Makefile.book
