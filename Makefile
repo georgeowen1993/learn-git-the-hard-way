@@ -18,10 +18,12 @@ ifeq ($(shell hostname),rothko)
 
 deploy: chapters $(DEPLOY_DIR)
 
-$(DEPLOY_DIR):
+$(DEPLOY_DIR): FORCE
 	cp -R output/9999.learngitthehardway.pdf output/learngitthehardway.pdf
 	cp -R output/learngitthehardway.pdf learngitthehardway.pdf
 	cp -R output/* $(DEPLOY_DIR)
+
+FORCE:
 
 else
 deploy:
