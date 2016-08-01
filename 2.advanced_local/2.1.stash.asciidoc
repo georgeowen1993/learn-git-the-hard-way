@@ -35,12 +35,14 @@ $ git init
 $ echo 'Some content' > file1
 $ git add file1
 $ git commit -am initial
-$ echo 'Some changes I'm not sure about' >> file1
+$ echo 'Some changes I am not sure about' >> file1
 ----
 
 
 Let's imagine I'm in the middle of some work, and Alice lets me know that 
 there's an important update to the code I need to pull from BitBucket.
+
+First you can see what changes you have made locally with 'git diff':
 
 ----
 $ git diff
@@ -53,17 +55,25 @@ index 0ee3895..5554e0f 100644
 +Some changes I'm not sure about...
 ----
 
+To store away these changes locally you run 'git stash':
+
 ----
 $ git stash
 Saved working directory and index state WIP on master: 34509a0 initial
 HEAD is now at 34509a0 initial
 ----
 
+A quick 'git status' confirms that our working directory is 'clean':
+
 ----
 $ git status
 On branch master
 nothing to commit, working directory clean
 ----
+
+What happened to our change?
+
+The really keen can look at 
 
 ----
 $ git log --graph --all --decorate
@@ -89,26 +99,26 @@ $ git log --graph --all --decorate
 
 As you can see, it's committed the state of the index (9ff...) and then
 committed the local change to the refs/stash branch, and merged them as a child
-of the HEAD.
+of the HEAD on a new 'refs/stash' branch.
 
 Don't worry too much about the details: it's basically stored
-all the changes we've made but not _committed_ ready to be re-applied.
+all the changes we've made (but not _committed_) ready to be re-applied.
 
 'stash' is a special branch which is kept local to our repository. The message
-'WIP on master' is added automatically for us.
+'WIP on master' and 'index on master' is added automatically for us.
 
 The master branch is still where it was and the HEAD pointer is pointed at it
 (that is where our repo now is).
 
-I can now do my other work (in this case pulling the latest changes) without
-concern for whether it conflicts with those changes. 
+I can now do my other work (in this case, pulling the latest changes from a 
+remote) without concern for whether it conflicts with those changes. 
 
 ----
 $ git stash list
 stash@{0}: WIP on master: 34509a0 initial
 ----
 
-Once done, I can reapply those changes by running 'git stash pop':
+Once I'm ready, I can reapply those changes by running 'git stash pop':
 
 ----
 $ git stash pop
@@ -123,17 +133,116 @@ no changes added to commit (use "git add" and/or "git commit -a")
 Dropped refs/stash@{0} (279ee87c68798caaf2ea3d45fcfa0ac42df6ba4b)
 ----
 
-which pops the change off the stash stack and restores me to where I was.
-
-There are more sophisticated ways to deal with stash, but these are not covered
-here.
+which 'pops' the zero-numbered change off the stash stack and restores the
+changes I stashed, applied to wherever I've ended up.
 
 ==== Choosing your stash
 
-TODO: multiple stashing example
+You may be wondering at this point how you manage multiple stashes.
+
+Type this sequence out. It will stash two similar-looking changes.
+
+----
+$ rm -rf 2.1.2
+$ mkdir 2.1.2
+$ cd 2.1.2
+$ git init
+$ echo 'Some content' > file1
+$ git add file1
+$ git commit -am initial
+$ echo 'First changes I am not sure about' >> file1
+$ git stash
+$ echo 'Second change I am also not sure about' >> file1
+$ git stash
+$ git stash list
+stash@{0}: WIP on master: d3f21d2 initial
+stash@{1}: WIP on master: d3f21d2 initial
+----
+
+You can see you now have two changes in your stash. But which is which?
+
+Some minimal information is available with 'git stash show <ID>'
+
+----
+$ git stash show stash@{0}
+ file1 | 1 +
+ 1 file changed, 1 insertion(+)
+$ git stash show stash@{1}
+ file1 | 1 +
+ 1 file changed, 1 insertion(+)
+----
+
+but this is not sufficient for you to tell what is going on.
+
+'git stash show --patch <ID>' gives you diff information also:
+
+----
+$ git stash show --patch stash@{0}
+diff --git a/file1 b/file1
+index 0ee3895..c8f5c78 100644
+--- a/file1
++++ b/file1
+@@ -1 +1,2 @@
+ Some content
++Second change I am also not sure about
+
+$ git stash show --patch stash@{1}
+diff --git a/file1 b/file1
+index 0ee3895..aa51db4 100644
+--- a/file1
++++ b/file1
+@@ -1 +1,2 @@
+ Some content
++First changes I am not sure about
+----
+
+From this you can infer that stash pushes to a stack at number zero, and then
+pops from zero if you use git stash pop.
+
+If you want to apply the first change only from here, run:
+
+----
+$ git stash apply stash@{1}
+On branch master
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+	modified:   file1
+
+no changes added to commit (use "git add" and/or "git commit -a")
+
+$ git diff
+diff --git a/file1 b/file1
+index 0ee3895..aa51db4 100644
+--- a/file1
++++ b/file1
+@@ -1 +1,2 @@
+ Some content
++First changes I am not sure about
+----
+
+Be aware of a little gotcha here - if you 'apply' a git stash, then it remains
+in the list. 'git stash pop' will remove the stash item for you.
+
+----
+$ git stash list
+stash@{0}: WIP on master: d3f21d2 initial
+stash@{1}: WIP on master: d3f21d2 initial
+----
+
+How to manually remove a stash entry is left as an exercise for the reader.
+
+In general, use of the stash is limited to simple pushes/pops.
 
 ==== What you learned
 
 - What the stash is
 - How it works
 - How to re-apply changes
+
+
+==== Exercises
+
+- Stash several changes and then re-apply them in a different order, ending
+up with an empty stash list

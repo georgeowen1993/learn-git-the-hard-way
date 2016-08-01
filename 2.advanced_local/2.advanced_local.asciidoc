@@ -6,15 +6,15 @@ include::2.intro.asciidoc[]
 
 include::2.1.stash.asciidoc[]
 
-include::2.2.add_i.asciidoc[]
-
-include::2.3.reflog.asciidoc[]
-
 include::2.4.cherry_pick.asciidoc[]
 
 include::2.5.rebase.asciidoc[]
 
 include::2.6.bisect.asciidoc[]
+
+include::2.2.add_i.asciidoc[]
+
+include::2.3.reflog.asciidoc[]
 
 include::2.summary.asciidoc[]
 
