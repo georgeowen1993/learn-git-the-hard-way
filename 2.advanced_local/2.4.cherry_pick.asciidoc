@@ -8,29 +8,29 @@ port changes from one branch to another.
 To demonstrate this, create a simple repository with two changes:
 
 ----
-rm -rf 2.4.1
-mkdir 2.4.1
-cd 2.4.1
-git init
-echo change1 > file1
-git add file1
-git commit -am change1
-echo change2 >> file1
-git commit -am change2
-git log
+$ rm -rf 2.4.1
+$ mkdir 2.4.1
+$ cd 2.4.1
+$ git init
+$ echo change1 > file1
+$ git add file1
+$ git commit -am change1
+$ echo change2 >> file1
+$ git commit -am change2
+$ git log
 ----
 
 At this point we branch off into two branches, master and experimental.
 
 ----
-git branch experimental
-git checkout experimental
-ex -sc '1i|crazy change' -cx file1  # Magic to insert before the first line
-cat file1
-git commit -am crazy
-echo more sensible change >> file1
-cat file1
-git commit -am sensible
+$ git branch experimental
+$ git checkout experimental
+$ ex -sc '1i|crazy change' -cx file1  # Magic to insert before the first line
+$ cat file1
+$ git commit -am crazy
+$ echo more sensible change >> file1
+$ cat file1
+$ git commit -am sensible
 ----
 
 We decide that the sensible change is the one we want to keep.
@@ -38,15 +38,15 @@ We decide that the sensible change is the one we want to keep.
 First get the reference id with a git log:
 
 ----
-git log
+$ git log
 ----
 
 then checkout the master and run a cherry-pick command:
 
 ----
-git checkout master
-git cherry-pick ID
-git log
+$ git checkout master
+$ git cherry-pick ID
+$ git log
 ----
 
 
@@ -57,29 +57,30 @@ Sometimes the cherry-pick might fail because the diff cannot easily be applied,
 as in this case:
 
 ----
-rm -rf 2.4.3
-mkdir 2.4.3
-cd 2.4.3
-git init
-echo change1 > file1
-git add file1
-git commit -am change1
-echo change2 >> file1
-git commit -am change2
-git log
-git branch experimental
-git checkout experimental
-echo crazy change >> file1
-cat file1
-git commit -am crazy
-echo more sensible change >> file1
-cat file1
-git commit -am sensible
-git log
-git checkout master
-git cherry-pick ID
-git log
+$ rm -rf 2.4.3
+$ mkdir 2.4.3
+$ cd 2.4.3
+$ git init
+$ echo change1 > file1
+$ git add file1
+$ git commit -am change1
+$ echo change2 >> file1
+$ git commit -am change2
+$ git log
+$ git branch experimental
+$ git checkout experimental
+$ echo crazy change >> file1
+$ cat file1
+$ git commit -am crazy
+$ echo more sensible change >> file1
+$ cat file1
+$ git commit -am sensible
+$ git log
+$ git checkout master
+$ git cherry-pick ID
 ----
+
+When cherry-picking you will get a message like this:
 
 ----
 error: could not apply 743d18e... sensible
@@ -93,18 +94,18 @@ in which case you need to follow the instructions above.
 As ever, a git status helps you see what's going on.
 
 ----
-imiell@Ians-MacBook-Air:~/2.4.3$ git status
-#On branch master
-#You are currently cherry-picking commit 743d18e.
-#  (fix conflicts and run "git cherry-pick --continue")
-#  (use "git cherry-pick --abort" to cancel the cherry-pick operation)
-#
-#Unmerged paths:
-#  (use "git add <file>..." to mark resolution)
-#
-#	both modified:   file1
-#
-#no changes added to commit (use "git add" and/or "git commit -a")
+$ git status
+On branch master
+You are currently cherry-picking commit 743d18e.
+  (fix conflicts and run "git cherry-pick --continue")
+  (use "git cherry-pick --abort" to cancel the cherry-pick operation)
+
+Unmerged paths:
+  (use "git add <file>..." to mark resolution)
+
+	both modified:   file1
+
+no changes added to commit (use "git add" and/or "git commit -a")
 ----
 
 

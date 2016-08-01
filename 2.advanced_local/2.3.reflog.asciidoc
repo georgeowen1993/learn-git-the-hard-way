@@ -9,25 +9,25 @@ as we will see here.
 First set up a repo with two commits:
 
 ----
-rm -rf 2.3.1
-mkdir 2.3.1
-cd 2.3.1
-git init
-echo first commit > file1
-git add file1
-git commit -am file1
-echo second commit >> file1
-git commit -am file1.1
-git log
+$ rm -rf 2.3.1
+$ mkdir 2.3.1
+$ cd 2.3.1
+$ git init
+$ echo first commit > file1
+$ git add file1
+$ git commit -am file1
+$ echo second commit >> file1
+$ git commit -am file1.1
+$ git log
 ----
 
 Then do some magic to effectively remove the last commit:
 
 ----
-git checkout HEAD^
-git branch -f master
-git checkout master
-git log
+$ git checkout HEAD^    # Use the caret character as a parent
+$ git branch -f master
+$ git checkout master
+$ git log
 ----
 
 NOTE: don't worry about what we just did - it's a more advanced set of commands
@@ -45,11 +45,11 @@ Git reflog records all _movements_ of branches in the repo. Like stashes, it is
 local to your repo.
 
 ----
-git reflog
-#66cdcd2 HEAD@{0}: checkout: moving from 66cdcd23c5c005edecd7cd7b162d7b42b7a02ab4 to master
-#66cdcd2 HEAD@{1}: checkout: moving from master to HEAD^
-#40e99f7 HEAD@{2}: commit: file1.1
-#66cdcd2 HEAD@{3}: commit (initial): file1
+$ git reflog
+66cdcd2 HEAD@{0}: checkout: moving from 66cdcd23c5c005edecd7cd7b162d7b42b7a02ab4 to master
+66cdcd2 HEAD@{1}: checkout: moving from master to HEAD^
+40e99f7 HEAD@{2}: commit: file1.1
+66cdcd2 HEAD@{3}: commit (initial): file1
 ----
 
 Git reflog is a history of the changes made to the HEAD (remember the head is a
@@ -58,9 +58,9 @@ pointer to the current location of the repository).
 If we 'reset --hard' the repository to the reference given:
 
 ----
-git reset --hard 40e99f7
-# HEAD is now at 40e99f7 file1.1
-git log
+$ git reset --hard 40e99f7
+HEAD is now at 40e99f7 file1.1
+$ git log
 ----
 
 we are returned to where we were.

@@ -9,62 +9,26 @@ a simple example, so pay attention!
 
 Let's say we have a set of changes on a master branch:
 
-----
-A
-|
-B
-|
-C
-----
+image::diagrams/2.5.1.mermaid.png[]
 
-NOTE: The diagrams in this book are top-bottom in time order, whereas the
+NOTE: The diagrams in this book are left-right in time order, whereas the
 'git log' is bottom-up in time order.
 
-and at this point we branch off to 'feature1' and make another change:
+and at this point you branch off to 'feature1' and make another change:
 
-----
-A
-|
-B
-|
-C (HEAD, master)
- \
-  D (feature1)
-----
+image::diagrams/2.5.2.mermaid.png[]
 
-Now we go back to master and make a couple more changes:
+Now you go back to master and make a couple more changes:
 
-----
-A
-|
-B
-|
-C
-|\
-E D (feature1)
-|
-F (HEAD, master)
-----
+image::diagrams/2.5.3.mermaid.png[]
 
-Now think about this from the point of view of feature1. It made a change
-from point C on the master branch, but the situation has moved on. Now if master
-wants to merge in the change on feature1, it could merge it in, and the tree
-would look like this:
+Now think about this from the point of view of the developer of feature1. She
+has made a change from point C on the master branch, but the situation has moved
+on. Now if master wants to merge in the change on feature1, it could merge it
+in, and the tree would look like this:
 
-----
-A
-|
-B
-|
-C
-|\
-E |
-| |
-F D (feature1)
-| |
-|/
-G (HEAD, master)
-----
+image::diagrams/2.5.4.mermaid.png[]
+
 
 That is OK, but not entirely desirable for two reasons:
 
@@ -73,19 +37,7 @@ That is OK, but not entirely desirable for two reasons:
 
 Wouldn't it be better if the history looked like this?
 
-----
-A
-|
-B
-|
-C
-|
-E
-|
-F
-|
-D (head, master, feature1)
-----
+image::diagrams/2.5.5.mermaid.png[]
 
 This is much cleaner and easier to follow. If, for example, a bug was
 introduced in D, it's easier to find (eg using bisect, which we will come
@@ -97,6 +49,7 @@ If we remind ourselves of the situation pre-merge (above)then we can
 visualise 'picking up' the changes on the feature1 branch and moving them
 to the HEAD. So from this:
 
+image::diagrams/2.5.3.mermaid.png[]
 ----
 A
 |
@@ -111,6 +64,7 @@ F (HEAD, master)
 
 To this:
 
+image::diagrams/2.5.5.mermaid.png[]
 ----
 A
 |
@@ -196,17 +150,7 @@ git log --all --decorate --graph
 
 We are now in this state:
 
-----
-A
-|
-B
-|
-C
-|\
-E D (feature1)
-|
-F (HEAD, master)
-----
+image::diagrams/2.5.3.mermaid.png[]
 
 We go to feature1 and rebase:
 

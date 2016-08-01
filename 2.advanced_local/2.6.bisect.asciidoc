@@ -4,23 +4,7 @@ Bisecting is a very powerful tool for finding bugs.
 
 Let's say you have a set of changes on a master branch:
 
-----
-A1
-|
-A2
-|
-A3
-|
-...
-|
-A50
-|
-A51
-|
-...
-|
-A100
-----
+image::diagrams/2.6.1.mermaid.png[]
 
 You discover a previously-unseen bug at point A100 and want to debug it. One way
 to do this is to read over the code, add logging etc.. This can be
@@ -35,106 +19,30 @@ It works by picking a start point where the bug definitely did not exist (the
 'good' point). In this case we'll choose point A1. Then you pick a point where
 the bug definitely did exist (the 'bad' point). In this case, that's A100.
 
-----
-A1     GOOD
-|
-A2     ?
-|
-A3     ?
-|
-...
-|
-A50    ?
-|
-A51    ?
-|
-...
-|
-A100   BAD
-----
+image::diagrams/2.6.2.mermaid.png[]
 
 Once the git bisect session has that information, it can hand you a version
 at the hafway point between the 'good' and 'bad' points and asks you to run 
 whatever you need to run to determine whether it's good or bad. If you tell it
 it's 'good' it will mark all version at that point and before as 'good'. 
 
-----
-A1     GOOD
-|
-A2     GOOD
-|
-...
-|
-A49    GOOD
-|
-A50    GOOD
-|
-A51    ?
-|
-...
-|
-A99    ?
-|
-A100   BAD
-----
+image::diagrams/2.6.3.mermaid.png[]
 
 It then repeats the process, giving you a version at the halfway point between
 'good' and 'bad', asking you for its status. In this sequence, we are given
 A75:
 
-----
-A50    GOOD
-|
-A51    ?
-|
-A75    GOOD OR BAD?
-|
-A76    ?
-|
-...
-|
-A100   BAD
-----
+image::diagrams/2.6.4.mermaid.png[]
 
 If we determine that this version was 'bad', then all the versions after it are
 marked as bad:
 
-----
-A1     GOOD
-...
-A50    GOOD
-|
-A51    ?
-|
-A52    ?
-...
-A74    ?
-|
-A75    BAD
-|
-A76    BAD
-...
-A99    BAD
-|
-A100   BAD
-----
+image::diagrams/2.6.5.mermaid.png[]
 
 This binary search process repeats until we know which versions were good
 and bad. One outcome might be:
 
-----
-A1    GOOD
-|
-A2    GOOD
-...
-A62   GOOD
-|
-A63   BAD
-|
-A64   BAD
-...
-A100  BAD
-----
+image::diagrams/2.6.6.mermaid.png[]
 
 Once we know that the first 'bad' commit was A63, we can examine the difference
 between A62 and A63, and this gives us a clue.
@@ -208,6 +116,6 @@ git diff 79583459dc6061bd91d55cfcf8c34fae845f836b^ 79583459dc6061bd91d55cfcf8c34
 ----
 
 
-==== WHat you learned
+==== What you learned
 
 - How to bisect a git repo
