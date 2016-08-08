@@ -40,7 +40,14 @@ We have cloned the repository, and 'accidentally' deleted all the files.
 
 ==== git reset
 
-You can use 'git reset' to recover the state of the 
+You can use 'git reset' to recover the state of the git repository in various
+ways.
+
+By default, git will recover whatever has been added to the index/staging area
+and place it in your working directory.
+
+By contrast a 'git reset --hard' will blitz all local and added changes,
+reverting your checkout to a just-cloned state.
 
 ----
 $ git status        # reports that we have deleted files in working tree/directory
