@@ -1,4 +1,4 @@
-include ../../makefiles/Makefile.constants
+include ../../../makefiles/Makefile.constants
 MERMAID_FILES:=$(wildcard *.mermaid)
 OBJ_FILES:=$(patsubst %.mermaid,$(OUTPUT_DIR)/diagrams/%.mermaid.png,$(MERMAID_FILES))
 

@@ -1,4 +1,4 @@
-CHAPTERS:=$(shell ls -d [1-9]*)
+CHAPTERS:=$(shell ls -d asciidoc/[1-9]*)
 OUTPUT_DIR:=$(shell pwd)/output
 DEPLOY_DIR:=/var/www/html/learngitthehardway
 BOOK_NAME:=learngitthehardway
